@@ -1,6 +1,6 @@
 import "./App.css";
 import {PlaylistItem} from  "./components/songs"
-import { Nav } from "./components/navigation"
+import  Nav from "./components/navigation"
 import { SideBar } from "./components/sidebar";
 import { Bar } from "./components/playBar";
 
