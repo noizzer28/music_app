@@ -1,5 +1,5 @@
 import "./App.css";
-import {PlaylistItem} from  "./components/songs"
+import PlaylistItems from  "./components/songs"
 import  Nav from "./components/navigation"
 import { SideBar } from "./components/sidebar";
 import { Bar } from "./components/playBar";
@@ -45,25 +45,8 @@ function App() {
             </div>
           </div>
           <div className="content__playlist playlist">
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
-            <PlaylistItem/>
+            <PlaylistItems/>
+            <PlaylistItems/>
           </div>
         </div>
       </div>
