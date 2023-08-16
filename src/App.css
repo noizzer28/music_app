@@ -877,3 +877,9 @@ body {
 .volume__progress-line {
   width: 109px;
 }
+
+.skeleton {
+  width: 250px;
+  height: 150px;
+  background-color: #202020;
+}

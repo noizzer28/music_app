@@ -1,4 +1,12 @@
 
+
+import Skeleton, {SkeletonTheme} from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import { useEffect, useState } from 'react'
+
+
+  
+
 export const BarVolume = () => {
     return(<div className="bar__volume-block volume">
     <div className="volume__content">
@@ -19,19 +27,26 @@ export const BarVolume = () => {
   }
   
 export const BarPlayingTrack = () => {
+  const [loading, setloading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setloading(false)
+    }, 5000);
+  })
     return(
     <div className="player__track-play track-play">
       <div className="track-play__contain">
-        <div className="track-play__image">
-          <svg className="track-play__svg" alt="music">
+        <div className="track-play__image"> {loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> :           <svg className="track-play__svg" alt="music">
             <use xlinkHref="./icons/sprite.svg#icon-note"></use>
-          </svg>
+          </svg>}
+
         </div>
         <div className="track-play__author">
-          <a className="track-play__author-link" href="http://">Ты та...</a>
+          <a className="track-play__author-link" href="http://">{loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> : "Ты та..."}</a>
         </div>
         <div className="track-play__album">
-          <a className="track-play__album-link" href="http://">Баста</a>
+          <a className="track-play__album-link" href="http://">{loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> : "Баста    >"}</a>
         </div>
       </div>
   
