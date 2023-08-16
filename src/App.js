@@ -3,6 +3,8 @@ import PlaylistItems from  "./components/songs"
 import  Nav from "./components/navigation"
 import { SideBar } from "./components/sidebar";
 import { Bar } from "./components/playBar";
+import SkeletonTrack from "./components/skeleton";
+import { useState, useEffect } from "react";
 
 
 const PlaylistFilter = () => {
@@ -15,6 +17,14 @@ const PlaylistFilter = () => {
 }
 
 function App() {
+
+  const [loading, setloading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setloading(false)
+    }, 5000);
+  })
   return (    <div className="wrapper">
   <div className="container">
     <main className="main">
@@ -45,8 +55,8 @@ function App() {
             </div>
           </div>
           <div className="content__playlist playlist">
-            <PlaylistItems/>
-            <PlaylistItems/>
+            {loading ? <SkeletonTrack/> : <PlaylistItems/>}
+
           </div>
         </div>
       </div>

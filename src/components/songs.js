@@ -7,6 +7,9 @@ const Songs = [
   {title: "Eyes on Fire", subtitle: "(Zeds Dead Remix)", author:"lue Foundation, Zeds Dead", id: 6, album:"Eyes on Fire", length:"5:20" },
   {title: "Mucho Bien", subtitle: "(Hi Profile Remix)", author:"HYBIT, Mr. Black, Offer Nissim, Hi Profile", id: 7, album:"Mucho Bien", length:"3:41" },
   {title: "Knives n Cherries", subtitle: "", author:"minthaze", id: 8, album:"Captivating", length:"1:36" },
+  {title: "Eyes on Fire", subtitle: "(Zeds Dead Remix)", author:"lue Foundation, Zeds Dead", id: 9, album:"Eyes on Fire", length:"5:20" },
+  {title: "Mucho Bien", subtitle: "(Hi Profile Remix)", author:"HYBIT, Mr. Black, Offer Nissim, Hi Profile", id: 10, album:"Mucho Bien", length:"3:41" },
+  {title: "Knives n Cherries", subtitle: "", author:"minthaze", id: 11, album:"Captivating", length:"1:36" },
 ]
 
 
