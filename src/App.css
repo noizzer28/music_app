@@ -883,3 +883,26 @@ body {
   height: 150px;
   background-color: #202020;
 }
+
+.filter__modal {
+  position: absolute;
+  width: 248px;
+  max-height: 305px;
+  background-color: #313131;
+  padding: 34px;
+  overflow-y: scroll;
+  border-radius: 10px;
+
+}
+.button-author {
+  position: relative;
+}
+.author__list {
+  margin-bottom: 25px;
+  transition: all 0.3s;
+}
+.author__list:hover {
+  text-decoration: underline;
+  color: #ad61ff;
+  cursor: pointer;
+}
