@@ -12,6 +12,7 @@ class PlaylistFilter extends React.Component {
         }
     }
     handler = () => {
+        console.log('click')
         this.setState({
             isActive: !this.state.isActive
         })
@@ -32,11 +33,9 @@ class PlaylistFilter extends React.Component {
 
         return <div className="centerblock__filter filter">
         <div className="filter__title">Искать по:</div>
-        <div className="filter__button button-author _btn-text">исполнителю</div>
+        <div className="filter__button button-author _btn-text" onClick={this.handler} >исполнителю</div>
         <div className="filter__author">
-            <ul className="filter__modal">
-            {this.renderAuthors()}
-            </ul>
+        {this.state.isActive ? <ul className="filter__modal">{this.renderAuthors()}</ul> : ''}
         </div>
         <div className="filter__button button-year _btn-text">году выпуска</div>
         <div className="filter__button button-genre _btn-text">жанру</div>

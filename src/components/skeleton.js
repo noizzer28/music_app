@@ -5,9 +5,9 @@ import 'react-loading-skeleton/dist/skeleton.css'
 const SkeletonTrack = () => {
   const SkeletonTracks = []
   for (let i = 0; i < 19; i++) {
-    SkeletonTracks.push(<SkeletonTheme baseColor="#202020" highlightColor="#444">
+    SkeletonTracks.push(<SkeletonTheme baseColor="#202020" key={i} highlightColor="#444">
     <div className='content__title'>
-      <div className="track__title-image">
+      <div className="track__title-image" >
         <Skeleton/>
       </div>
             <div className="track__album">

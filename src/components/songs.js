@@ -1,4 +1,4 @@
-const Songs = [
+export const Tracks = [
   {title: "Guilt", subtitle: "", author:"Nero", id: 1, album:"Welcome Reality", length:"4:44" },
   {title: "Elektro", subtitle: "", author:"Dynoro, Outwork, Mr. Gee", id: 2, album:"Elektro", length:"2:22" },
   {title: "I’m Fire", subtitle: "", author:"Ali Bakgor", id: 3, album:"I’m Fire", length:"2:24" },
@@ -14,7 +14,7 @@ const Songs = [
 
 
 const PlaylistItems = () => {
-  const playList = Songs.map(song => 
+  const playList = Tracks.map(song => 
     <div className="playlist__item" key={song.id}>
     <div className="playlist__track track">
       <div className="track__title">
@@ -42,11 +42,8 @@ const PlaylistItems = () => {
     </div>
   </div>
   )
-  console.log(playList)
-
   return[playList]
 }
-
 
 
 export default PlaylistItems
