@@ -1,5 +1,8 @@
 import { Tracks } from "./songs"
 import React from "react";
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
+
 
 
 class PlaylistFilter extends React.Component {
@@ -72,9 +75,7 @@ class PlaylistFilter extends React.Component {
         return <div className="centerblock__filter filter">
         <div className="filter__title">Искать по:</div>
         <div className="filter__button button-author _btn-text" onClick={this.handlerAuthor} >исполнителю</div>
-        <div className="filter__author">
-        {this.state.isActiveAuthor ? <ul className="filter__modal filter__author">{this.renderAuthors()}</ul> : ''}
-        </div>
+        {this.state.isActiveAuthor ? <ul className="filter__modal filter__author"><SimpleBar forceVisible="y"    style={{ height: '300px' }}>{this.renderAuthors()}</SimpleBar></ul>: ''}
         <div className="filter__button button-year _btn-text" onClick={this.handlerYear}>году выпуска</div>
         {this.state.isActiveYear ? <ul className="filter__modal filter__year">{this.renderYears()}</ul> : ''}
         <div className="filter__button button-genre _btn-text" onClick={this.handlerGenre}>жанру</div>
