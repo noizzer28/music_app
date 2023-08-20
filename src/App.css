@@ -885,24 +885,44 @@ body {
 }
 
 .filter__modal {
-  position: absolute;
   width: 248px;
   max-height: 305px;
   background-color: #313131;
   padding: 34px;
-  overflow-y: scroll;
   border-radius: 10px;
+  left: 0
+}
 
-}
-.button-author {
-  position: relative;
-}
 .filter__list {
   margin-bottom: 25px;
   transition: all 0.3s;
+}
+.filter__list:last-child {
+  margin-bottom: 0;
 }
 .filter__list:hover {
   text-decoration: underline;
   color: #ad61ff;
   cursor: pointer;
 }
+
+
+.filter__author {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 8%;
+}
+.centerblock__filter {
+  position: relative;
+} 
+.filter__genre {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 35%;
+}
+.filter__year {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 22%;
+}
+

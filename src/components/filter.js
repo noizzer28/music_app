@@ -2,7 +2,6 @@ import { Tracks } from "./songs"
 import React from "react";
 
 
-
 class PlaylistFilter extends React.Component {
 
     constructor () {
@@ -14,7 +13,6 @@ class PlaylistFilter extends React.Component {
         }
     }
     handlerAuthor = () => {
-        console.log('click')
         this.setState({
             isActiveAuthor: !this.state.isActiveAuthor,
             isActiveYear: false,
@@ -22,7 +20,6 @@ class PlaylistFilter extends React.Component {
         })
     }
     handlerYear = () => {
-        console.log("click")
         this.setState({
             isActiveAuthor: false,
             isActiveYear: !this.state.isActiveYear,
@@ -30,7 +27,6 @@ class PlaylistFilter extends React.Component {
         })
     }
     handlerGenre = () => {
-        console.log("click")
         this.setState({
             isActiveAuthor: false,
             isActiveYear: false,
@@ -77,12 +73,12 @@ class PlaylistFilter extends React.Component {
         <div className="filter__title">Искать по:</div>
         <div className="filter__button button-author _btn-text" onClick={this.handlerAuthor} >исполнителю</div>
         <div className="filter__author">
-        {this.state.isActiveAuthor ? <ul className="filter__modal">{this.renderAuthors()}</ul> : ''}
+        {this.state.isActiveAuthor ? <ul className="filter__modal filter__author">{this.renderAuthors()}</ul> : ''}
         </div>
         <div className="filter__button button-year _btn-text" onClick={this.handlerYear}>году выпуска</div>
-        {this.state.isActiveYear ? <ul className="filter__modal">{this.renderYears()}</ul> : ''}
+        {this.state.isActiveYear ? <ul className="filter__modal filter__year">{this.renderYears()}</ul> : ''}
         <div className="filter__button button-genre _btn-text" onClick={this.handlerGenre}>жанру</div>
-        {this.state.isActiveGenre ? <ul className="filter__modal">{this.renderGenre()}</ul> : ''}
+        {this.state.isActiveGenre ? <ul className="filter__modal filter__genre">{this.renderGenre()}</ul> : ''}
         
     </div>
     }
