@@ -897,11 +897,11 @@ body {
 .button-author {
   position: relative;
 }
-.author__list {
+.filter__list {
   margin-bottom: 25px;
   transition: all 0.3s;
 }
-.author__list:hover {
+.filter__list:hover {
   text-decoration: underline;
   color: #ad61ff;
   cursor: pointer;
