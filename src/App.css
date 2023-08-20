@@ -886,11 +886,11 @@ body {
 
 .filter__modal {
   width: 248px;
-  max-height: 305px;
+  /* max-height: 305px; */
   background-color: #313131;
   padding: 34px;
   border-radius: 10px;
-  left: 0
+
 }
 
 .filter__list {
