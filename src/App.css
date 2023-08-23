@@ -877,3 +877,52 @@ body {
 .volume__progress-line {
   width: 109px;
 }
+
+.skeleton {
+  width: 250px;
+  height: 150px;
+  background-color: #202020;
+}
+
+.filter__modal {
+  width: 248px;
+  /* max-height: 305px; */
+  background-color: #313131;
+  padding: 34px;
+  border-radius: 10px;
+
+}
+
+.filter__list {
+  margin-bottom: 25px;
+  transition: all 0.3s;
+}
+.filter__list:last-child {
+  margin-bottom: 0;
+}
+.filter__list:hover {
+  text-decoration: underline;
+  color: #ad61ff;
+  cursor: pointer;
+}
+
+
+.filter__author {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 8%;
+}
+.centerblock__filter {
+  position: relative;
+} 
+.filter__genre {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 35%;
+}
+.filter__year {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 22%;
+}
+
