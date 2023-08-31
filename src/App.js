@@ -5,7 +5,7 @@ import { SideBar } from "./components/sidebar";
 import { Bar } from "./components/playBar";
 import SkeletonTrack from "./components/skeleton";
 import { useState, useEffect } from "react";
-import PlaylistFilter from "./components/filter";
+import PlaylistFilter from "./components/filter/filter";
 import * as S from "./app.styles"
 import { GlobalStyles } from "./globalstyles";
 

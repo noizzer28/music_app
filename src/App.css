@@ -85,17 +85,7 @@
 }
 
 .centerblock__filter {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-bottom: 51px;
+
 }
 
 .centerblock__content {
@@ -147,26 +137,14 @@
 }
 
 .filter__title {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  margin-right: 15px;
+
 }
 
 .filter__button {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  border: 1px solid #ffffff;
-  border-radius: 60px;
-  padding: 6px 20px;
+
 }
 
-.filter__button:not(:last-child) {
-  margin-right: 10px;
-}
+.filter__button
 
 .content__title {
 
@@ -719,44 +697,26 @@
 }
 
 .filter__modal {
-  width: 248px;
-  /* max-height: 305px; */
-  background-color: #313131;
-  padding: 34px;
-  border-radius: 10px;
 
 }
 
 .filter__list {
-  margin-bottom: 25px;
-  transition: all 0.3s;
+
 }
-.filter__list:last-child {
-  margin-bottom: 0;
-}
-.filter__list:hover {
-  text-decoration: underline;
-  color: #ad61ff;
-  cursor: pointer;
-}
+.filter__list
+.filter__list
 
 
 .filter__author {
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 8%;
+
 }
 .centerblock__filter {
-  position: relative;
+
 } 
 .filter__genre {
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 35%;
+
 }
 .filter__year {
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 22%;
+
 }
 
