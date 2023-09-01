@@ -1,3 +1,16 @@
+import styled  from "styled-components";
+
+
+const Styled = styled.div``
+// const Styled = styled.div``
+// const Styled = styled.div``
+// const Styled = styled.div``
+// const Styled = styled.div``
+// const Styled = styled.div``
+// const Styled = styled.div``
+// const Styled = styled.div``
+// const Styled = styled.div``
+// const Styled = styled.div``
 export const Tracks = [
   {title: "Guilt", subtitle: "", author:"Nero", id: 1, album:"Welcome Reality", length:"4:44" },
   {title: "Elektro", subtitle: "", author:"Dynoro, Outwork, Mr. Gee", id: 2, album:"Elektro", length:"2:22" },

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
-import { Tracks } from "../songs";
+import { Tracks } from "../songs/songs";
 import * as S from "./filter.styles"
 
 const PlaylistFilter = () => {

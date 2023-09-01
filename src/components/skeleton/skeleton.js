@@ -1,6 +1,15 @@
 import Skeleton, { SkeletonTheme }  from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import styled  from "styled-components";
 
+const StyledContentTitle = styled.div``
+// const Styled = styled.div``
+// const Styled = styled.div``
+// const Styled = styled.div``
+// const Styled = styled.div``
+// const Styled = styled.div``
+// const Styled = styled.div``
+// const Styled = styled.div``
 
 const SkeletonTrack = () => {
   const SkeletonTracks = []
