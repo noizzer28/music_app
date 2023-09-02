@@ -3,9 +3,9 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { useEffect, useState } from 'react'
 import BarVolume from './barVolume'
 import BarPlayerControls from './barPlayerControls'
+import * as S from "./playBar.styles"
 
-
-export const BarPlayingTrack = () => {
+const BarPlayingTrack = () => {
   const [loading, setloading] = useState(true)
 
   useEffect(() => {
@@ -14,51 +14,51 @@ export const BarPlayingTrack = () => {
     }, 5000);
   })
     return(
-    <div className="player__track-play track-play">
-      <div className="track-play__contain">
-        <div className="track-play__image"> {loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> :           <svg className="track-play__svg" alt="music">
+    <S.TrackPlay>
+      <S.TrackPlayContainer>
+        <S.TrackPlayImg> {loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> :           <S.TrackPlaySvg alt="music">
             <use xlinkHref="./icons/sprite.svg#icon-note"></use>
-          </svg>}
+          </S.TrackPlaySvg>}
 
-        </div>
-        <div className="track-play__author">
-          <a className="track-play__author-link" href="http://">{loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> : "Ты та..."}</a>
-        </div>
-        <div className="track-play__album">
-          <a className="track-play__album-link" href="http://">{loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> : "Баста    >"}</a>
-        </div>
-      </div>
+        </S.TrackPlayImg>
+        <S.TrackPlayAuthor>
+          <S.TrackPlayAuthorLink href="http://">{loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> : "Ты та..."}</S.TrackPlayAuthorLink>
+        </S.TrackPlayAuthor>
+        <S.TrackPlayAlbum>
+          <S.TrackPlayAlbumLink href="http://">{loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> : "Баста    >"}</S.TrackPlayAlbumLink>
+        </S.TrackPlayAlbum>
+      </S.TrackPlayContainer>
   
-    <div className="track-play__like-dis">
-      <div className="track-play__like _btn-icon">
-        <svg className="track-play__like-svg" alt="like">
+    <S.TrackPlayLikeDis>
+      <S.TrackPlayLike className="_btn-icon">
+        <S.TrackPlayLikeSvg alt="like">
           <use xlinkHref="./icons/sprite.svg#icon-like"></use>
-        </svg>
-      </div>
-      <div className="track-play__dislike _btn-icon">
-        <svg className="track-play__dislike-svg" alt="dislike">
+        </S.TrackPlayLikeSvg>
+      </S.TrackPlayLike>
+      <S.TrackPlayDisike className="_btn-icon">
+        <S.TrackPlayDisLikeSvg alt="dislike">
           <use xlinkHref="./icons/sprite.svg#icon-dislike"></use>
-        </svg>
-      </div>
-    </div>
-  </div>)
+        </S.TrackPlayDisLikeSvg>
+      </S.TrackPlayDisike>
+    </S.TrackPlayLikeDis>
+  </S.TrackPlay>)
   }
   
   
   
   
 export  const Bar = () => {
-    return (<div className="bar">
-    <div className="bar__content">
-      <div className="bar__player-progress"></div>
-      <div className="bar__player-block">
-        <div className="bar__player player">
+    return (<S.BarContainer>
+    <S.BarContent>
+      <S.BarPlayerProgress></S.BarPlayerProgress>
+      <S.BarPlayerBlock>
+        <S.BarPlayer>
           <BarPlayerControls/>
           <BarPlayingTrack/>
-        </div>
+        </S.BarPlayer>
         <BarVolume/>
-      </div>
-    </div>
-  </div>)
+      </S.BarPlayerBlock>
+    </S.BarContent>
+  </S.BarContainer>)
   }
   
