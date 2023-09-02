@@ -1,8 +1,7 @@
-// import "./App.css";
 import PlaylistItems from  "./components/songs/songs"
 import  Nav from "./components/navigation/navigation"
 import { SideBar } from "./components/sidebar/sidebar";
-  import {Bar} from "./components/playBar/playBar";
+import {Bar} from "./components/playBar/playBar";
 import SkeletonTrack from "./components/skeleton/skeleton";
 import { useState, useEffect } from "react";
 import PlaylistFilter from "./components/filter/filter";
