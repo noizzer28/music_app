@@ -1,16 +1,4 @@
-import styled  from "styled-components";
-
-
-const Styled = styled.div``
-// const Styled = styled.div``
-// const Styled = styled.div``
-// const Styled = styled.div``
-// const Styled = styled.div``
-// const Styled = styled.div``
-// const Styled = styled.div``
-// const Styled = styled.div``
-// const Styled = styled.div``
-// const Styled = styled.div``
+import * as S from "./songs.styles"
 export const Tracks = [
   {title: "Guilt", subtitle: "", author:"Nero", id: 1, album:"Welcome Reality", length:"4:44" },
   {title: "Elektro", subtitle: "", author:"Dynoro, Outwork, Mr. Gee", id: 2, album:"Elektro", length:"2:22" },
@@ -28,32 +16,32 @@ export const Tracks = [
 
 const PlaylistItems = () => {
   const playList = Tracks.map(song => 
-    <div className="playlist__item" key={song.id}>
-    <div className="playlist__track track">
-      <div className="track__title">
-        <div className="track__title-image">
-          <svg className="track__title-svg" alt="music">
+    <S.PlaylistItem key={song.id}>
+    <S.PlaylistTrack>
+      <S.TrackTitle>
+        <S.TrackTitleImage>
+          <S.trackTitleSvg alt="music">
             <use xlinkHref="./icons/sprite.svg#icon-note"></use>
-          </svg>
-        </div>
+          </S.trackTitleSvg>
+        </S.TrackTitleImage>
         <div className="track__title-text" >
-          <a className="track__title-link" href="http://">{song.title} <span className="track__title-span">{song.subtitle}</span></a>
+        <S.TrackTitleLink href="http://">{song.title} <S.TrackTitleSpan>{song.subtitle}</S.TrackTitleSpan></S.TrackTitleLink>
         </div>
-      </div>
-      <div className="track__author">
-        <a className="track__author-link" href="http://">{song.author}</a>
-      </div>
-      <div className="track__album">
-        <a className="track__album-link" href="http://">{song.album}</a>
-      </div>
-      <div className="track__time">
-        <svg className="track__time-svg" alt="time">
+      </S.TrackTitle>
+      <S.TrackAuthor>
+        <S.TrackAuthorLink href="http://">{song.author}</S.TrackAuthorLink>
+      </S.TrackAuthor>
+      <S.TrackAlbum>
+        <S.TrackAlbumLink href="http://">{song.album}</S.TrackAlbumLink>
+      </S.TrackAlbum>
+      <div className="track__time _btn-icon">
+        <S.TrackTimeSvg alt="time">
           <use xlinkHref="./icons/sprite.svg#icon-like"></use>
-        </svg>  
-        <span className="track__time-text">{song.length}</span>
+        </S.TrackTimeSvg>  
+        <S.TrackTimeText>{song.length}</S.TrackTimeText>
       </div>
-    </div>
-  </div>
+    </S.PlaylistTrack>
+  </S.PlaylistItem>
   )
   return[playList]
 }
