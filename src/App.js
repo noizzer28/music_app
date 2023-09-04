@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 import PlaylistFilter from "./components/filter/filter";
 import * as S from "./app.styles"
 import { GlobalStyles } from "./globalstyles";
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
 
 
 function App() {
@@ -20,7 +22,7 @@ function App() {
   })
   return (  
     <>
-    <GlobalStyles/>
+<GlobalStyles/>
     <S.Wrapper>
   <S.Container>
     <S.Main>
@@ -38,6 +40,7 @@ function App() {
         </S.CenterblockSearch>
         <S.SenterblockHeader>Треки</S.SenterblockHeader>
         <PlaylistFilter/>
+
         <S.CenterblockContent>
           <S.ContentTitle>
             <S.PlaylistTitle_1>Трек</S.PlaylistTitle_1>
@@ -50,9 +53,12 @@ function App() {
             </S.PlaylistTitle_4>
           </S.ContentTitle>
           <S.ContentPlaylist>
-            {loading ? <SkeletonTrack/> : <PlaylistItems/>}
+            {loading ? <SkeletonTrack/> :         <SimpleBar forceVisible="y" style={{ height: '500px', maxWidth:"1120px"}}><PlaylistItems/>
+
+</SimpleBar>}
           </S.ContentPlaylist>
         </S.CenterblockContent>
+
       </S.MainSenterblock>
       <SideBar/>
     </S.Main>
