@@ -35,11 +35,12 @@ export const GlobalStyles = createGlobalStyle`
   
   html,
   body {
-    width: 100%;
-    height: 100%;
-    font-family: "StratosSkyeng", sans-serif;
-    color: #fff;
-  }
+  width: 100%;
+  height: 100%;
+  font-family: "StratosSkyeng", sans-serif;
+  color: #fff;
+  background-color: #181818;
+}
   @font-face {
     font-family: "StratosSkyeng";
     src: local("StratosSkyeng"), local("StratosSkyeng"),

@@ -6,7 +6,6 @@ import SkeletonTrack from "../../components/skeleton/skeleton";
 import { useState, useEffect } from "react";
 import PlaylistFilter from "../../components/filter/filter";
 import * as S from "./app.styles"
-import { GlobalStyles } from "../../globalstyles";
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 
@@ -22,7 +21,6 @@ function MainApp() {
   })
   return (  
     <>
-    <GlobalStyles/>
     <S.Wrapper>
   <S.Container>
     <S.Main>
@@ -52,9 +50,7 @@ function MainApp() {
             </S.PlaylistTitle_4>
           </S.ContentTitle>
           <S.ContentPlaylist>
-          {loading ? <SkeletonTrack/> :         <SimpleBar forceVisible="y" style={{ height: '500px', maxWidth:"1120px"}}><PlaylistItems/>
-
-</SimpleBar>}
+          {loading ? <SkeletonTrack/> :         <SimpleBar forceVisible="y" style={{ height: '500px', maxWidth:"1120px"}}><PlaylistItems/></SimpleBar>}
           </S.ContentPlaylist>
         </S.CenterblockContent>
       </S.MainSenterblock>

@@ -1,38 +1,21 @@
 import Skeleton, { SkeletonTheme }  from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import styled  from "styled-components";
+import * as S from "./skeleton.styles"
 
-const StyledContentTitle = styled.div``
-// const Styled = styled.div``
-// const Styled = styled.div``
-// const Styled = styled.div``
-// const Styled = styled.div``
-// const Styled = styled.div``
-// const Styled = styled.div``
-// const Styled = styled.div``
 
 const SkeletonTrack = () => {
   const SkeletonTracks = []
   for (let i = 0; i < 19; i++) {
     SkeletonTracks.push(<SkeletonTheme baseColor="#202020" key={i} highlightColor="#444">
-    <div className='content__title'>
-      <div className="track__title-image" >
+    <S.SkeletonWrap>
+      <S.SkeletonImg>
         <Skeleton/>
-      </div>
-            <div className="track__album">
-      <a className="track__album-link" href="http://"><Skeleton/></a>
-            </div>
-            <div className="track__album">
-      <a className="track__album-link" href="http://"><Skeleton/></a>
-            </div>
-            <div className="track__album">
-      <a className="track__album-link" href="http://"><Skeleton/></a>
-            </div>
-            <div className="track__time">
-    <svg className="track__time-svg" alt="time">
-    </svg>  
-  </div>
-    </div>
+      </S.SkeletonImg>
+      <S.Skeleton><Skeleton/></S.Skeleton>
+      <S.Skeleton><Skeleton/></S.Skeleton>
+      <S.Skeleton><Skeleton/></S.Skeleton>
+      <S.SkeletonWatch><Skeleton/></S.SkeletonWatch>
+    </S.SkeletonWrap>
 </SkeletonTheme>)}
         return SkeletonTracks
 }
