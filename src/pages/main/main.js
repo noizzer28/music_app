@@ -50,7 +50,7 @@ function MainApp() {
             </S.PlaylistTitle_4>
           </S.ContentTitle>
           <S.ContentPlaylist>
-          {loading ? <SkeletonTrack/> :         <SimpleBar forceVisible="y" style={{ height: '500px', maxWidth:"1120px"}}><PlaylistItems/></SimpleBar>}
+          {loading ? <SkeletonTrack/> :         <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}><PlaylistItems/></SimpleBar>}
           </S.ContentPlaylist>
         </S.CenterblockContent>
       </S.MainSenterblock>
