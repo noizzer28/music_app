@@ -22,17 +22,22 @@ function Nav() {
         <S.NavMenu>
           <S.MenuList>
             <S.MenuItem>
-              <S.MenuLink>
+              <S.MenuLink to="/" style={({ isActive }) => {
+    return {
+      color: isActive ? "#ad61ff" : "",
+      textDecoration: isActive ? "underline" : "",
+    };
+  }}>
                 Главное
               </S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink>
+              <S.MenuLink to='/favorites' activeClassName="isactive">
                 Мой плейлист
               </S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink>
+              <S.MenuLink to='/login' activeClassName="isactive">
                 Войти
               </S.MenuLink>
             </S.MenuItem>

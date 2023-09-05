@@ -1,4 +1,5 @@
 import styled  from "styled-components";
+import { Link } from "react-router-dom";
 
 export const MainSideBar = styled.div`
 max-width: 418px;
@@ -65,7 +66,7 @@ height: 150px;
 export const Skeleton = styled.div`  width: 250px;
 height: 150px;
 background-color: #202020;`
-export const SideBarLink = styled.a`
+export const SideBarLink = styled(Link)`
 width: 100%;
 height: 100%;`
 export const SideBarImg = styled.img`
