@@ -4,8 +4,6 @@ import * as S from "./sidebar.styled"
 import { PLAYLISTS } from './categories'
 
 export  const SideBar = ( ) => {
-  console.log(PLAYLISTS)
-  
   const [loading, setloading] = useState(true)
 
   useEffect(() => {
@@ -15,8 +13,7 @@ export  const SideBar = ( ) => {
   })
     return(       
          <S.MainSideBar>
-            {loading ? "" :     <S.SideBarPersonal>
-
+            {loading ? "" : <S.SideBarPersonal>
       <S.SideBarName>Sergey.Ivanov</S.SideBarName>
       <S.SideBarIcon>
         <svg alt="logout">

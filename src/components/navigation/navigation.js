@@ -32,12 +32,22 @@ function Nav() {
               </S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink to='/favorites' activeClassName="isactive">
+              <S.MenuLink to='/favorites' style={({ isActive }) => {
+    return {
+      color: isActive ? "#ad61ff" : "",
+      textDecoration: isActive ? "underline" : "",
+    };
+  }}>
                 Мой плейлист
               </S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink to='/login' activeClassName="isactive">
+              <S.MenuLink to='/login' style={({ isActive }) => {
+    return {
+      color: isActive ? "#ad61ff" : "",
+      textDecoration: isActive ? "underline" : "",
+    };
+  }}>
                 Войти
               </S.MenuLink>
             </S.MenuItem>
