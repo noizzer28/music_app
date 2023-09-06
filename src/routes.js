@@ -7,16 +7,17 @@ import { Category } from "./pages/category/category";
 import { NotFound } from "./pages/not-found/not-found";
 import { ProtectedRoute } from "./components/protected-routes/protected";
 
-export const AppRoutes = ({token}) => {
-    console.log(token)
+export const AppRoutes = ({token, setToken}) => {
+    const user = localStorage.getItem("token")
+
     return (
         <Routes>
-            <Route element={<ProtectedRoute  isAllowed={Boolean(token)}></ProtectedRoute>}>
+            <Route element={<ProtectedRoute  isAllowed={Boolean(user)}></ProtectedRoute>}>
                 <Route path="/" element={<MainApp/>}/>
                 <Route path="/favorites" element={<Favorites/>}/>
                 <Route path="/category/:id" element={<Category/>}/>
             </Route>
-            <Route path="/login" element={<Login/>}/>
+            <Route path="/login" element={<Login setToken={setToken}/>}/>
             <Route path="/authorisation" element={<Authorisation/>}/>   
             <Route path="*" element={<NotFound/ >} />
 

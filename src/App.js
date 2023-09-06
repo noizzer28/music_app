@@ -7,14 +7,11 @@ import { useState } from "react";
 
 function App() {
   const [token, setToken] = useState(null)
-  const handleLogin = () => {
-    setToken({token: 'someToken'})
-console.log(token)}
 
   return (
     <BrowserRouter>
         <GlobalStyles/>
-            <AppRoutes token={token}/>
+            <AppRoutes token={token} setToken={setToken}/>
     </BrowserRouter>
 
 
