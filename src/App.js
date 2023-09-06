@@ -1,13 +1,14 @@
-import "./App.css";
-import PlaylistItems from  "./components/songs"
-import  Nav from "./components/navigation"
-import { SideBar } from "./components/sidebar";
-import { Bar } from "./components/playBar";
-import SkeletonTrack from "./components/skeleton";
+import PlaylistItems from  "./components/songs/songs"
+import  Nav from "./components/navigation/navigation"
+import { SideBar } from "./components/sidebar/sidebar";
+import {Bar} from "./components/playBar/playBar";
+import SkeletonTrack from "./components/skeleton/skeleton";
 import { useState, useEffect } from "react";
-import PlaylistFilter from "./components/filter";
-
-
+import PlaylistFilter from "./components/filter/filter";
+import * as S from "./app.styles"
+import { GlobalStyles } from "./globalstyles";
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
 
 
 function App() {
@@ -19,47 +20,52 @@ function App() {
       setloading(false)
     }, 5000);
   })
-  return (    <div className="wrapper">
-  <div className="container">
-    <main className="main">
+  return (  
+    <>
+<GlobalStyles/>
+    <S.Wrapper>
+  <S.Container>
+    <S.Main>
       <Nav/>
-      <div className="main__centerblock centerblock">
-        <div className="centerblock__search search">
-          <svg className="search__svg">
+      <S.MainSenterblock>
+        <S.CenterblockSearch>
+          <S.Search>
             <use xlinkHref="./icons/sprite.svg#icon-search"></use>
-          </svg>
-          <input
-            className="search__text"
+          </S.Search>
+          <S.InputSearch
             type="search"
             placeholder="Поиск"
             name="search"
           />
-        </div>
-        <h2 className="centerblock__h2">Треки</h2>
+        </S.CenterblockSearch>
+        <S.SenterblockHeader>Треки</S.SenterblockHeader>
         <PlaylistFilter/>
-        <div className="centerblock__content">
-          <div className="content__title playlist-title">
-            <div className="playlist-title__col col01">Трек</div>
-            <div className="playlist-title__col col02">ИСПОЛНИТЕЛЬ</div>
-            <div className="playlist-title__col col03">АЛЬБОМ</div>
-            <div className="playlist-title__col col04">
-              <svg className="playlist-title__svg" alt="time">
-                <use xlinkHref="./icons/sprite.svg#icon-watch"></use>
-              </svg>
-            </div>
-          </div>
-          <div className="content__playlist playlist">
-            {loading ? <SkeletonTrack/> : <PlaylistItems/>}
 
-          </div>
-        </div>
-      </div>
+        <S.CenterblockContent>
+          <S.ContentTitle>
+            <S.PlaylistTitle_1>Трек</S.PlaylistTitle_1>
+            <S.PlaylistTitle_2>ИСПОЛНИТЕЛЬ</S.PlaylistTitle_2>
+            <S.PlaylistTitle_3>АЛЬБОМ</S.PlaylistTitle_3>
+            <S.PlaylistTitle_4>
+              <S.PlayListSvg alt="time">
+                <use xlinkHref="./icons/sprite.svg#icon-watch"></use>
+              </S.PlayListSvg>
+            </S.PlaylistTitle_4>
+          </S.ContentTitle>
+          <S.ContentPlaylist>
+            {loading ? <SkeletonTrack/> :         <SimpleBar forceVisible="y" style={{ height: '500px', maxWidth:"1120px"}}><PlaylistItems/>
+
+</SimpleBar>}
+          </S.ContentPlaylist>
+        </S.CenterblockContent>
+
+      </S.MainSenterblock>
       <SideBar/>
-    </main>
+    </S.Main>
     <Bar/>
-    <footer className="footer"></footer>
-  </div>
-</div>)
+  </S.Container>
+</S.Wrapper>
+</>)
 }
 
 

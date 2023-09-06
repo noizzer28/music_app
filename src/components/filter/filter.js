@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
-import { Tracks } from "./songs";
+import { Tracks } from "../songs/songs";
+import * as S from "./filter.styles"
 
 const PlaylistFilter = () => {
     const [isActiveAuthor, setIsActiveAuthor] = useState(false);
@@ -28,46 +29,46 @@ const PlaylistFilter = () => {
 
     const renderAuthors = () => {
         return Tracks.map((track) => (
-            <li key={track.id} className="filter__list">
+            <S.FilterList key={track.id}>
                 {track.author}
-            </li>
+            </S.FilterList>
         ));
     };
 
     const renderYears = () => {
         const years = ["1990-2000", "2001-2010", "2011-2020", "2020+"];
         return years.map((year, index) => (
-            <li key={index} className="filter__list">
+            <S.FilterList key={index}>
                 {year}
-            </li>
+            </S.FilterList>
         ));
     };
 
     const renderGenre = () => {
         const genres = ["Rock", "Pop", "RnB", "Jazz", "Hip-Hop"];
         return genres.map((genre, index) => (
-            <li key={index} className="filter__list">
+            <S.FilterList key={index}>
                 {genre}
-            </li>
+            </S.FilterList>
         ));
     };
 
     return (
-        <div className="centerblock__filter filter">
-            <div className="filter__title">Искать по:</div>
-            <div className="filter__button button-author _btn-text" onClick={handleAuthor}>исполнителю</div>
+        <S.CenterblockFilter>
+            <S.FilterTitle>Искать по:</S.FilterTitle>
+            <S.FilterButton className="_btn-text" onClick={handleAuthor}>исполнителю</S.FilterButton>
             {isActiveAuthor && (
-                <ul className="filter__modal filter__author">
+                <S.FilterAuthor>
                     <SimpleBar forceVisible="y" style={{ height: '300px' }}>
                         {renderAuthors()}
                     </SimpleBar>
-                </ul>
+                </S.FilterAuthor>
             )}
-            <div className="filter__button button-year _btn-text" onClick={handleYear}>году выпуска</div>
-            {isActiveYear && <ul className="filter__modal filter__year">{renderYears()}</ul>}
-            <div className="filter__button button-genre _btn-text" onClick={handleGenre}>жанру</div>
-            {isActiveGenre && <ul className="filter__modal filter__genre">{renderGenre()}</ul>}
-        </div>
+            <S.FilterButton className="_btn-text" onClick={handleYear}>году выпуска</S.FilterButton>
+            {isActiveYear && <S.FilterYear>{renderYears()}</S.FilterYear>}
+            <S.FilterButton className="_btn-text" onClick={handleGenre}>жанру</S.FilterButton>
+            {isActiveGenre && <S.FilterGenre>{renderGenre()}</S.FilterGenre>}
+        </S.CenterblockFilter>
     );
 };
 
