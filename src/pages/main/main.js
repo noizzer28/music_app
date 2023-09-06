@@ -10,12 +10,12 @@ import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 
 
-function MainApp() {
+function MainApp({setToken}) {
 
   const [loading, setloading] = useState(true)
 
   useEffect(() => {
-    setTimeout(() => {
+    setTimeout(() => {  
       setloading(false)
     }, 2000);
   })
@@ -54,7 +54,7 @@ function MainApp() {
           </S.ContentPlaylist>
         </S.CenterblockContent>
       </S.MainSenterblock>
-      <SideBar/>
+      <SideBar setToken={setToken}/>
     </S.Main>
     <Bar/>
   </S.Container>

@@ -3,8 +3,12 @@ import { useEffect, useState } from 'react'
 import * as S from "./sidebar.styled"
 import { PLAYLISTS } from './categories'
 
-export  const SideBar = ( ) => {
+export  const SideBar = ( {setToken} ) => {
   const [loading, setloading] = useState(true)
+  const handleLogout = () => {
+    localStorage.clear()
+    setToken({token: null})
+  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -15,7 +19,7 @@ export  const SideBar = ( ) => {
          <S.MainSideBar>
             {loading ? "" : <S.SideBarPersonal>
       <S.SideBarName>Sergey.Ivanov</S.SideBarName>
-      <S.SideBarIcon>
+      <S.SideBarIcon onClick={handleLogout}>
         <svg alt="logout">
           <use xlinkHref="./icons/sprite.svg#logout"></use>
         </svg>
