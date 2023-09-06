@@ -37,9 +37,6 @@ export const Login = ({setToken}) => {
             <div>
                 <Link to="/authorisation">Зарегистрироваться</Link>
             </div>
-            <div>
-                <StyledLinkBtn to="/">К списку треков</StyledLinkBtn>
-            </div>
         </div>
     )
 }
