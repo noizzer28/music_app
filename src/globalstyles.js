@@ -7,7 +7,10 @@ export const GlobalStyles = createGlobalStyle`
     padding: 0;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-  }
+  }:active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
   
   *:before,
   *:after {
