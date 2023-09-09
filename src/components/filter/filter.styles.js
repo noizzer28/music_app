@@ -35,6 +35,7 @@ width: 248px;
 background-color: #313131;
 padding: 34px;
 border-radius: 10px;
+z-index: 2;
 `
 export const FilterAuthor = styled(FilterModal)`
 position: absolute;

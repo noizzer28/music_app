@@ -1,23 +1,25 @@
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useEffect, useState } from 'react'
 import * as S from "./sidebar.styled"
+import { PLAYLISTS } from './categories'
 
-export  const SideBar = () => {
-
-  
+export  const SideBar = ( {setToken} ) => {
   const [loading, setloading] = useState(true)
+  const handleLogout = () => {
+    localStorage.clear()
+    setToken({token: null})
+  }
 
   useEffect(() => {
     setTimeout(() => {
       setloading(false)
-    }, 5000);
+    }, 2000);
   })
     return(       
          <S.MainSideBar>
-            {loading ? "" :     <S.SideBarPersonal>
-
+            {loading ? "" : <S.SideBarPersonal>
       <S.SideBarName>Sergey.Ivanov</S.SideBarName>
-      <S.SideBarIcon>
+      <S.SideBarIcon onClick={handleLogout}>
         <svg alt="logout">
           <use xlinkHref="./icons/sprite.svg#logout"></use>
         </svg>
@@ -26,34 +28,19 @@ export  const SideBar = () => {
 
     <S.SidebarBlock>
       <S.SideBarList>
-
-        <S.SidebarItem>
-        {loading ? <S.Skeleton></S.Skeleton> : <S.SideBarLink href="#">
-            <S.SideBarImg
-              src="./playlist01.png"
-              alt="day's playlist"
-            />
-          </S.SideBarLink>    }
-
-        </S.SidebarItem>
-        <S.SidebarItem>
-        {loading ? <S.Skeleton></S.Skeleton> :
-          <S.SideBarLink href="#">
-            <S.SideBarImg
-              src="./playlist02.png"
-              alt="day's playlist"
-            />
-          </S.SideBarLink>}
-        </S.SidebarItem>
-        <S.SidebarItem>
-        {loading ? <S.Skeleton></S.Skeleton> :
-          <S.SideBarLink href="#">
-            <S.SideBarImg
-              src="./playlist03.png"
-              alt="day's playlist"
-            />
-          </S.SideBarLink>}
-        </S.SidebarItem>
+      {
+        PLAYLISTS.map((playlist) => (
+          <S.SidebarItem key={playlist.id}>
+          {loading ? <S.Skeleton></S.Skeleton> : <S.SideBarLink to={`/category/${playlist.id}`} >
+              <S.SideBarImg
+                src={playlist.image}
+                alt={playlist.Playlist}
+              />
+            </S.SideBarLink>}
+  
+          </S.SidebarItem>
+        ))
+      }
       </S.SideBarList>
     </S.SidebarBlock>
   </S.MainSideBar>)

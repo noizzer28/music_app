@@ -22,17 +22,32 @@ function Nav() {
         <S.NavMenu>
           <S.MenuList>
             <S.MenuItem>
-              <S.MenuLink>
+              <S.MenuLink to="/" style={({ isActive }) => {
+    return {
+      color: isActive ? "#ad61ff" : "",
+      textDecoration: isActive ? "underline" : "",
+    };
+  }}>
                 Главное
               </S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink>
+              <S.MenuLink to='/favorites' style={({ isActive }) => {
+    return {
+      color: isActive ? "#ad61ff" : "",
+      textDecoration: isActive ? "underline" : "",
+    };
+  }}>
                 Мой плейлист
               </S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink>
+              <S.MenuLink to='/login' style={({ isActive }) => {
+    return {
+      color: isActive ? "#ad61ff" : "",
+      textDecoration: isActive ? "underline" : "",
+    };
+  }}>
                 Войти
               </S.MenuLink>
             </S.MenuItem>
