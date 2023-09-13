@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react"
-import { getTracks } from "../../api"
+
 import * as S from "./tracks.styles"
 import { min } from "lodash"
 export const Tracks = [
@@ -17,7 +16,7 @@ export const Tracks = [
 ]
 
 
-const PlaylistItems = ({setPlayBar, isPlayBar}) => {
+const PlaylistItems = ({setPlayBar, tracks}) => {
 
   const secondsToMinutes = (time) => {
     const minutes = Math.floor(time / 60)
@@ -26,21 +25,15 @@ const PlaylistItems = ({setPlayBar, isPlayBar}) => {
   }
 
 
-  const [tracks, setTracks] = useState([])
-
-  useEffect(()=> {
-    getTracks().then((tracks) => setTracks(tracks))
-    console.log("useEffect")
-  },[])
-
   const handlePlay = () => {
     setPlayBar(true)
   }
 
 
+
   const playList = tracks.map(song => 
     <S.PlaylistItem key={song.id}>
-    <S.PlaylistTrack onClick={handlePlay}>
+    <S.PlaylistTrack>
       <S.TrackTitle>
         <S.TrackTitleImage>
           <S.trackTitleSvg alt="music">
@@ -48,7 +41,7 @@ const PlaylistItems = ({setPlayBar, isPlayBar}) => {
           </S.trackTitleSvg>
         </S.TrackTitleImage>
         <div className="track__title-text" >
-        <S.TrackTitleLink href="#">{song.name} <S.TrackTitleSpan>{song.subtitle}</S.TrackTitleSpan></S.TrackTitleLink>
+        <S.TrackTitleLink href="#" onClick={handlePlay}><audio src={song.track_file} controls preload="metadata"></audio>{song.name} <S.TrackTitleSpan>{song.subtitle}</S.TrackTitleSpan></S.TrackTitleLink>
         </div>
       </S.TrackTitle>
       <S.TrackAuthor>

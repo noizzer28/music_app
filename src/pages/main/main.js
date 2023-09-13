@@ -8,21 +8,29 @@ import PlaylistFilter from "../../components/filter/filter";
 import * as S from "./app.styles"
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
+import { getTracks } from "../../api"
 
 
 function MainApp({setToken}) {
 
-  const [loading, setloading] = useState(true)
+  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    setTimeout(() => {  
-      setloading(false)
-    }, 2000);
+
+  useEffect(()=> {
+  getTracks()
+    .then((tracks) => setTracks(tracks))
+      .then(()=> {
+        setLoading(false)
   })
+  },[])
 
   const [isPlayBar, setPlayBar] = useState(false)
 
  
+  const [tracks, setTracks] = useState([])
+
+
+
   return (  
     <>
     <S.Wrapper>
@@ -54,7 +62,8 @@ function MainApp({setToken}) {
             </S.PlaylistTitle_4>
           </S.ContentTitle>
           <S.ContentPlaylist>
-          {loading ? <SkeletonTrack/> : <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}><PlaylistItems setPlayBar={setPlayBar} isPlayBar={isPlayBar}/></SimpleBar>}
+          {loading ? <SkeletonTrack/> : <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}>
+            <PlaylistItems setPlayBar={setPlayBar} setTracks={setTracks} tracks={tracks} setLoading={setLoading}/></SimpleBar>}
           </S.ContentPlaylist>
         </S.CenterblockContent>
       </S.MainSenterblock>  
