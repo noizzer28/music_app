@@ -4,7 +4,7 @@ import 'simplebar-react/dist/simplebar.min.css';
 import { Tracks } from "../tracks/tracks";
 import * as S from "./filter.styles"
 
-const PlaylistFilter = () => {
+const PlaylistFilter = ({tracks}) => {
     const [isActiveAuthor, setIsActiveAuthor] = useState(false);
     const [isActiveYear, setIsActiveYear] = useState(false);
     const [isActiveGenre, setIsActiveGenre] = useState(false);
@@ -28,11 +28,14 @@ const PlaylistFilter = () => {
     };
 
     const renderAuthors = () => {
-        return Tracks.map((track) => (
-            <S.FilterList key={track.id}>
-                {track.author}
-            </S.FilterList>
-        ));
+        const authorList = tracks.map((track) => {
+            if (track.author !== "-") {
+                return <S.FilterList key={track.id}>
+                        {track.author}
+                    </S.FilterList>
+            }
+        })
+        return authorList
     };
 
     const renderYears = () => {

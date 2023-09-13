@@ -20,13 +20,15 @@ function MainApp({setToken}) {
   getTracks()
     .then((tracks) => setTracks(tracks))
       .then(()=> {
+        console.log(tracks)
         setLoading(false)
   })
   },[])
 
   const [isPlayBar, setPlayBar] = useState(false)
 
- 
+  const [currentTrack, setCurrentTrack] = useState(null)
+
   const [tracks, setTracks] = useState([])
 
 
@@ -49,7 +51,7 @@ function MainApp({setToken}) {
           />
         </S.CenterblockSearch>
         <S.SenterblockHeader>Треки</S.SenterblockHeader>
-        <PlaylistFilter/>
+        <PlaylistFilter tracks={tracks}/>
         <S.CenterblockContent>
           <S.ContentTitle>
             <S.PlaylistTitle_1>Трек</S.PlaylistTitle_1>
@@ -63,7 +65,7 @@ function MainApp({setToken}) {
           </S.ContentTitle>
           <S.ContentPlaylist>
           {loading ? <SkeletonTrack/> : <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}>
-            <PlaylistItems setPlayBar={setPlayBar} setTracks={setTracks} tracks={tracks} setLoading={setLoading}/></SimpleBar>}
+            <PlaylistItems setPlayBar={setPlayBar} setTracks={setTracks} tracks={tracks} setLoading={setLoading} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack}/></SimpleBar>}
           </S.ContentPlaylist>
         </S.CenterblockContent>
       </S.MainSenterblock>  

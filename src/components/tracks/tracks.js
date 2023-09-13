@@ -1,6 +1,8 @@
 
+import { useState } from "react"
 import * as S from "./tracks.styles"
 import { min } from "lodash"
+import { getTrackById } from "../../api"
 export const Tracks = [
   {title: "Guilt", subtitle: "", author:"Nero", id: 1, album:"Welcome Reality", length:"4:44" },
   {title: "Elektro", subtitle: "", author:"Dynoro, Outwork, Mr. Gee", id: 2, album:"Elektro", length:"2:22" },
@@ -16,7 +18,7 @@ export const Tracks = [
 ]
 
 
-const PlaylistItems = ({setPlayBar, tracks}) => {
+const PlaylistItems = ({setPlayBar, tracks, currentTrack, setCurrentTrack}) => {
 
   const secondsToMinutes = (time) => {
     const minutes = Math.floor(time / 60)
@@ -25,10 +27,14 @@ const PlaylistItems = ({setPlayBar, tracks}) => {
   }
 
 
-  const handlePlay = () => {
+  const handlePlay = (id) => {
     setPlayBar(true)
+    if (currentTrack === id) {
+      setCurrentTrack(null);
+    } else{
+      setCurrentTrack(id);
+    }
   }
-
 
 
   const playList = tracks.map(song => 
@@ -41,7 +47,11 @@ const PlaylistItems = ({setPlayBar, tracks}) => {
           </S.trackTitleSvg>
         </S.TrackTitleImage>
         <div className="track__title-text" >
-        <S.TrackTitleLink href="#" onClick={handlePlay}><audio src={song.track_file} controls preload="metadata"></audio>{song.name} <S.TrackTitleSpan>{song.subtitle}</S.TrackTitleSpan></S.TrackTitleLink>
+        <S.TrackTitleLink href="#" onClick={() => handlePlay(song.id)}>
+          {currentTrack === song.id ? <S.TrackAudio src={song.track_file} controls preload="metadata" autoPlay></S.TrackAudio> : ""}
+            {song.name} 
+            <S.TrackTitleSpan>{song.subtitle}</S.TrackTitleSpan>
+        </S.TrackTitleLink>
         </div>
       </S.TrackTitle>
       <S.TrackAuthor>

@@ -8,6 +8,10 @@ export async function getTracks () {
     return data
 }
 
-// export async function getTrackById(id) {
-//     const response = await fetch("https://skypro-music-api.skyeng.tech/catalog/track/:id")
-// }
+export async function getTrackById(id) {
+    const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/` + id, {
+        method: "GET"
+    })
+    const data = await response.json()
+    return data
+}
