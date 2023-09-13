@@ -27,12 +27,12 @@ const PlaylistItems = ({setPlayBar, tracks, currentTrack, setCurrentTrack}) => {
   }
 
 
-  const handlePlay = (id) => {
+  const handlePlay = (song) => {
     setPlayBar(true)
-    if (currentTrack === id) {
+    if (currentTrack === song) {
       setCurrentTrack(null);
     } else{
-      setCurrentTrack(id);
+      setCurrentTrack(song);
     }
   }
 
@@ -47,8 +47,8 @@ const PlaylistItems = ({setPlayBar, tracks, currentTrack, setCurrentTrack}) => {
           </S.trackTitleSvg>
         </S.TrackTitleImage>
         <div className="track__title-text" >
-        <S.TrackTitleLink href="#" onClick={() => handlePlay(song.id)}>
-          {currentTrack === song.id ? <S.TrackAudio src={song.track_file} controls preload="metadata" autoPlay></S.TrackAudio> : ""}
+        <S.TrackTitleLink href="#" onClick={() => handlePlay(song)}>
+          {currentTrack === song ? <S.TrackAudio src={song.track_file} controls preload="metadata" autoPlay></S.TrackAudio> : ""}
             {song.name} 
             <S.TrackTitleSpan>{song.subtitle}</S.TrackTitleSpan>
         </S.TrackTitleLink>

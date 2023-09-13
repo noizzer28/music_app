@@ -13,17 +13,20 @@ import { getTracks } from "../../api"
 
 function MainApp({setToken}) {
 
-  const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
+    const [trackError, SetTrackError] = useState("")
 
-
-  useEffect(()=> {
-  getTracks()
-    .then((tracks) => setTracks(tracks))
-      .then(()=> {
-        console.log(tracks)
-        setLoading(false)
-  })
-  },[])
+    useEffect(()=> {
+    getTracks()
+      .then((tracks) => setTracks(tracks))
+        .then(()=> {
+          console.log(tracks)
+          setLoading(false)
+    }).catch((error) => {
+      setLoading(false)
+      alert(error)
+    })
+    },[])
 
   const [isPlayBar, setPlayBar] = useState(false)
 
@@ -64,14 +67,17 @@ function MainApp({setToken}) {
             </S.PlaylistTitle_4>
           </S.ContentTitle>
           <S.ContentPlaylist>
-          {loading ? <SkeletonTrack/> : <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}>
-            <PlaylistItems setPlayBar={setPlayBar} setTracks={setTracks} tracks={tracks} setLoading={setLoading} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack}/></SimpleBar>}
-          </S.ContentPlaylist>
+          {loading ? <SkeletonTrack/> :
+          <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}>
+            <PlaylistItems setPlayBar={setPlayBar} setTracks={setTracks} tracks={tracks} setLoading={setLoading} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack}/>
+            </SimpleBar>}
+          </S.ContentPlaylist> : <div>{trackError}</div>
+
         </S.CenterblockContent>
       </S.MainSenterblock>  
       <SideBar setToken={setToken}/>
     </S.Main>
-    {isPlayBar ? <Bar/> : ""} 
+    {isPlayBar ? <Bar currentTrack={currentTrack} loading={loading}/> : ""} 
   </S.Container>
 </S.Wrapper>
 </>)

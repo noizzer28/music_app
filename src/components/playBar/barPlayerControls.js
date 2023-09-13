@@ -1,4 +1,4 @@
-import * as S from "./barPlayercontrols.styles"
+import * as S from "./styles/barPlayercontrols.styles"
 
  const  BarPlayerControls = () =>  {
     return (<S.PlayerControls>

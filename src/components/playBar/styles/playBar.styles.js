@@ -48,11 +48,11 @@ justify-content: flex-start;`
 export const TrackPlay = styled.div`
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  // display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;`
+  // -ms-flex-direction: row;
+  // flex-direction: row;`
 export const TrackPlayContainer = styled.div`
 width: auto;
 display: -ms-grid;
