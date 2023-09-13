@@ -71,7 +71,7 @@ function MainApp({setToken}) {
           <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}>
             <PlaylistItems setPlayBar={setPlayBar} setTracks={setTracks} tracks={tracks} setLoading={setLoading} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack}/>
             </SimpleBar>}
-          </S.ContentPlaylist> : <div>{trackError}</div>
+          </S.ContentPlaylist>
 
         </S.CenterblockContent>
       </S.MainSenterblock>  
