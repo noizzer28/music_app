@@ -7,7 +7,7 @@ import { Category } from "./pages/category/category";
 import { NotFound } from "./pages/not-found/not-found";
 import { ProtectedRoute } from "./components/protected-routes/protected";
 
-export const AppRoutes = ({ setToken}) => {
+export const AppRoutes = ({ setToken }) => {
 
     return (
         <Routes>

@@ -1,4 +1,4 @@
-import PlaylistItems from  "../../components/songs/songs"
+import PlaylistItems from  "../../components/tracks/tracks"
 import  Nav from "../../components/navigation/navigation"
 import { SideBar } from "../../components/sidebar/sidebar";
 import {Bar} from "../../components/playBar/playBar";
@@ -19,6 +19,10 @@ function MainApp({setToken}) {
       setloading(false)
     }, 2000);
   })
+
+  const [isPlayBar, setPlayBar] = useState(false)
+
+ 
   return (  
     <>
     <S.Wrapper>
@@ -50,13 +54,13 @@ function MainApp({setToken}) {
             </S.PlaylistTitle_4>
           </S.ContentTitle>
           <S.ContentPlaylist>
-          {loading ? <SkeletonTrack/> :         <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}><PlaylistItems/></SimpleBar>}
+          {loading ? <SkeletonTrack/> : <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}><PlaylistItems setPlayBar={setPlayBar} isPlayBar={isPlayBar}/></SimpleBar>}
           </S.ContentPlaylist>
         </S.CenterblockContent>
-      </S.MainSenterblock>
+      </S.MainSenterblock>  
       <SideBar setToken={setToken}/>
     </S.Main>
-    <Bar/>
+    {isPlayBar ? <Bar/> : ""} 
   </S.Container>
 </S.Wrapper>
 </>)

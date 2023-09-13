@@ -1,4 +1,7 @@
-import * as S from "./songs.styles"
+import { useEffect, useState } from "react"
+import { getTracks } from "../../api"
+import * as S from "./tracks.styles"
+import { min } from "lodash"
 export const Tracks = [
   {title: "Guilt", subtitle: "", author:"Nero", id: 1, album:"Welcome Reality", length:"4:44" },
   {title: "Elektro", subtitle: "", author:"Dynoro, Outwork, Mr. Gee", id: 2, album:"Elektro", length:"2:22" },
@@ -14,10 +17,30 @@ export const Tracks = [
 ]
 
 
-const PlaylistItems = () => {
-  const playList = Tracks.map(song => 
+const PlaylistItems = ({setPlayBar, isPlayBar}) => {
+
+  const secondsToMinutes = (time) => {
+    const minutes = Math.floor(time / 60)
+    const seconds = time % 60
+    return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`
+  }
+
+
+  const [tracks, setTracks] = useState([])
+
+  useEffect(()=> {
+    getTracks().then((tracks) => setTracks(tracks))
+    console.log("useEffect")
+  },[])
+
+  const handlePlay = () => {
+    setPlayBar(true)
+  }
+
+
+  const playList = tracks.map(song => 
     <S.PlaylistItem key={song.id}>
-    <S.PlaylistTrack>
+    <S.PlaylistTrack onClick={handlePlay}>
       <S.TrackTitle>
         <S.TrackTitleImage>
           <S.trackTitleSvg alt="music">
@@ -25,20 +48,20 @@ const PlaylistItems = () => {
           </S.trackTitleSvg>
         </S.TrackTitleImage>
         <div className="track__title-text" >
-        <S.TrackTitleLink href="http://">{song.title} <S.TrackTitleSpan>{song.subtitle}</S.TrackTitleSpan></S.TrackTitleLink>
+        <S.TrackTitleLink href="#">{song.name} <S.TrackTitleSpan>{song.subtitle}</S.TrackTitleSpan></S.TrackTitleLink>
         </div>
       </S.TrackTitle>
       <S.TrackAuthor>
-        <S.TrackAuthorLink href="http://">{song.author}</S.TrackAuthorLink>
+        <S.TrackAuthorLink href="#">{song.author}</S.TrackAuthorLink>
       </S.TrackAuthor>
       <S.TrackAlbum>
-        <S.TrackAlbumLink href="http://">{song.album}</S.TrackAlbumLink>
+        <S.TrackAlbumLink href="#">{song.album}</S.TrackAlbumLink>
       </S.TrackAlbum>
       <div className="track__time _btn-icon">
         <S.TrackTimeSvg alt="time">
           <use xlinkHref="./icons/sprite.svg#icon-like"></use>
         </S.TrackTimeSvg>  
-        <S.TrackTimeText>{song.length}</S.TrackTimeText>
+        <S.TrackTimeText>{secondsToMinutes(song.duration_in_seconds)}</S.TrackTimeText>
       </div>
     </S.PlaylistTrack>
   </S.PlaylistItem>
