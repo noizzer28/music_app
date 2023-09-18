@@ -65,7 +65,8 @@ function MainApp({setToken}) {
              setLoading={setLoading} 
              currentTrack={currentTrack} 
              setCurrentTrack={setCurrentTrack}
-             setIsPlaying={setIsPlaying}/>
+             setIsPlaying={setIsPlaying}
+             isLooped={isLooped}/>
             </SimpleBar>}
           </S.ContentPlaylist>}
         </S.CenterblockContent>
@@ -78,6 +79,7 @@ function MainApp({setToken}) {
     isPlaying={isPlaying}
     setIsPlaying={setIsPlaying}
     audioRef={audioRef}
+    isLooped={isLooped}
     setLoop={setLoop}/> : ""} 
   </S.Container>
 </S.Wrapper>

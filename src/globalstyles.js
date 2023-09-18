@@ -73,7 +73,7 @@ export const GlobalStyles = createGlobalStyle`
     cursor: pointer;
   }
   
-  ._btn-icon:active svg {
+  ._btn-icon__active svg {
     fill: transparent;
     stroke: #ffffff;
     cursor: pointer;

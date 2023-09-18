@@ -1,6 +1,7 @@
 import * as S from "./styles/barPlayercontrols.styles"
+import { useState } from "react"
 
- const  BarPlayerControls = ({isPlaying, setIsPlaying, audioRef}) =>  {
+ const  BarPlayerControls = ({isPlaying, setIsPlaying, audioRef, isLooped, setLoop}) =>  {
 
         function handlePlaying() {
             if (isPlaying) {
@@ -11,6 +12,11 @@ import * as S from "./styles/barPlayercontrols.styles"
                 audioRef.current.play()
             }
         }
+
+        function handleLoop () {
+            setLoop(!isLooped)
+        }
+
         return (<S.PlayerControls>
         <S.PlayerBtnPrev className="_btn">
             <S.PlayerBtnPrevSvg alt="prev">
@@ -32,7 +38,7 @@ import * as S from "./styles/barPlayercontrols.styles"
         <use xlinkHref="./icons/sprite.svg#icon-next"></use>
         </S.PlayerBtnNextSvg>
     </S.PlayerBtnNext>
-    <S.PlayerBtnRepeat className="_btn-icon">
+    <S.PlayerBtnRepeat className={isLooped ? '_btn-icon _btn-icon__active' : '_btn-icon'}  onClick={handleLoop}>
         <S.PlayerBtnRepeatSvg alt="repeat">
         <use xlinkHref="/icons/sprite.svg#icon-repeat"></use>
         </S.PlayerBtnRepeatSvg>

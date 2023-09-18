@@ -18,7 +18,7 @@ import { getTrackById } from "../../api"
 // ]
 
 
-const PlaylistItems = ({setPlayBar, tracks, currentTrack, setCurrentTrack, audioRef, setIsPlaying}) => {
+const PlaylistItems = ({setPlayBar, tracks, currentTrack, setCurrentTrack, audioRef, setIsPlaying, isLooped}) => {
 
   const secondsToMinutes = (time) => {
     const minutes = Math.floor(time / 60)
@@ -50,7 +50,7 @@ const PlaylistItems = ({setPlayBar, tracks, currentTrack, setCurrentTrack, audio
         </S.TrackTitleImage>
         <div className="track__title-text" >
         <S.TrackTitleLink href="#" onClick={() => handlePlay(song)}>
-          {currentTrack === song ? <S.TrackAudio ref={audioRef} src={song.track_file} controls preload="metadata" autoPlay></S.TrackAudio> : ""}
+          {currentTrack === song ? <S.TrackAudio ref={audioRef} src={song.track_file} controls preload="metadata" autoPlay {...(isLooped ? { loop: true } : {})}></S.TrackAudio> : ""}
             {song.name} 
             <S.TrackTitleSpan>{song.subtitle}</S.TrackTitleSpan>
         </S.TrackTitleLink>
