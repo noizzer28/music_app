@@ -26,8 +26,7 @@ function MainApp({setToken}) {
           setLoading(false)
     }).catch((error) => {
       setLoading(false)
-      SetTrackError(error.message)
-      console.log(error.message)
+      SetTrackError(`Ошибка соединения с сервером: ${error.message}`)
       console.log(trackError)
     })
     },[])
@@ -52,12 +51,14 @@ function MainApp({setToken}) {
         <PlaylistFilter tracks={tracks}/>
         <S.CenterblockContent>
           <TracksTitle></TracksTitle>
-          <S.ContentPlaylist>
+          {trackError ? <div>{trackError}</div>  : 
+           <S.ContentPlaylist>
           {loading ? <SkeletonTrack/> :
           <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}>
             <PlaylistItems setPlayBar={setPlayBar} setTracks={setTracks} tracks={tracks} setLoading={setLoading} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack}/>
             </SimpleBar>}
-          </S.ContentPlaylist>
+          </S.ContentPlaylist>}
+
 
         </S.CenterblockContent>
       </S.MainSenterblock>  
