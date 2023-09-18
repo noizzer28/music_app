@@ -102,4 +102,5 @@ color: #696969;`
 
 export const TrackAudio = styled.audio`
 position: absolute;
+// display: none;
 `

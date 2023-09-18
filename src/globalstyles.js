@@ -61,6 +61,12 @@ export const GlobalStyles = createGlobalStyle`
     cursor: pointer;
   }
   
+  ._btn:hover svg {
+    fill: #696969;
+    stroke: #696969;
+    cursor: pointer;
+  }
+  
   ._btn-text:active {
     border-color: #ad61ff;
     color: #ad61ff;
@@ -70,6 +76,11 @@ export const GlobalStyles = createGlobalStyle`
   ._btn-icon:active svg {
     fill: transparent;
     stroke: #ffffff;
+    cursor: pointer;
+  }
+  ._btn:active svg {
+    fill: transparent;
+    stroke: #D9D9D9;
     cursor: pointer;
   }
   

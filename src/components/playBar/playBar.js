@@ -42,13 +42,13 @@ const BarPlayingTrack = ({currentTrack, loading}) => {
   
   
   
-export  const Bar = ({currentTrack, loading}) => {
+export  const Bar = ({currentTrack, loading, isPlaying, setIsPlaying, audioRef}) => {
     return (<S.BarContainer>
     <S.BarContent>
       <S.BarPlayerProgress></S.BarPlayerProgress>
       <S.BarPlayerBlock>
         <S.BarPlayer>
-          <BarPlayerControls/>
+          <BarPlayerControls isPlaying={isPlaying} setIsPlaying={setIsPlaying} audioRef={audioRef}/>
           <BarPlayingTrack loading={loading} currentTrack={currentTrack}/>
         </S.BarPlayer>
         <BarVolume/>
