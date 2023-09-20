@@ -13,7 +13,16 @@ import { Search } from "../../components/center/search"
 import { TracksTitle } from "../../components/center/title"
 
 
+export const secondsToMinutes = (time) => {
+  const minutes = Math.floor(time / 60)
+  const seconds = time % 60
+  return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`
+}
+
+
 function MainApp({setToken}) {
+
+
 
   const [loading, setLoading] = useState(true)
   const [trackError, SetTrackError] = useState("")
@@ -39,7 +48,12 @@ function MainApp({setToken}) {
 
   const [isLooped, setLoop] = useState(false)
 
+  const [duration, setDuration] = useState(0)
+
   const audioRef = useRef(null)
+
+
+
 
   return (  
 <>
@@ -66,7 +80,9 @@ function MainApp({setToken}) {
              currentTrack={currentTrack} 
              setCurrentTrack={setCurrentTrack}
              setIsPlaying={setIsPlaying}
-             isLooped={isLooped}/>
+             isLooped={isLooped}
+             duration={duration}
+             setDuration={setDuration}/>
             </SimpleBar>}
           </S.ContentPlaylist>}
         </S.CenterblockContent>
@@ -80,7 +96,9 @@ function MainApp({setToken}) {
     setIsPlaying={setIsPlaying}
     audioRef={audioRef}
     isLooped={isLooped}
-    setLoop={setLoop}/> : ""} 
+    setLoop={setLoop}
+    duration={duration}
+    setDuration={setDuration}/> : ""} 
   </S.Container>
 </S.Wrapper>
 </>)
