@@ -15,10 +15,7 @@ display: flex;
 -webkit-box-direction: normal;
 -ms-flex-direction: column;
 flex-direction: column;`
-export const BarPlayerProgress = styled.div`
-width: 100%;
-height: 5px;
-background: #2e2e2e;`
+
 export const BarPlayerBlock = styled.div`
 height: 73px;
 display: -webkit-box;

@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react'
 import BarVolume from './barVolume'
 import BarPlayerControls from './barPlayerControls'
 import * as S from "./styles/playBar.styles"
+import { BarProgress } from './barProgress'
 
 const BarPlayingTrack = ({currentTrack, loading}) => {
-
 
     return(
     <S.TrackPlay>
@@ -42,14 +42,29 @@ const BarPlayingTrack = ({currentTrack, loading}) => {
   
   
   
-export  const Bar = ({currentTrack, loading, isPlaying, setIsPlaying, audioRef, isLooped, setLoop}) => {
+export  const Bar = ({currentTrack, 
+  loading, 
+  isPlaying, 
+  setIsPlaying, 
+  audioRef, 
+  isLooped, 
+  setLoop,
+  duration,
+  setDuration}) => {
     return (<S.BarContainer>
     <S.BarContent>
-      <S.BarPlayerProgress></S.BarPlayerProgress>
+      <BarProgress 
+          duration={duration}
+          setDuration={setDuration}>
+      </BarProgress>
       <S.BarPlayerBlock>
         <S.BarPlayer>
-          <BarPlayerControls isPlaying={isPlaying} setIsPlaying={setIsPlaying} audioRef={audioRef}     isLooped={isLooped}
-    setLoop={setLoop}/>
+          <BarPlayerControls 
+          isPlaying={isPlaying} 
+          setIsPlaying={setIsPlaying} 
+          audioRef={audioRef}     
+          isLooped={isLooped}
+          setLoop={setLoop}/>
           <BarPlayingTrack loading={loading} currentTrack={currentTrack}/>
         </S.BarPlayer>
         <BarVolume/>
