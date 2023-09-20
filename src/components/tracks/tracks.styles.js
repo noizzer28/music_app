@@ -99,3 +99,7 @@ font-size: 16px;
 line-height: 24px;
 text-align: right;
 color: #696969;`
+
+export const TrackAudio = styled.audio`
+position: absolute;
+`

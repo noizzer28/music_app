@@ -1,4 +1,4 @@
-import * as S from "./barVolume.styles"
+import * as S from "./styles/barVolume.styles"
 const BarVolume = () => {
     return(<S.BarVolumeBlock>
     <S.VolumeContent>

@@ -3,29 +3,24 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { useEffect, useState } from 'react'
 import BarVolume from './barVolume'
 import BarPlayerControls from './barPlayerControls'
-import * as S from "./playBar.styles"
+import * as S from "./styles/playBar.styles"
 
-const BarPlayingTrack = () => {
-  const [loading, setloading] = useState(true)
+const BarPlayingTrack = ({currentTrack, loading}) => {
 
-  useEffect(() => {
-    setTimeout(() => {
-      setloading(false)
-    }, 5000);
-  })
+
     return(
     <S.TrackPlay>
       <S.TrackPlayContainer>
-        <S.TrackPlayImg> {loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> :           <S.TrackPlaySvg alt="music">
+        <S.TrackPlayImg> {loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> :          
+         <S.TrackPlaySvg alt="music">
             <use xlinkHref="./icons/sprite.svg#icon-note"></use>
           </S.TrackPlaySvg>}
-
         </S.TrackPlayImg>
         <S.TrackPlayAuthor>
-          <S.TrackPlayAuthorLink href="http://">{loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> : "Ты та..."}</S.TrackPlayAuthorLink>
+          <S.TrackPlayAuthorLink href="http://">{loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> : currentTrack.name}</S.TrackPlayAuthorLink>
         </S.TrackPlayAuthor>
         <S.TrackPlayAlbum>
-          <S.TrackPlayAlbumLink href="http://">{loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> : "Баста    >"}</S.TrackPlayAlbumLink>
+          <S.TrackPlayAlbumLink href="http://">{loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> : currentTrack.author}</S.TrackPlayAlbumLink>
         </S.TrackPlayAlbum>
       </S.TrackPlayContainer>
   
@@ -47,14 +42,14 @@ const BarPlayingTrack = () => {
   
   
   
-export  const Bar = () => {
+export  const Bar = ({currentTrack, loading}) => {
     return (<S.BarContainer>
     <S.BarContent>
       <S.BarPlayerProgress></S.BarPlayerProgress>
       <S.BarPlayerBlock>
         <S.BarPlayer>
           <BarPlayerControls/>
-          <BarPlayingTrack/>
+          <BarPlayingTrack loading={loading} currentTrack={currentTrack}/>
         </S.BarPlayer>
         <BarVolume/>
       </S.BarPlayerBlock>
