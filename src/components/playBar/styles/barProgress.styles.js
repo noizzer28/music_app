@@ -5,6 +5,7 @@ export const BarPlayerProgress = styled.div`
 `
 
 export const BarPlayerRange = styled.input`
+--progress-width: 0px;
 -webkit-appearance: none;
 background-color: #2E2E2E;
 height: 5px;
@@ -38,7 +39,7 @@ position: relative;
     height: 5px;
     position: absolute;
     background-color: #B672FF;
-    width: 100px;
+    width: var(--progress-width);
     top: 0;
     left: 0;    
     z-index: 2;
@@ -48,7 +49,9 @@ position: relative;
 export const ProgressDuration = styled.div`
 position: absolute;
 top: -15px;
-right: 0;
+right: 20px;
 color: #696969;
 margin-right: 10px
+font-size: 16px;
+line-height: 18px;
 `

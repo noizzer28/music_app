@@ -1,10 +1,11 @@
 import Skeleton, {SkeletonTheme} from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { useEffect, useState } from 'react'
-import BarVolume from './barVolume'
-import BarPlayerControls from './barPlayerControls'
-import * as S from "./styles/playBar.styles"
+import { useEffect, useState, useRef, useCallback } from 'react'
+import BarVolume from './volumeElement'
+import BarPlayerControls from './controls'
+import * as S from "./styles/audio.styles"
 import { BarProgress } from './barProgress'
+
 
 const BarPlayingTrack = ({currentTrack, loading}) => {
 
@@ -39,23 +40,62 @@ const BarPlayingTrack = ({currentTrack, loading}) => {
   </S.TrackPlay>)
   }
   
-  
-  
+
   
 export  const Bar = ({currentTrack, 
   loading, 
   isPlaying, 
   setIsPlaying, 
-  audioRef, 
   isLooped, 
   setLoop,
   duration,
-  setDuration}) => {
+  setDuration,
+  audioRef,
+  currentTime,
+  setCurrentTime,
+  playAnimationRef
+  }) => {
+
+    const progressRef = useRef()
+
+    // useEffect(() => {
+    //   function getTrackLength(track) {
+    //     track.addEventListener("loadedmetadata",  () => {
+    //       const seconds = Math.floor(audioRef.current.duration)
+    //       setDuration(audioRef.current.duration)
+    //       progressRef.current.max = seconds
+    //     });
+    //   }
+    //   getTrackLength(audioRef.current)
+    // здесь был audioRef?.current?.loadedmetadata, а также audioRef?.current?.readySate, 
+    // и их различные комбинации, но я все равно не понимаю почему компонент рендерится два раза
+    
+
+    // а потом я нашла более изящный способ:
+    const onLoadedMetadata = () => {
+      const seconds = Math.floor(audioRef.current.duration)
+      setDuration(audioRef.current.duration)
+      progressRef.current.max = seconds
+    };
+
+
+
     return (<S.BarContainer>
     <S.BarContent>
+    <S.TrackAudio 
+    onLoadedMetadata={onLoadedMetadata}  
+    ref={audioRef} 
+    src={currentTrack.track_file} 
+    autoPlay 
+    {...(isLooped ? { loop: true } : {})}>
+    </S.TrackAudio>
       <BarProgress 
           duration={duration}
-          setDuration={setDuration}>
+          setDuration={setDuration}
+          currentTime={currentTime}
+          setCurrentTime={setCurrentTime}
+          progressRef={progressRef}
+          audioRef={audioRef}>
       </BarProgress>
       <S.BarPlayerBlock>
         <S.BarPlayer>
@@ -64,7 +104,11 @@ export  const Bar = ({currentTrack,
           setIsPlaying={setIsPlaying} 
           audioRef={audioRef}     
           isLooped={isLooped}
-          setLoop={setLoop}/>
+          setLoop={setLoop}
+          playAnimationRef={playAnimationRef}
+          progressRef={progressRef}
+          setCurrentTime={setCurrentTime}
+          duration={duration}/>
           <BarPlayingTrack loading={loading} currentTrack={currentTrack}/>
         </S.BarPlayer>
         <BarVolume/>

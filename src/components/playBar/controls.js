@@ -1,5 +1,5 @@
-import * as S from "./styles/barPlayercontrols.styles"
-import { useState } from "react"
+import * as S from "./styles/controls.styles"
+import { useState, useCallback } from "react"
 
  const  BarPlayerControls = ({isPlaying, setIsPlaying, audioRef, isLooped, setLoop}) =>  {
 

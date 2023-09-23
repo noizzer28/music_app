@@ -51,12 +51,13 @@ width: 18px;
 height: 17px;
 fill: transparent;
 stroke: #4e4e4e;`
-export const TrackTitleLink = styled.a`
+export const TrackTitleLink = styled.span`
 font-style: normal;
 font-weight: 400;
 font-size: 16px;
 line-height: 24px;
-color: #ffffff;`
+color: #ffffff;
+cursor: pointer;`
 export const TrackTitleSpan = styled.span`
 font-style: normal;
 font-weight: 400;
@@ -77,15 +78,17 @@ font-weight: 400;
 font-size: 16px;
 line-height: 24px;
 color: #ffffff;
-text-align: left;`
+text-align: left;
+cursor: pointer;`
 export const TrackAlbum = styled.div`
 width: 245px;`
-export const TrackAlbumLink = styled.a`
+export const TrackAlbumLink = styled.span`
 font-style: normal;
 font-weight: 400;
 font-size: 16px;
 line-height: 24px;
-color: #696969;`
+color: #696969;
+cursor: pointer;`
 export const TrackTimeSvg = styled.svg`
 width: 14px;
 height: 12px;
@@ -102,5 +105,6 @@ color: #696969;`
 
 export const TrackAudio = styled.audio`
 position: absolute;
+right: 0; 
 // display: none;
 `
