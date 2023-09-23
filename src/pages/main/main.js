@@ -47,10 +47,11 @@ function MainApp({setToken}) {
   const [duration, setDuration] = useState(0)
 
   const [currentTime, setCurrentTime] = useState(0)
+
    
   const audioRef = useRef()
   const playAnimationRef = useRef();
-  
+
   return (  
 <>
 <S.Wrapper>

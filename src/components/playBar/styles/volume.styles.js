@@ -32,6 +32,40 @@ width: 13px;
 height: 18px;
 fill: transparent;` 
 export const VolumeProgress = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
 width: 109px;` 
 export const VolumeProgresLine = styled.input`
-width: 109px;` 
+--volume-width: 10px;
+-webkit-appearance: none;
+background-color: #797979;
+height: 2px;
+width: 109px;
+outline: none;
+position: relative;
+&::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    height: 12px;
+    width: 12px;
+    cursor: pointer;
+    animate: 0.2s;
+    background: rgba(0, 0, 0, 1);
+    border-radius: 50px;
+    border: 2px solid #fff;
+    opacity:1;
+    z-index: 10;
+
+}
+
+&::before {
+    content: "";
+    height: 2px;
+    position: absolute;
+    background-color: #fff;
+    width: var(--volume-width);
+    top: 0;
+    left: 0;    
+    z-index: 2;
+}
+` 

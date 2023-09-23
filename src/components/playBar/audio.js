@@ -111,7 +111,7 @@ export  const Bar = ({currentTrack,
           duration={duration}/>
           <BarPlayingTrack loading={loading} currentTrack={currentTrack}/>
         </S.BarPlayer>
-        <BarVolume/>
+        <BarVolume audioRef={audioRef}/>
       </S.BarPlayerBlock>
     </S.BarContent>
   </S.BarContainer>)

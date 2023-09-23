@@ -1,5 +1,21 @@
 import * as S from "./styles/volume.styles"
-const BarVolume = () => {
+import { useState, useEffect, useRef } from "react";
+const BarVolume = ({audioRef}) => {
+
+  const [volume, setVolume] = useState(60);
+
+  useEffect(() => {
+    if (audioRef) {
+      audioRef.current.volume = volume / 100;
+    }
+  }, [volume, audioRef]);
+
+  const volumeRef = useRef(60)
+  const volumeHandler = () => {
+    setVolume(volumeRef.current.value)
+    volumeRef.current.style.setProperty(`--volume-width`, `${ volume }%`)
+  }
+
     return(<S.BarVolumeBlock>
     <S.VolumeContent>
       <S.VolumeImage>
@@ -9,9 +25,11 @@ const BarVolume = () => {
       </S.VolumeImage>
       <S.VolumeProgress className="_btn">
         <S.VolumeProgresLine
+          ref={volumeRef}
           className="_btn"
           type="range"
-          name="range"
+          min={0} max={100}
+          onChange={volumeHandler}
         />
       </S.VolumeProgress>
     </S.VolumeContent>

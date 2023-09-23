@@ -1,15 +1,14 @@
 
 import * as S from "./tracks.styles"
 import { secondsToMinutes } from "../../pages/main/main"
-import { useEffect } from "react"
 
 
 const PlaylistItems = ({
   tracks, 
   currentTrack, 
   setCurrentTrack, 
-  setIsPlaying,
-  playAnimationRef}) => {
+  setIsPlaying
+  }) => {
 
   const handlePlay = (song) => {
     const prevValue = song
@@ -20,8 +19,7 @@ const PlaylistItems = ({
       } else{
         setCurrentTrack(prevValue);
       }
-      playAnimationRef.current = requestAnimationFrame(repeat);
-  }
+}
 
 
 
