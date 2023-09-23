@@ -37,7 +37,7 @@ align-items: center;
 justify-content: center;
 width: 109px;` 
 export const VolumeProgresLine = styled.input`
---volume-width: 10px;
+--volume-width: 50%;
 -webkit-appearance: none;
 background-color: #797979;
 height: 2px;
