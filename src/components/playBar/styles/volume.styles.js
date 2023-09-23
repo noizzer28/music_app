@@ -50,7 +50,7 @@ position: relative;
     width: 12px;
     cursor: pointer;
     animate: 0.2s;
-    background: rgba(0, 0, 0, 1);
+    background-color: #fff;
     border-radius: 50px;
     border: 2px solid #fff;
     opacity:1;
@@ -66,6 +66,5 @@ position: relative;
     width: var(--volume-width);
     top: 0;
     left: 0;    
-    z-index: 2;
 }
 ` 
