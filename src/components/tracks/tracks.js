@@ -5,37 +5,25 @@ import { useEffect } from "react"
 
 
 const PlaylistItems = ({
-  setPlayBar, 
   tracks, 
   currentTrack, 
   setCurrentTrack, 
-  audioRef, 
-  setIsPlaying, 
-  isLooped,
-  duration,
-  setDuration}) => {
-
-
-
+  setIsPlaying,
+  playAnimationRef}) => {
 
   const handlePlay = (song) => {
-      setPlayBar(true)
+    const prevValue = song
       setIsPlaying(true)
-      if (currentTrack === song) {
+      if (currentTrack === prevValue) {
         setCurrentTrack(null);
+        setIsPlaying(false)
       } else{
-        setCurrentTrack(song);
+        setCurrentTrack(prevValue);
       }
-
-      console.log(audioRef)
-      console.log(audioRef.current?.duration)
+      playAnimationRef.current = requestAnimationFrame(repeat);
   }
 
-  useEffect(() => {
-    console.log(1)
-    // console.log(audioRef.current.duration)
-    // setDuration(audioRef.current.duration)
-  },[audioRef?.current?.loadedmetadata, audioRef?.current?.readystate])
+
 
   const playList = tracks.map(song => 
     <S.PlaylistItem key={song.id}>
@@ -46,19 +34,18 @@ const PlaylistItems = ({
             <use xlinkHref="./icons/sprite.svg#icon-note"></use>
           </S.trackTitleSvg>
         </S.TrackTitleImage>
-        <div className="track__title-text" >
-        <S.TrackTitleLink href="#" onClick={() => handlePlay(song)}>
-          {currentTrack === song ? <S.TrackAudio ref={audioRef} src={song.track_file} controls autoPlay {...(isLooped ? { loop: true } : {})}></S.TrackAudio> : ""}
+        <div className="track__title-text">
+        <S.TrackTitleLink  onClick={() => handlePlay(song)}>
             {song.name} 
             <S.TrackTitleSpan>{song.subtitle}</S.TrackTitleSpan>
         </S.TrackTitleLink>
         </div>
       </S.TrackTitle>
       <S.TrackAuthor>
-        <S.TrackAuthorLink href="#">{song.author}</S.TrackAuthorLink>
+        <S.TrackAuthorLink>{song.author}</S.TrackAuthorLink>
       </S.TrackAuthor>
       <S.TrackAlbum>
-        <S.TrackAlbumLink href="#">{song.album}</S.TrackAlbumLink>
+        <S.TrackAlbumLink>{song.album}</S.TrackAlbumLink>
       </S.TrackAlbum>
       <div className="track__time _btn-icon">
         <S.TrackTimeSvg alt="time">

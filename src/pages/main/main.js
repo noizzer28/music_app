@@ -1,7 +1,7 @@
 import PlaylistItems from  "../../components/tracks/tracks"
 import  Nav from "../../components/navigation/navigation"
 import { SideBar } from "../../components/sidebar/sidebar";
-import {Bar} from "../../components/playBar/playBar";
+import {Bar} from "../../components/playBar/audio";
 import SkeletonTrack from "../../components/skeleton/skeleton";
 import { useState, useEffect, useRef } from "react";
 import PlaylistFilter from "../../components/filter/filter";
@@ -15,14 +15,12 @@ import { TracksTitle } from "../../components/center/title"
 
 export const secondsToMinutes = (time) => {
   const minutes = Math.floor(time / 60)
-  const seconds = time % 60
+  const seconds = Math.floor(time % 60)
   return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`
 }
 
 
 function MainApp({setToken}) {
-
-
 
   const [loading, setLoading] = useState(true)
   const [trackError, SetTrackError] = useState("")
@@ -38,8 +36,6 @@ function MainApp({setToken}) {
   })
   },[])
 
-  const [isPlayBar, setPlayBar] = useState(false)
-
   const [currentTrack, setCurrentTrack] = useState(null)
 
   const [isPlaying, setIsPlaying] = useState(false)
@@ -50,11 +46,11 @@ function MainApp({setToken}) {
 
   const [duration, setDuration] = useState(0)
 
-  const audioRef = useRef(null)
-
-
-
-
+  const [currentTime, setCurrentTime] = useState(0)
+   
+  const audioRef = useRef()
+  const playAnimationRef = useRef();
+  
   return (  
 <>
 <S.Wrapper>
@@ -72,24 +68,19 @@ function MainApp({setToken}) {
           {loading ? <SkeletonTrack/> :
           <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}>
             <PlaylistItems 
-             audioRef={audioRef}
-             setPlayBar={setPlayBar} 
-             setTracks={setTracks} 
              tracks={tracks} 
-             setLoading={setLoading} 
              currentTrack={currentTrack} 
              setCurrentTrack={setCurrentTrack}
              setIsPlaying={setIsPlaying}
-             isLooped={isLooped}
-             duration={duration}
-             setDuration={setDuration}/>
+             audioRef={audioRef}
+             playAnimationRef={playAnimationRef}/>
             </SimpleBar>}
           </S.ContentPlaylist>}
         </S.CenterblockContent>
       </S.MainSenterblock>  
       <SideBar setToken={setToken}/>
     </S.Main>
-    {isPlayBar ? <Bar 
+    {currentTrack ? <Bar 
     currentTrack={currentTrack} 
     loading={loading}
     isPlaying={isPlaying}
@@ -98,7 +89,10 @@ function MainApp({setToken}) {
     isLooped={isLooped}
     setLoop={setLoop}
     duration={duration}
-    setDuration={setDuration}/> : ""} 
+    setDuration={setDuration}
+    currentTime={currentTime}
+    setCurrentTime={setCurrentTime}
+    playAnimationRef={playAnimationRef}/> : ""} 
   </S.Container>
 </S.Wrapper>
 </>)
