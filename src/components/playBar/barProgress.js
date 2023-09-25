@@ -12,8 +12,10 @@ export const BarProgress = (({duration, currentTime, progressRef, audioRef, setC
 
     useEffect(() => {
         audioRef.current.addEventListener("timeupdate", ()=> {
-          setCurrentTime(audioRef.current.currentTime);
-          progressRef.current.style.setProperty(`--progress-width`, `${currentTime / duration * 100}%`)
+          if (audioRef.current.currentTime) {
+            setCurrentTime(audioRef.current.currentTime);
+            progressRef.current.style.setProperty(`--progress-width`, `${currentTime / duration * 100}%`)
+          }
   
         })
       },[currentTime])
