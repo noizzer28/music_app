@@ -13,8 +13,7 @@ export  function AuthPage({ isLoginMode = false, setToken }) {
 
 
   const handleLogin = async ({ email, password }) => {
-    setLoading(true)
-    console.log(`${password} + ${email}  + ${repeatPassword}`)
+    setLoading(true)  
     Authorisation({email, password})
         .then((data) => {
           setToken(`token`, data.username)
@@ -29,7 +28,6 @@ export  function AuthPage({ isLoginMode = false, setToken }) {
 
   const handleRegister = async () => {
     setLoading(true)
-    console.log(`${password} + ${email}  + ${repeatPassword}`)
     if (!password || !repeatPassword || !email)  {
       setError(`Все поля должны быть заполнены`)
       return
@@ -60,7 +58,7 @@ export  function AuthPage({ isLoginMode = false, setToken }) {
       <S.ModalForm>
         <Link to="/login">
           <S.ModalLogo>
-            <S.ModalLogoImage src="./logo_new.png" alt="logo" />
+            <S.ModalLogoImage src="./logo_modal.png" alt="logo" />
           </S.ModalLogo>
         </Link>
         {isLoginMode ? (

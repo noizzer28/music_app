@@ -5,12 +5,13 @@ import { Favorites } from "./pages/favorites/favorites";
 import { Category } from "./pages/category/category";
 import { NotFound } from "./pages/not-found/not-found";
 import { ProtectedRoute } from "./components/protected-routes/protected";
+import { useContext } from "react";
+import { UserContext } from "./components/context/context";
 
 export const AppRoutes = ({ setToken }) => {
-
     return (
         <Routes>
-            <Route element={<ProtectedRoute  isAllowed={Boolean(localStorage.getItem('token'))}></ProtectedRoute>}>
+            <Route element={<ProtectedRoute  isAllowed={user}></ProtectedRoute>}>
                 <Route path="/" element={<MainApp setToken={setToken}/>}/>
                 <Route path="/favorites" element={<Favorites/>}/>
                 <Route path="/category/:id" element={<Category/>}/>
