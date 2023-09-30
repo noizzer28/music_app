@@ -20,7 +20,8 @@ export const secondsToMinutes = (time) => {
 }
 
 
-function MainApp({setToken}) {
+function MainApp() {
+
 
   const [loading, setLoading] = useState(true)
   const [trackError, SetTrackError] = useState("")
@@ -50,7 +51,6 @@ function MainApp({setToken}) {
 
    
   const audioRef = useRef()
-  const playAnimationRef = useRef();
 
   return (  
 <>
@@ -73,13 +73,12 @@ function MainApp({setToken}) {
              currentTrack={currentTrack} 
              setCurrentTrack={setCurrentTrack}
              setIsPlaying={setIsPlaying}
-             audioRef={audioRef}
-             playAnimationRef={playAnimationRef}/>
+             audioRef={audioRef}/>
             </SimpleBar>}
           </S.ContentPlaylist>}
         </S.CenterblockContent>
       </S.MainSenterblock>  
-      <SideBar setToken={setToken}/>
+      <SideBar />
     </S.Main>
     {currentTrack ? <Bar 
     currentTrack={currentTrack} 
@@ -92,8 +91,7 @@ function MainApp({setToken}) {
     duration={duration}
     setDuration={setDuration}
     currentTime={currentTime}
-    setCurrentTime={setCurrentTime}
-    playAnimationRef={playAnimationRef}/> : ""} 
+    setCurrentTime={setCurrentTime}/> : ""} 
   </S.Container>
 </S.Wrapper>
 </>)

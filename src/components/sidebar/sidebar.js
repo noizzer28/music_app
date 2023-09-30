@@ -1,13 +1,16 @@
 import 'react-loading-skeleton/dist/skeleton.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import * as S from "./sidebar.styled"
 import { PLAYLISTS } from './categories'
+import { UserContext } from '../context/context'
 
-export  const SideBar = ( {setToken} ) => {
+export  const SideBar = ( ) => {
+
+  const {token, setToken} = useContext(UserContext)
   const [loading, setloading] = useState(true)
   const handleLogout = () => {
     localStorage.clear()
-    setToken({token: null})
+    setToken(null)
   }
 
   useEffect(() => {
@@ -18,7 +21,7 @@ export  const SideBar = ( {setToken} ) => {
     return(       
          <S.MainSideBar>
             {loading ? "" : <S.SideBarPersonal>
-      <S.SideBarName>Sergey.Ivanov</S.SideBarName>
+      <S.SideBarName>{token}</S.SideBarName>
       <S.SideBarIcon onClick={handleLogout}>
         <svg alt="logout">
           <use xlinkHref="./icons/sprite.svg#logout"></use>

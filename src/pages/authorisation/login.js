@@ -1,28 +1,32 @@
 import { Link, useNavigate } from "react-router-dom"
 import * as S from "./login.styled";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Authorisation, Registration } from "../../api";
+import { UserContext } from "../../components/context/context";
 
-export  function AuthPage({ isLoginMode = false, setToken }) {
+export  function AuthPage({ isLoginMode = false}) {
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [isLoading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const {token, setToken} = useContext(UserContext)
 
 
   const handleLogin = async ({ email, password }) => {
+
+
     setLoading(true)  
     Authorisation({email, password})
         .then((data) => {
-          setToken(`token`, data.username)
+          setToken(data.username)
           localStorage.setItem('token', data.username)
           navigate(`/`)
         }).catch((error) => {
           console.error(error)
-        setError(`Ошибка: ${error.message}`)
-      })
+          setError(`Ошибка: ${error.message}`)
+        })
 
   };
 
