@@ -45,11 +45,12 @@ export async function Registration({email, password}) {
       },
     })
     const data = await response.json()
-    console.log(data)
-    if (response.status === 200) {
+    if (response.ok) {
       return data
-    } else {
+    } else if (data.email){
       throw new Error(data.email);
+    } else {
+      throw new Error(data.password);
     }
 }
 
@@ -66,7 +67,7 @@ export async function Authorisation({email, password}) {
       },
     })
     const data = await response.json()
-    if (response.status === 200) {
+    if (response.ok) {
       return data
     } else {
       throw new Error(data.detail);
