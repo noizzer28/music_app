@@ -13,7 +13,7 @@ export const AppRoutes = () => {
     const user = useContext(UserContext)
     return (
         <Routes>
-            <Route element={<ProtectedRoute  isAllowed={user.token}></ProtectedRoute>}>
+            <Route element={<ProtectedRoute  isAllowed={localStorage.getItem('token')}></ProtectedRoute>}>
                 <Route path="/" element={<MainApp/>}/>
                 <Route path="/favorites" element={<Favorites/>}/>
                 <Route path="/category/:id" element={<Category/>}/>

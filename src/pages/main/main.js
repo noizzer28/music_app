@@ -3,7 +3,7 @@ import  Nav from "../../components/navigation/navigation"
 import { SideBar } from "../../components/sidebar/sidebar";
 import {Bar} from "../../components/playBar/audio";
 import SkeletonTrack from "../../components/skeleton/skeleton";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useDebugValue } from "react";
 import PlaylistFilter from "../../components/filter/filter";
 import * as S from "./app.styles"
 import SimpleBar from 'simplebar-react';
@@ -11,6 +11,8 @@ import 'simplebar-react/dist/simplebar.min.css';
 import { getTracks } from "../../api"
 import { Search } from "../../components/center/search"
 import { TracksTitle } from "../../components/center/title"
+import { useDispatch } from "react-redux";
+import { setTracks } from "../../store/track.slice";
 
 
 export const secondsToMinutes = (time) => {
@@ -22,13 +24,13 @@ export const secondsToMinutes = (time) => {
 
 function MainApp() {
 
-
+  const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
   const [trackError, SetTrackError] = useState("")
 
   useEffect(()=> {
   getTracks()
-    .then((tracks) => setTracks(tracks))
+    .then((tracks) => dispatch(setTracks(tracks)))
       .then(()=> {
         setLoading(false)
   }).catch((error) => {
@@ -40,8 +42,6 @@ function MainApp() {
   const [currentTrack, setCurrentTrack] = useState(null)
 
   const [isPlaying, setIsPlaying] = useState(false)
- 
-  const [tracks, setTracks] = useState([])
 
   const [isLooped, setLoop] = useState(false)
 
@@ -61,7 +61,7 @@ function MainApp() {
       <S.MainSenterblock>
         <Search></Search>
         <S.SenterblockHeader>Треки</S.SenterblockHeader>
-        <PlaylistFilter tracks={tracks}/>
+        <PlaylistFilter/>
         <S.CenterblockContent>
           <TracksTitle></TracksTitle>
           {trackError ? <div>{trackError}</div>  : 
@@ -69,7 +69,6 @@ function MainApp() {
           {loading ? <SkeletonTrack/> :
           <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}>
             <PlaylistItems 
-             tracks={tracks} 
              currentTrack={currentTrack} 
              setCurrentTrack={setCurrentTrack}
              setIsPlaying={setIsPlaying}

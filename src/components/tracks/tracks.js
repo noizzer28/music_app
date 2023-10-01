@@ -1,14 +1,16 @@
 
 import * as S from "./tracks.styles"
 import { secondsToMinutes } from "../../pages/main/main"
+import { useSelector } from "react-redux/es/hooks/useSelector"
 
 
 const PlaylistItems = ({
-  tracks, 
   currentTrack, 
   setCurrentTrack, 
   setIsPlaying
   }) => {
+
+  const tracks = useSelector(state => state.tracks.tracks)
 
   const handlePlay = (song) => {
     const prevValue = song
