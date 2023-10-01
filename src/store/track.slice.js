@@ -25,8 +25,8 @@ const trackSlice = createSlice({
         },
         prevTrack(state, action) {},
         nextTrack(state, action) {
-            state.currentIndex++
-            if (state.currentTrack.id !== null && state.currentTrack.id < state.tracks.length - 1) {
+            if (state.currentIndex !== null && state.currentIndex < state.tracks.length - 1) {
+                state.currentIndex++
                 state.currentTrack = state.tracks[state.currentIndex]
             }
         }
