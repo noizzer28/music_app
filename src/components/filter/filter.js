@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
-import { Tracks } from "../tracks/tracks";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 import * as S from "./filter.styles"
 
-const PlaylistFilter = ({tracks}) => {
+const PlaylistFilter = () => {
     const [isActiveAuthor, setIsActiveAuthor] = useState(false);
     const [isActiveYear, setIsActiveYear] = useState(false);
     const [isActiveGenre, setIsActiveGenre] = useState(false);
+    
+    const tracks = useSelector(state => state.tracks.tracks)
 
     const handleAuthor = () => {
         setIsActiveAuthor(!isActiveAuthor);

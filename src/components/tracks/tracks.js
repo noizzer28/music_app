@@ -1,31 +1,33 @@
-
 import * as S from "./tracks.styles"
 import { secondsToMinutes } from "../../pages/main/main"
-import { useSelector } from "react-redux/es/hooks/useSelector"
+import { useSelector} from "react-redux"
+import { setCurrentIndex, setCurrentTrack } from "../../store/track.slice"
+import { useDispatch } from "react-redux"
+
 
 
 const PlaylistItems = ({
-  currentTrack, 
-  setCurrentTrack, 
   setIsPlaying
   }) => {
-
+ 
   const tracks = useSelector(state => state.tracks.tracks)
+  const dispatch = useDispatch()
+  const currentTrack = useSelector(state => state.tracks.currentTrack)
 
-  const handlePlay = (song) => {
+  const handlePlay = (song, index) => {
     const prevValue = song
-      setIsPlaying(true)
-      if (currentTrack === prevValue) {
-        setCurrentTrack(null);
-        setIsPlaying(false)
-      } else{
-        setCurrentTrack(prevValue);
-      }
+    setIsPlaying(true)  
+    if (currentTrack === prevValue) {
+      dispatch(setCurrentTrack(null))
+      setIsPlaying(false)
+    } else{
+      dispatch(setCurrentTrack(prevValue))
+      dispatch(setCurrentIndex(index))
+    }
 }
 
 
-
-  const playList = tracks.map(song => 
+  const playList = tracks.map((song, index) => 
     <S.PlaylistItem key={song.id}>
     <S.PlaylistTrack>
       <S.TrackTitle>
@@ -35,7 +37,7 @@ const PlaylistItems = ({
           </S.trackTitleSvg>
         </S.TrackTitleImage>
         <div className="track__title-text">
-        <S.TrackTitleLink  onClick={() => handlePlay(song)}>
+        <S.TrackTitleLink  onClick={() => handlePlay(song, index)}>
             {song.name} 
             <S.TrackTitleSpan>{song.subtitle}</S.TrackTitleSpan>
         </S.TrackTitleLink>
@@ -58,6 +60,5 @@ const PlaylistItems = ({
   )
   return[playList]
 }
-
 
 export default PlaylistItems

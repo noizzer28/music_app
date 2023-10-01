@@ -1,7 +1,14 @@
 import * as S from "./styles/controls.styles"
-
+import { useDispatch, useSelector } from "react-redux"
+import { nextTrack } from "../../store/track.slice"
 
  const  BarPlayerControls = ({isPlaying, setIsPlaying, audioRef, isLooped, setLoop}) =>  {
+
+    const dispatch = useDispatch()
+
+    function handleNext () {
+        dispatch(nextTrack())
+    }
 
         function handlePlaying() {
             if (isPlaying) {
@@ -33,7 +40,7 @@ import * as S from "./styles/controls.styles"
         </S.PlayerBtnPLaySvg>}
 
     </S.PlayerBtnPlay>
-    <S.PlayerBtnNext className="_btn">
+    <S.PlayerBtnNext className="_btn" onClick={handleNext}>
         <S.PlayerBtnNextSvg alt="next">
         <use xlinkHref="./icons/sprite.svg#icon-next"></use>
         </S.PlayerBtnNextSvg>
