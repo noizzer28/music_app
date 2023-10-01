@@ -1,21 +1,24 @@
 import * as S from "./styles/controls.styles"
 import { useDispatch, useSelector } from "react-redux"
 import { nextTrack } from "../../store/track.slice"
+import { setIsPlaying } from "../../store/track.slice"
 
- const  BarPlayerControls = ({isPlaying, setIsPlaying, audioRef, isLooped, setLoop}) =>  {
+ const  BarPlayerControls = ({ audioRef, isLooped, setLoop}) =>  {
 
     const dispatch = useDispatch()
+    const isPlaying = useSelector(state => state.tracks.isPlaying)
 
     function handleNext () {
         dispatch(nextTrack())
     }
 
         function handlePlaying() {
+
             if (isPlaying) {
-                setIsPlaying(false)
+                dispatch(setIsPlaying(false)) 
                 audioRef.current.pause()
             } else {
-                setIsPlaying(true)
+                dispatch(setIsPlaying(true)) 
                 audioRef.current.play()
             }
         }

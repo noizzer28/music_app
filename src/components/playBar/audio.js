@@ -5,7 +5,7 @@ import BarVolume from './volumeElement'
 import BarPlayerControls from './controls'
 import * as S from "./styles/audio.styles"
 import { BarProgress } from './barProgress'
-import { useSelector } from 'react-redux/es/hooks/useSelector'
+import { useSelector, useDispatch } from 'react-redux/es/hooks/useSelector'
 
 const BarPlayingTrack = ({ loading}) => {
   const currentTrack = useSelector(state => state.tracks.currentTrack)
@@ -44,8 +44,6 @@ const BarPlayingTrack = ({ loading}) => {
   
 export  const Bar = ({
   loading, 
-  isPlaying, 
-  setIsPlaying, 
   isLooped, 
   setLoop,
   duration,
@@ -56,6 +54,8 @@ export  const Bar = ({
   playAnimationRef
   }) => {
     const currentTrack = useSelector(state => state.tracks.currentTrack)
+
+  
     const progressRef = useRef()
     const onLoadedMetadata = () => {
       const seconds = Math.floor(audioRef.current.duration)
@@ -83,8 +83,6 @@ export  const Bar = ({
       <S.BarPlayerBlock>
         <S.BarPlayer>
           <BarPlayerControls 
-          isPlaying={isPlaying} 
-          setIsPlaying={setIsPlaying} 
           audioRef={audioRef}     
           isLooped={isLooped}
           setLoop={setLoop}

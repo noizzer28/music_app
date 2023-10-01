@@ -6,6 +6,7 @@ const trackSlice = createSlice({
         tracks: [],
         currentTrack: null,
         currentIndex: null,
+        isPlaying: false
     },
     reducers: {
         setTracks(state, action) {
@@ -19,6 +20,9 @@ const trackSlice = createSlice({
             state.currentIndex = action.payload
         },
         toggleShuffle(state, action) {},
+        setIsPlaying(state, action) {
+            state.isPlaying = action.payload
+        },
         prevTrack(state, action) {},
         nextTrack(state, action) {
             state.currentIndex++
@@ -29,5 +33,5 @@ const trackSlice = createSlice({
     }
 })
 
-export const {setTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack} = trackSlice.actions;
+export const {setTracks, setIsPlaying, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack} = trackSlice.actions;
 export default trackSlice.reducer;

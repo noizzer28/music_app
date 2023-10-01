@@ -40,7 +40,7 @@ function MainApp() {
   })
   },[])
 
-  const [isPlaying, setIsPlaying] = useState(false)
+
 
   const [isLooped, setLoop] = useState(false)
 
@@ -67,9 +67,7 @@ function MainApp() {
            <S.ContentPlaylist>
           {loading ? <SkeletonTrack/> :
           <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}>
-            <PlaylistItems 
-             setIsPlaying={setIsPlaying}
-             audioRef={audioRef}/>
+            <PlaylistItems/>
             </SimpleBar>}
           </S.ContentPlaylist>}
         </S.CenterblockContent>
@@ -78,8 +76,6 @@ function MainApp() {
     </S.Main>
     {currentTrack ? <Bar 
     loading={loading}
-    isPlaying={isPlaying}
-    setIsPlaying={setIsPlaying}
     audioRef={audioRef}
     isLooped={isLooped}
     setLoop={setLoop}
