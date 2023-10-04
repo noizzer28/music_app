@@ -1,28 +1,29 @@
 import * as S from "./styles/controls.styles"
 import { useDispatch, useSelector } from "react-redux"
-import { nextTrack, setIsPlaying, prevTrack, toggleShuffle, setShuffledTracks } from "../../store/track.slice"
-import { LOGICAL_OPERATORS } from "@babel/types"
+import { nextTrack, setIsPlaying, prevTrack, toggleShuffle, setShuffledTracks, setCurrentIndex } from "../../store/track.slice"
 
-
- const  BarPlayerControls = ({ audioRef, isLooped, setLoop}) =>  {
+ const  BarPlayerControls = ({ audioRef, isLooped, setLoop, currentTime}) =>  {
 
     const dispatch = useDispatch()
     const isPlaying = useSelector(state => state.tracks.isPlaying)
     const isShuffled = useSelector(state => state.tracks.isShuffled)
-    const shuffledTracks = useSelector(state => state.tracks.shuffledTracks)
     const tracks = useSelector(state => state.tracks.tracks)
+    const currentTrack = useSelector(state => state.tracks.currentTrack)
+    const shuffledTracks = useSelector(state => state.tracks.shuffledTracks)
+    const currentIndex = useSelector(state => state.tracks.currentIndex)
 
 
     function handleNext () {
         dispatch(nextTrack())
+        console.log(currentIndex)
     }
 
     function handlePrev () {
         dispatch(prevTrack())
+        console.log(currentIndex)
     }
 
     function handlePlaying() {
-
         if (isPlaying) {
             dispatch(setIsPlaying(false)) 
             audioRef.current.pause()
@@ -35,6 +36,7 @@ import { LOGICAL_OPERATORS } from "@babel/types"
     function handleLoop () {
         setLoop(!isLooped)
     }
+
     function shuffle(array) {
         const newTracks = [...array]
         for (let i = newTracks.length - 1; i > 0; i--) {
@@ -43,26 +45,33 @@ import { LOGICAL_OPERATORS } from "@babel/types"
         }
         return newTracks
     }
+
     function handleShuffle () {
-        dispatch(setShuffledTracks(shuffle(tracks)))
         dispatch(toggleShuffle(!isShuffled))
+        if (!isShuffled) {
+            dispatch(setShuffledTracks(shuffle(tracks)))
+            dispatch(setCurrentIndex(shuffledTracks.indexOf(currentTrack)))
+        } else {
+            dispatch(setCurrentIndex(tracks.indexOf(currentTrack)))
+        }
+
+
     }
 
-        return (<S.PlayerControls>
-        <S.PlayerBtnPrev className="_btn">
-            <S.PlayerBtnPrevSvg alt="prev" onClick={handlePrev}>
-            <use xlinkHref="./icons/sprite.svg#icon-prev"></use>
-            </S.PlayerBtnPrevSvg>
-        </S.PlayerBtnPrev>
-        <S.PlayerBtnPlay className="_btn" onClick={handlePlaying}>
-        {isPlaying ?         
-        <S.PlayerBtnPLaySvg alt="pause">
-        <use xlinkHref="./icons/sprite.svg#icon-pause"></use>
-        </S.PlayerBtnPLaySvg> :         
-        <S.PlayerBtnPLaySvg alt="play">
-        <use xlinkHref="./icons/sprite.svg#icon-play"></use>
-        </S.PlayerBtnPLaySvg>}
-
+    return (<S.PlayerControls>
+    <S.PlayerBtnPrev className="_btn">
+        <S.PlayerBtnPrevSvg alt="prev" onClick={handlePrev}>
+        <use xlinkHref="./icons/sprite.svg#icon-prev"></use>
+        </S.PlayerBtnPrevSvg>
+    </S.PlayerBtnPrev>
+    <S.PlayerBtnPlay className="_btn" onClick={handlePlaying}>
+    {isPlaying ?         
+    <S.PlayerBtnPLaySvg alt="pause">
+    <use xlinkHref="./icons/sprite.svg#icon-pause"></use>
+    </S.PlayerBtnPLaySvg> :         
+    <S.PlayerBtnPLaySvg alt="play">
+    <use xlinkHref="./icons/sprite.svg#icon-play"></use>
+    </S.PlayerBtnPLaySvg>}
     </S.PlayerBtnPlay>
     <S.PlayerBtnNext className="_btn" onClick={handleNext}>
         <S.PlayerBtnNextSvg alt="next">

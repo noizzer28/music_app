@@ -16,7 +16,6 @@ const trackSlice = createSlice({
         },
         setCurrentTrack (state, action) {
             state.currentTrack = action.payload;
-
         },
         setCurrentIndex(state, action) {
             state.currentIndex = action.payload
@@ -31,12 +30,21 @@ const trackSlice = createSlice({
             state.shuffledTracks = action.payload
         },
         prevTrack(state, action) {
+
             if (state.isShuffled) {
+                if (state.currentIndex === 0) {
+                    state.currentIndex = state.shuffledTracks.length - 1
+                    state.currentTrack = state.shuffledTracks[state.currentIndex]
+                }
                 if (state.currentIndex !== null && state.currentIndex > 0 ) {
                     state.currentIndex--
                     state.currentTrack = state.shuffledTracks[state.currentIndex]
                 }
             } else {
+                if (state.currentIndex === 0) {
+                    state.currentIndex = state.tracks.length - 1
+                    state.currentTrack = state.tracks[state.currentIndex]
+                }
                 if (state.currentIndex !== null && state.currentIndex > 0 ) {
                     state.currentIndex--
                     state.currentTrack = state.tracks[state.currentIndex]
@@ -44,19 +52,16 @@ const trackSlice = createSlice({
             }
 
         },
-        nextTrack(state, action) {
-            if (state.isShuffled) {
-                if (state.currentIndex !== null && state.currentIndex < state.tracks.length -1) {
-                    state.currentIndex++
-                    state.currentTrack = state.shuffledTracks[state.currentIndex]
-                }
-            } else {
-                if (state.currentIndex !== null && state.currentIndex < state.tracks.length -1) {
-                    state.currentIndex++
-                    state.currentTrack = state.tracks[state.currentIndex]
-                }
+        nextTrack(state) {
+            state.currentIndex++
+            if (state.currentIndex === state.tracks.length) {
+                state.currentIndex = 0
             }
-
+            if (state.isShuffled) {
+                state.currentTrack = state.shuffledTracks[state.currentIndex]
+            } else {
+                state.currentTrack = state.tracks[state.currentIndex]
+            }
         }
     }
 })
