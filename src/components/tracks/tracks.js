@@ -13,9 +13,7 @@ const PlaylistItems = () => {
   const tracks = useSelector(state => state.tracks.tracks)
   const currentTrack = useSelector(state => state.tracks.currentTrack)
   const isPlaying = useSelector(state => state.tracks.isPlaying)
-  const currentIndex = useSelector(state => state.tracks.currentIndex)
-  console.log(currentIndex)
-  console.log(tracks)
+
   const handlePlay = (song, index) => {
     const prevValue = song
     dispatch(setIsPlaying(true)) 

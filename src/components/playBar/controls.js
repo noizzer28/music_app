@@ -1,12 +1,17 @@
 import * as S from "./styles/controls.styles"
 import { useDispatch, useSelector } from "react-redux"
-import { nextTrack, setIsPlaying, prevTrack } from "../../store/track.slice"
+import { nextTrack, setIsPlaying, prevTrack, toggleShuffle, setShuffledTracks } from "../../store/track.slice"
+import { LOGICAL_OPERATORS } from "@babel/types"
 
 
  const  BarPlayerControls = ({ audioRef, isLooped, setLoop}) =>  {
 
     const dispatch = useDispatch()
     const isPlaying = useSelector(state => state.tracks.isPlaying)
+    const isShuffled = useSelector(state => state.tracks.isShuffled)
+    const shuffledTracks = useSelector(state => state.tracks.shuffledTracks)
+    const tracks = useSelector(state => state.tracks.tracks)
+
 
     function handleNext () {
         dispatch(nextTrack())
@@ -29,6 +34,18 @@ import { nextTrack, setIsPlaying, prevTrack } from "../../store/track.slice"
 
     function handleLoop () {
         setLoop(!isLooped)
+    }
+    function shuffle(array) {
+        const newTracks = [...array]
+        for (let i = newTracks.length - 1; i > 0; i--) {
+          let j = Math.floor(Math.random() * (i + 1));
+          [newTracks[i], newTracks[j]] = [newTracks[j], newTracks[i]];
+        }
+        return newTracks
+    }
+    function handleShuffle () {
+        dispatch(setShuffledTracks(shuffle(tracks)))
+        dispatch(toggleShuffle(!isShuffled))
     }
 
         return (<S.PlayerControls>
@@ -57,8 +74,8 @@ import { nextTrack, setIsPlaying, prevTrack } from "../../store/track.slice"
         <use xlinkHref="/icons/sprite.svg#icon-repeat"></use>
         </S.PlayerBtnRepeatSvg>
     </S.PlayerBtnRepeat>
-    <S.PlayerBtnShuffle className="_btn-icon">
-        <S.PlayerBtnShuffleSvg alt="shuffle">
+    <S.PlayerBtnShuffle className={isShuffled ? '_btn-icon _btn-icon__active' : '_btn-icon'}  onClick={handleShuffle}>
+        <S.PlayerBtnShuffleSvg alt="shuffle" >
         <use xlinkHref="./icons/sprite.svg#icon-shuffle"></use>
         </S.PlayerBtnShuffleSvg>
     </S.PlayerBtnShuffle>

@@ -24,7 +24,6 @@ function MainApp() {
 
   const dispatch = useDispatch()
   const currentTrack = useSelector(state => state.tracks.currentTrack)
-  console.log(currentTrack)
 
   const [loading, setLoading] = useState(true)
   const [trackError, SetTrackError] = useState("")
