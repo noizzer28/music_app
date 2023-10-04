@@ -1,7 +1,7 @@
 import * as S from "./styles/controls.styles"
 import { useDispatch, useSelector } from "react-redux"
-import { nextTrack } from "../../store/track.slice"
-import { setIsPlaying } from "../../store/track.slice"
+import { nextTrack, setIsPlaying, prevTrack } from "../../store/track.slice"
+
 
  const  BarPlayerControls = ({ audioRef, isLooped, setLoop}) =>  {
 
@@ -12,25 +12,29 @@ import { setIsPlaying } from "../../store/track.slice"
         dispatch(nextTrack())
     }
 
-        function handlePlaying() {
+    function handlePrev () {
+        dispatch(prevTrack())
+    }
 
-            if (isPlaying) {
-                dispatch(setIsPlaying(false)) 
-                audioRef.current.pause()
-            } else {
-                dispatch(setIsPlaying(true)) 
-                audioRef.current.play()
-            }
-        }
+    function handlePlaying() {
 
-        function handleLoop () {
-            setLoop(!isLooped)
+        if (isPlaying) {
+            dispatch(setIsPlaying(false)) 
+            audioRef.current.pause()
+        } else {
+            dispatch(setIsPlaying(true)) 
+            audioRef.current.play()
         }
+    }
+
+    function handleLoop () {
+        setLoop(!isLooped)
+    }
 
         return (<S.PlayerControls>
         <S.PlayerBtnPrev className="_btn">
-            <S.PlayerBtnPrevSvg alt="prev">
-            <use xlinkHref="./icons/sprite.svg#icon-next"></use>
+            <S.PlayerBtnPrevSvg alt="prev" onClick={handlePrev}>
+            <use xlinkHref="./icons/sprite.svg#icon-prev"></use>
             </S.PlayerBtnPrevSvg>
         </S.PlayerBtnPrev>
         <S.PlayerBtnPlay className="_btn" onClick={handlePlaying}>

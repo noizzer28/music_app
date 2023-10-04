@@ -19,13 +19,20 @@ const trackSlice = createSlice({
         setCurrentIndex(state, action) {
             state.currentIndex = action.payload
         },
-        toggleShuffle(state, action) {},
+        toggleShuffle(state, action) {
+            
+        },
         setIsPlaying(state, action) {
             state.isPlaying = action.payload
         },
-        prevTrack(state, action) {},
+        prevTrack(state, action) {
+            if (state.currentIndex !== null && state.currentIndex > 0 ) {
+                state.currentIndex--
+                state.currentTrack = state.tracks[state.currentIndex]
+            }
+        },
         nextTrack(state, action) {
-            if (state.currentIndex !== null && state.currentIndex < state.tracks.length - 1) {
+            if (state.currentIndex !== null && state.currentIndex < state.tracks.length -1) {
                 state.currentIndex++
                 state.currentTrack = state.tracks[state.currentIndex]
             }
