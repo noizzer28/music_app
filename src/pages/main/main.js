@@ -49,6 +49,7 @@ function MainApp() {
 
    
   const audioRef = useRef()
+  const targetRef = useRef()
 
   return (  
 <>
@@ -65,8 +66,8 @@ function MainApp() {
           {trackError ? <div>{trackError}</div>  : 
            <S.ContentPlaylist>
           {loading ? <SkeletonTrack/> :
-          <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}>
-            <PlaylistItems/>
+          <SimpleBar forceVisible="y" style={{ height: '65vh', maxWidth:"1120px"}}>
+            <PlaylistItems targetRef={targetRef}/>
             </SimpleBar>}
           </S.ContentPlaylist>}
         </S.CenterblockContent>
@@ -81,7 +82,8 @@ function MainApp() {
     duration={duration}
     setDuration={setDuration}
     currentTime={currentTime}
-    setCurrentTime={setCurrentTime}/> : ""} 
+    setCurrentTime={setCurrentTime}
+    targetRef={targetRef}/> : ""} 
   </S.Container>
 </S.Wrapper>
 </>)

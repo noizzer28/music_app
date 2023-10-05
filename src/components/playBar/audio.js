@@ -53,7 +53,7 @@ export  const Bar = ({
   audioRef,
   currentTime,
   setCurrentTime,
-  playAnimationRef
+  targetRef
   }) => {
     const currentTrack = useSelector(state => state.tracks.currentTrack)
     const dispatch = useDispatch()
@@ -96,10 +96,10 @@ export  const Bar = ({
           audioRef={audioRef}     
           isLooped={isLooped}
           setLoop={setLoop}
-          playAnimationRef={playAnimationRef}
           progressRef={progressRef}
           setCurrentTime={setCurrentTime}
-          duration={duration}/>
+          duration={duration}
+          targetRef={targetRef}/>
           <BarPlayingTrack loading={loading}/>
         </S.BarPlayer>
         <BarVolume audioRef={audioRef}/>

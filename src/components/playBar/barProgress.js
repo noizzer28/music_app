@@ -1,12 +1,11 @@
 import * as S from "./styles/barProgress.styles"
 import { secondsToMinutes } from "../../pages/main/main"
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
-import { nextTrack } from "../../store/track.slice"
+
 
 
 export const BarProgress = (({duration, currentTime, progressRef, audioRef, setCurrentTime}) => {
-  const dispatch = useDispatch()
+
     const changeRange = () => {          
               if (audioRef.current) {
                 audioRef.current.currentTime = progressRef.current.value

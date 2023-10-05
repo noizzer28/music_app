@@ -7,7 +7,7 @@ import { setIsPlaying } from "../../store/track.slice"
 
 
 
-const PlaylistItems = () => {
+const PlaylistItems = ({targetRef}) => {
 
   const dispatch = useDispatch()
   const tracks = useSelector(state => state.tracks.tracks)
@@ -39,13 +39,12 @@ const PlaylistItems = () => {
     <S.PlaylistTrack>
       <S.TrackTitle>
         <S.TrackTitleImage >
-
           <S.trackTitleSvg alt="music" className={currentTrack === song ? `${playStyles}` : ""}>
             <use xlinkHref="./icons/sprite.svg#icon-note"></use>
           </S.trackTitleSvg>
         </S.TrackTitleImage>
         <div className="track__title-text">
-        <S.TrackTitleLink  onClick={() => handlePlay(song, index)}>
+        <S.TrackTitleLink  ref={currentTrack === song ? targetRef : undefined} onClick={() => handlePlay(song, index)} >
             {song.name} 
             <S.TrackTitleSpan>{song.subtitle}</S.TrackTitleSpan>
         </S.TrackTitleLink>
