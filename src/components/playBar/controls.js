@@ -13,15 +13,14 @@ import { nextTrack, setIsPlaying, prevTrack, toggleShuffle, setShuffledTracks, s
 
 
     function handleNext () {
-        targetRef.current.scrollIntoView()
-        console.log(targetRef)
+        targetRef.current.scrollIntoView({ behavior: 'smooth' })
         setCurrentTime(0)
         dispatch((setIsPlaying(true)))
         dispatch(nextTrack())
     }
 
     function handlePrev () {
-        // targetRef.current.scrollIntoView({ behavior: 'smooth' });
+        targetRef.current.scrollIntoView({ behavior: 'smooth' });
         if (currentTime < 5) {
             audioRef.current.currentTime = 0;
             setCurrentTime(0)
