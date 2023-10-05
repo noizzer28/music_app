@@ -6,6 +6,8 @@ import BarPlayerControls from './controls'
 import * as S from "./styles/audio.styles"
 import { BarProgress } from './barProgress'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
+import { useDispatch } from 'react-redux'
+import { nextTrack } from "../../store/track.slice"
 
 const BarPlayingTrack = ({ loading}) => {
   const currentTrack = useSelector(state => state.tracks.currentTrack)
@@ -54,6 +56,7 @@ export  const Bar = ({
   playAnimationRef
   }) => {
     const currentTrack = useSelector(state => state.tracks.currentTrack)
+    const dispatch = useDispatch()
 
   
     const progressRef = useRef()
@@ -63,14 +66,20 @@ export  const Bar = ({
       progressRef.current.max = seconds
     };
 
+    const handleEndTrack = () => {
+      dispatch(nextTrack())
+    }
+
     return (<S.BarContainer>
     <S.BarContent>
     <S.TrackAudio 
-    onLoadedMetadata={onLoadedMetadata}  
-    ref={audioRef} 
-    src={currentTrack.track_file} 
-    autoPlay 
-    {...(isLooped ? { loop: true } : {})}>
+        onLoadedMetadata={onLoadedMetadata} 
+        onEnded={handleEndTrack} 
+        ref={audioRef} 
+        src={currentTrack.track_file} 
+        autoPlay 
+        preload="metadata"
+        {...(isLooped ? { loop: true } : {})}>
     </S.TrackAudio>
       <BarProgress 
           duration={duration}

@@ -22,6 +22,7 @@ position: relative;
     -webkit-appearance: none;
 }
 &:hover::-webkit-slider-thumb{
+    -webkit-appearance: none;
     height: 20px;
     width: 20px;
     border-radius: 50px;

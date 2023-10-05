@@ -2,7 +2,7 @@ import * as S from "./styles/controls.styles"
 import { useDispatch, useSelector } from "react-redux"
 import { nextTrack, setIsPlaying, prevTrack, toggleShuffle, setShuffledTracks, setCurrentIndex } from "../../store/track.slice"
 
- const  BarPlayerControls = ({ audioRef, isLooped, setLoop, currentTime}) =>  {
+ const  BarPlayerControls = ({ audioRef, isLooped, setLoop, currentTime, setCurrentTime}) =>  {
 
     const dispatch = useDispatch()
     const isPlaying = useSelector(state => state.tracks.isPlaying)
@@ -14,13 +14,21 @@ import { nextTrack, setIsPlaying, prevTrack, toggleShuffle, setShuffledTracks, s
 
 
     function handleNext () {
+        dispatch((setIsPlaying(true)))
         dispatch(nextTrack())
-        console.log(currentIndex)
     }
 
     function handlePrev () {
-        dispatch(prevTrack())
-        console.log(currentIndex)
+
+        if (currentTime < 5) {
+            audioRef.current.currentTime = 0;
+            setCurrentTime(0)
+
+        } else {
+            dispatch((setIsPlaying(true)))
+            dispatch(prevTrack())
+        }
+
     }
 
     function handlePlaying() {
