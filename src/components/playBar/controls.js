@@ -2,6 +2,7 @@ import * as S from "./styles/controls.styles"
 import { useDispatch, useSelector } from "react-redux"
 import { nextTrack, setIsPlaying, prevTrack, toggleShuffle, setShuffledTracks, setCurrentIndex } from "../../store/track.slice"
 
+
  const  BarPlayerControls = ({ audioRef, isLooped, setLoop, currentTime, setCurrentTime, targetRef}) =>  {
 
     const dispatch = useDispatch()
@@ -10,11 +11,11 @@ import { nextTrack, setIsPlaying, prevTrack, toggleShuffle, setShuffledTracks, s
     const tracks = useSelector(state => state.tracks.tracks)
     const currentTrack = useSelector(state => state.tracks.currentTrack)
     const shuffledTracks = useSelector(state => state.tracks.shuffledTracks)
+    const currentIndex = useSelector(state => state.tracks.currentIndex)
 
 
     function handleNext () {
         targetRef.current.scrollIntoView({ behavior: 'smooth' })
-        setCurrentTime(0)
         dispatch((setIsPlaying(true)))
         dispatch(nextTrack())
     }
@@ -22,12 +23,11 @@ import { nextTrack, setIsPlaying, prevTrack, toggleShuffle, setShuffledTracks, s
     function handlePrev () {
         targetRef.current.scrollIntoView({ behavior: 'smooth' });
         if (currentTime < 5) {
-            audioRef.current.currentTime = 0;
-            setCurrentTime(0)
-        } else {
-            setCurrentTime(0)
             dispatch((setIsPlaying(true)))
             dispatch(prevTrack())
+        } else {
+            audioRef.current.currentTime = 0;
+            setCurrentTime(0)
         }
     }
 

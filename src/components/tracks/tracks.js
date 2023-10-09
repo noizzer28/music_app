@@ -25,7 +25,6 @@ const PlaylistItems = ({targetRef}) => {
       dispatch(setCurrentIndex(index))
     }
   }
-  // console.log(tracks)
   let playStyles = ``
   if (isPlaying) {
     playStyles = 'playing-dot active'

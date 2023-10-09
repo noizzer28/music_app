@@ -10,7 +10,9 @@ display: flex;
 flex-direction: row;
 padding: 0 27px 0 31px;`
 
-export const PlayerBtn = styled.div`
+export const PlayerBtn = styled.button`
+background: transparent;
+border: none;
 padding: 5px;
 display: -webkit-box;
 display: -ms-flexbox;

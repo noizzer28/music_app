@@ -29,7 +29,7 @@ const trackSlice = createSlice({
         setShuffledTracks(state, action) {
             state.shuffledTracks = action.payload
         },
-        prevTrack(state, action) {
+        prevTrack(state) {
 
             if (state.isShuffled) {
                 if (state.currentIndex === 0) {
@@ -41,10 +41,6 @@ const trackSlice = createSlice({
                     state.currentTrack = state.shuffledTracks[state.currentIndex]
                 }
             } else {
-                if (state.currentIndex === 0) {
-                    state.currentIndex = state.tracks.length - 1
-                    state.currentTrack = state.tracks[state.currentIndex]
-                }
                 if (state.currentIndex !== null && state.currentIndex > 0 ) {
                     state.currentIndex--
                     state.currentTrack = state.tracks[state.currentIndex]
@@ -53,11 +49,13 @@ const trackSlice = createSlice({
 
         },
         nextTrack(state) {
-            state.currentIndex++
-            if (state.currentIndex === state.tracks.length) {
-                state.currentIndex = 0
-            }
+            if (state.currentIndex < state.tracks.length -1) {
+                state.currentIndex++
+            } 
             if (state.isShuffled) {
+                if (state.currentIndex === state.shuffledTracks.length - 1) {
+                    state.currentIndex = 0
+                }
                 state.currentTrack = state.shuffledTracks[state.currentIndex]
             } else {
                 state.currentTrack = state.tracks[state.currentIndex]
