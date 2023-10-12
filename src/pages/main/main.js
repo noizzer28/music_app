@@ -1,18 +1,16 @@
-import PlaylistItems from  "../../components/tracks/tracks"
+
 import  Nav from "../../components/navigation/navigation"
 import { SideBar } from "../../components/sidebar/sidebar";
 import {Bar} from "../../components/playBar/audio";
-import SkeletonTrack from "../../components/skeleton/skeleton";
 import { useState, useEffect, useRef } from "react";
-import PlaylistFilter from "../../components/filter/filter";
 import * as S from "./app.styles"
-import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 import { getTracks } from "../../api"
 import { Search } from "../../components/center/search"
-import { TracksTitle } from "../../components/center/title"
 import { useDispatch, useSelector } from "react-redux";
 import { setTracks } from "../../store/track.slice";
+import { Outlet } from "react-router";
+import { AllTracks } from "../../components/tracks/mainTracks";
 
 export const secondsToMinutes = (time) => {
   const minutes = Math.floor(time / 60)
@@ -20,7 +18,7 @@ export const secondsToMinutes = (time) => {
   return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`
 }
 
-function MainApp() {
+export const  MainApp = () => {
 
   const dispatch = useDispatch()
   const currentTrack = useSelector(state => state.tracks.currentTrack)
@@ -59,18 +57,9 @@ function MainApp() {
       <Nav/>
       <S.MainSenterblock>
         <Search></Search>
-        <S.SenterblockHeader>Треки</S.SenterblockHeader>
-        <PlaylistFilter/>
-        <S.CenterblockContent>
-          <TracksTitle></TracksTitle>
-          {trackError ? <div>{trackError}</div>  : 
-           <S.ContentPlaylist>
-          {loading ? <SkeletonTrack/> :
-          <SimpleBar forceVisible="y" style={{ height: '65vh', maxWidth:"1120px"}}>
-            <PlaylistItems targetRef={targetRef}/>
-            </SimpleBar>}
-          </S.ContentPlaylist>}
-        </S.CenterblockContent>
+        <Outlet trackError={trackError}
+        loading={loading}
+        targetRef={targetRef}></Outlet>
       </S.MainSenterblock>  
       <SideBar />
     </S.Main>
@@ -88,5 +77,3 @@ function MainApp() {
 </S.Wrapper>
 </>)
 }
-
-export default MainApp;

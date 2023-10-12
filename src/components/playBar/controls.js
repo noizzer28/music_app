@@ -15,13 +15,13 @@ import { nextTrack, setIsPlaying, prevTrack, toggleShuffle, setShuffledTracks, s
 
 
     function handleNext () {
-        targetRef.current.scrollIntoView({ behavior: 'smooth' })
+        targetRef?.current?.scrollIntoView({ behavior: 'smooth' })
         dispatch((setIsPlaying(true)))
         dispatch(nextTrack())
     }
 
     function handlePrev () {
-        targetRef.current.scrollIntoView({ behavior: 'smooth' });
+        targetRef?.current?.scrollIntoView({ behavior: 'smooth' });
         if (currentTime < 5) {
             dispatch((setIsPlaying(true)))
             dispatch(prevTrack())
