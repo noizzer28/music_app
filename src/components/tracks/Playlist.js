@@ -8,13 +8,12 @@ import { setIsPlaying } from "../../store/track.slice"
 
 
 
-const PlaylistItems = ({targetRef}) => {
+const PlaylistItems = ({targetRef, tracks}) => {
 
   const dispatch = useDispatch()
-  const tracks = useSelector(state => state.tracks.tracks)
   const currentTrack = useSelector(state => state.tracks.currentTrack)
   const isPlaying = useSelector(state => state.tracks.isPlaying)
-
+  console.log(tracks)
   const handlePlay = (song, index) => {
     const prevValue = song
     dispatch(setIsPlaying(true)) 
@@ -33,8 +32,9 @@ const PlaylistItems = ({targetRef}) => {
     playStyles = `playing-dot`
   }
  
-
-  const playList = tracks.map((song, index) => 
+    
+  const PlayList = (tracks) => {
+    return tracks.map((song, index) => 
     <S.PlaylistItem key={song.id}>
     <S.PlaylistTrack>
       <S.TrackTitle>
@@ -65,7 +65,10 @@ const PlaylistItems = ({targetRef}) => {
     </S.PlaylistTrack>
   </S.PlaylistItem>
   )
-  return[playList]
+  }
+
+  return PlayList(tracks)
 }
+
 
 export default PlaylistItems

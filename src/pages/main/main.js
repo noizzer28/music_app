@@ -10,7 +10,6 @@ import { Search } from "../../components/center/search"
 import { useDispatch, useSelector } from "react-redux";
 import { setTracks } from "../../store/track.slice";
 import { Outlet } from "react-router";
-import { AllTracks } from "../../components/tracks/mainTracks";
 
 export const secondsToMinutes = (time) => {
   const minutes = Math.floor(time / 60)
@@ -57,9 +56,8 @@ export const  MainApp = () => {
       <Nav/>
       <S.MainSenterblock>
         <Search></Search>
-        <Outlet trackError={trackError}
-        loading={loading}
-        targetRef={targetRef}></Outlet>
+        <Outlet context={[trackError, loading, targetRef]}>
+        </Outlet>
       </S.MainSenterblock>  
       <SideBar />
     </S.Main>

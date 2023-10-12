@@ -5,8 +5,7 @@ import { Favorites } from "./pages/favorites/favorites";
 import { Category } from "./pages/category/category";
 import { NotFound } from "./pages/not-found/not-found";
 import { ProtectedRoute } from "./components/protected-routes/protected";
-import { Layout }  from "./components/layout/layout"
-import { AllTracks } from "./components/tracks/mainTracks";
+import { AllTracks } from "./pages/main/AllTracks";
 
 
 
