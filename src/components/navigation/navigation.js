@@ -2,8 +2,9 @@ import React, { useState, useContext } from "react";
 import * as S from "./navigation.styles"
 import { UserContext } from "../context/context";
 
+
 function Nav() {
-  const {token, setToken} = useContext(UserContext)
+  const {refreshToken, setRefreshToken} = useContext(UserContext)
   const [isActive, setIsActive] = useState(true);
 
   const hideSideBar = () => {
@@ -12,8 +13,14 @@ function Nav() {
 
   const handleLogOut = () => {
     localStorage.clear()
-    setToken({token: null})
+    setRefreshToken({token: null})
   }
+
+  const handleFavorites = async () => {
+    
+  }
+
+
   return (
     <S.MainNav >
       <S.NavLogo>
@@ -38,7 +45,7 @@ function Nav() {
               </S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink to='/favorites' style={({ isActive }) => {
+              <S.MenuLink to='/favorites' onClick={handleFavorites} style={({ isActive }) => {
                     return {
                       color: isActive ? "#ad61ff" : "",
                       textDecoration: isActive ? "underline" : "",

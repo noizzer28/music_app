@@ -9,7 +9,7 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useOutletContext } from "react-router";
 
 
-export const AllTracks = () =>  {
+export const MainTracks = () =>  {
     const AllTracks = useSelector(state => state.tracks.tracks)
     const [trackError, loading, targetRef] = useOutletContext()
 

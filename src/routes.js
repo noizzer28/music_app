@@ -5,16 +5,17 @@ import { Favorites } from "./pages/favorites/favorites";
 import { Category } from "./pages/category/category";
 import { NotFound } from "./pages/not-found/not-found";
 import { ProtectedRoute } from "./components/protected-routes/protected";
-import { AllTracks } from "./pages/main/AllTracks";
+import { MainTracks } from "./pages/main/mainTracks";
 
 
 
 export const AppRoutes = () => {
+
     return (
         <Routes>
             <Route element={<ProtectedRoute  isAllowed={localStorage.getItem('token')}></ProtectedRoute>}>
                 <Route path="/" element={<MainApp/>}>
-                    <Route index path="/" element={<AllTracks/>}/>
+                    <Route index path="/" element={<MainTracks/>}/>
                     <Route path="/favorites" element={<Favorites/>}/>
                     <Route path="/category/:id" element={<Category/>}/>
                 </Route>

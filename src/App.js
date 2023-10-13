@@ -8,12 +8,18 @@ import store from './store/index'
 
 
 function App() {
-  const [token, setToken] = useState(null)
-
-
+  const [refreshToken, setRefreshToken] = useState(null)
+  const [accessToken, setAccessToken] = useState(null)
+  const [tokenValidation, setTokenValidation] = useState(0)
 
   return (
-    <UserContext.Provider value={{token, setToken}}>
+    <UserContext.Provider value={{
+      refreshToken,
+      setRefreshToken, 
+      accessToken, 
+      setAccessToken, 
+      tokenValidation, 
+      setTokenValidation}}>
       <Provider store={store}>
         <BrowserRouter >
             <GlobalStyles/>

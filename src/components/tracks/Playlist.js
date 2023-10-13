@@ -13,7 +13,7 @@ const PlaylistItems = ({targetRef, tracks}) => {
   const dispatch = useDispatch()
   const currentTrack = useSelector(state => state.tracks.currentTrack)
   const isPlaying = useSelector(state => state.tracks.isPlaying)
-  console.log(tracks)
+
   const handlePlay = (song, index) => {
     const prevValue = song
     dispatch(setIsPlaying(true)) 
