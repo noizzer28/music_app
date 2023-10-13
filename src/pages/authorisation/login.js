@@ -21,6 +21,10 @@ export  function AuthPage({ isLoginMode = false}) {
 
   const handleLogin = async ({ login, password }) => {
     setLoading(true)  
+    if (!password || !login)  {
+      setError(`Все поля должны быть заполнены`)
+      return
+    }
     try {
       const data  = await Promise.all([Authorisation({login, password}), GetToken({login, password})])
       console.log(data)

@@ -6,7 +6,7 @@ export const fetchFavorites = createAsyncThunk(
         const responce = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/`, {
             method: "GET",
             headers: {
-                authorisation: `Bearer ${refreshToken}`
+                Authorization: `Bearer ${refreshToken}`
             }
         })
 
@@ -28,6 +28,7 @@ const trackSlice = createSlice({
         status: null,
         error: null,
         favoriteTracks: [],
+        refreshToken: null
     },
     reducers: {
         setTracks(state, action) {
@@ -79,7 +80,10 @@ const trackSlice = createSlice({
             } else {
                 state.currentTrack = state.tracks[state.currentIndex]
             }
-        }
+        },
+        setRefreshToken (state, action) {
+            state.refreshToken = action.payload;
+        },
     },
     extraReducers: {
         [fetchFavorites.pending]: (state) => {
@@ -94,5 +98,5 @@ const trackSlice = createSlice({
     }
 })
 
-export const {setTracks, setIsPlaying,setShuffledTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack} = trackSlice.actions;
+export const {setTracks, setIsPlaying,setShuffledTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack, setRefreshToken} = trackSlice.actions;
 export default trackSlice.reducer;

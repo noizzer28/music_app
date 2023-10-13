@@ -17,7 +17,7 @@ function Nav() {
   }
 
   const handleFavorites = async () => {
-    
+    console.log('1')
   }
 
 

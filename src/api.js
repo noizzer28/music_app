@@ -1,4 +1,5 @@
-
+import { useDispatch, useSelector } from "react-redux"
+import { setRefreshToken } from "./store/track.slice"
 const regLink = `https://skypro-music-api.skyeng.tech/user/signup/`
 const authLink = `https://skypro-music-api.skyeng.tech/user/login/`
 // myPassword =`Q9yCxe8xKRMdVvj`
@@ -97,7 +98,7 @@ export async function GetToken({login, password}) {
 }
 
 export async function GetAccessToken({refreshToken}) {
-
+  const dispatch = useDispatch()
   const response = await fetch(`https://skypro-music-api.skyeng.tech/user/token/`, {
     method: "POST",
     body: JSON.stringify({
@@ -109,7 +110,7 @@ export async function GetAccessToken({refreshToken}) {
   })
   const data = await response.json()
   if (response.ok) {
-    console.log(data)
+    dispatch(setRefreshToken(data))
     return data
   } else {
     throw new Error(data.detail);
