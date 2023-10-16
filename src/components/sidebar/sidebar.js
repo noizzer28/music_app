@@ -12,14 +12,13 @@ export  const SideBar = ( ) => {
   const login = useSelector(state => state.user.login)
 
   const navigate = useNavigate()
-  // const {accessToken, setAccessToken} = useContext(UserContext)
   const [loading, setloading] = useState(true)
 
 
   const handleLogout = () => {
     localStorage.clear()
     dispatch(setAccessToken(null))
-    navigate('/')
+    navigate('/login')
   }
 
   useEffect(() => {

@@ -3,7 +3,8 @@ import * as S from "./login.styled";
 import {  useEffect, useState } from "react";
 import { Authorisation, Registration, GetToken } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
-import { setPassword, setLogin, setAccessToken, setRefreshToken } from "../../store/user.slice";
+import { setPassword, setLogin, setRefreshToken } from "../../store/user.slice";
+import { FetchRefreshToken } from "../../store/user.slice";
 import { clearToken } from "../../App";
 
 export  function AuthPage({ isLoginMode = false}) {
@@ -24,9 +25,8 @@ export  function AuthPage({ isLoginMode = false}) {
       return
     }
     try {
-      const data  = await Promise.all([Authorisation({login, password}), GetToken({login, password})])
+      const data  = await Promise.all([Authorisation({login, password}), dispatch(FetchRefreshToken)])
       dispatch(setRefreshToken(data[1].refresh))
-      dispatch(setAccessToken(data[1].access))
       localStorage.setItem('token', data[1].refresh)
       navigate(`/`)
     } catch (error) {
@@ -48,10 +48,10 @@ export  function AuthPage({ isLoginMode = false}) {
     }
 
     try {
-      const data  = await Promise.all([Registration({login, password}), GetToken({login, password})])
+      const data  = await Promise.all([Registration({login, password}), dispatch(FetchRefreshToken)])
       dispatch(setRefreshToken(data[1].refresh))
-      dispatch(setAccessToken(data[1].access))
       localStorage.setItem('token', data[1].refresh)
+      navigate(`/`)
     } catch (error) {
       console.error(error)
       setError(`Ошибка: ${error.message}`)

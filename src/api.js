@@ -76,42 +76,4 @@ export async function Authorisation({login, password}) {
     }
 }
 
-export async function GetToken({login, password}) {
-
-  const response = await fetch(`https://skypro-music-api.skyeng.tech/user/token/`, {
-    method: "POST",
-    body: JSON.stringify({
-      email: `${login}`,
-      password: `${password}`,
-  }),
-    headers: {
-      "content-type": "application/json",
-    },
-  })
-  const data = await response.json()
-  if (response.ok) {
-    return data
-  } else {
-    throw new Error(data.detail);
-  }
-}
-
-export async function FetchAccessToken ({refreshToken}) {
-
-  const response = await fetch(`https://skypro-music-api.skyeng.tech/user/token/refresh/`, {
-    method: "POST",
-    body: JSON.stringify({
-      refresh: `${refreshToken}`
-  }),
-    headers: {
-      "content-type": "application/json",
-    },
-  })
-  const data = await response.json()
-  if (response.ok) {
-    return data
-  } else {
-    throw new Error(response);
-  }
-}
 

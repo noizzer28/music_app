@@ -3,10 +3,9 @@ import { TracksTitle } from "../../components/center/title";
 import SkeletonTrack from "../../components/skeleton/skeleton";
 import SimpleBar from 'simplebar-react';
 import * as S from "../../pages/main/app.styles"
-import { useOutletContext } from "react-router";
+import { FetchAccessToken } from "../../store/user.slice";
 import { fetchFavorites } from "../../store/track.slice";
 import { useEffect } from "react";
-import { FetchAccessToken } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { setAccessToken } from "../../store/user.slice";
 import { useState } from "react";
@@ -17,20 +16,30 @@ export const Favorites =() => {
     const [error, setError] = useState()
     const [loading, setIsLoading] = useState(false)
     const favoriteTracks = useSelector(state => state.tracks.favoriteTracks)
-    const refreshToken = useSelector(state => state.user.refreshToken)
+    const tokenActive = useSelector(state => state.user.tokenActive)
+    const accessToken = useSelector(state => state.user.accessToken)
 
     useEffect(() => {
         setIsLoading(true)
         const fetchData = async () => {
-            await FetchAccessToken({refreshToken}).then((data) => {
-                dispatch(setAccessToken(data.access))   
-                dispatch(fetchFavorites(data.access))
-                setIsLoading(false)
-
-            }).catch((error) => {
+            if (tokenActive) {
+               const data = await dispatch(fetchFavorites(accessToken))
+               .catch(()=> {
                 setError(error)
                 console.error(error)
-            })
+               })
+               console.log(data)
+                setIsLoading(false)
+            } else {
+                await dispatch(FetchAccessToken()).then((data) => {
+                    dispatch(fetchFavorites(data.access))
+                    setIsLoading(false)
+                }).catch((error) => {
+                    setError(error)
+                    console.error(error)
+                })
+            }
+
         }
         fetchData()
         
