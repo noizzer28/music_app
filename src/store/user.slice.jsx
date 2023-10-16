@@ -3,30 +3,31 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const FetchRefreshToken = createAsyncThunk(
     'user/fetchRefreshToken',
-    async function() {
+    async function({login, password}) {
         const response = await fetch(`https://skypro-music-api.skyeng.tech/user/token/`, {
             method: "POST",
             body: JSON.stringify({
-              email: `${state.login}`,
-              password: `${state.password}`,
+              email: `${login}`,
+              password: `${password}`,
           }),
             headers: {
               "content-type": "application/json",
             },
           })
           const data = await response.json()
+          console.log(data)
           return data
     }
 )
 
 export const FetchAccessToken = createAsyncThunk(
     'user/refreshAccessToken',
-    async function() {
+    async function(refreshToken) {
         
         const response = await fetch(`https://skypro-music-api.skyeng.tech/user/token/refresh/`, {
             method: "POST",
             body: JSON.stringify({
-            refresh: `${state.refreshToken}`
+            refresh: `${refreshToken}`
         }),
             headers: {
             "content-type": "application/json",
@@ -42,7 +43,7 @@ const userSlice = createSlice({
     initialState: {
         login: '',
         password: '',
-        refreshToken: null,
+        refreshToken: localStorage.getItem("token"),
         accessToken: null,
         status: null,
         tokenActive: false
@@ -67,22 +68,23 @@ const userSlice = createSlice({
         },
         [FetchRefreshToken.fulfilled]: (state, action) => {
             state.status = "resolved"
-            state.refreshToken = action.payload
+            state.accessToken = action.payload.access
+            state.refreshToken = action.payload.refresh
         },
         [FetchRefreshToken.rejected]: (state, action) => {
             state.status ="rejected"
             state.error = action.payload
         },
 
-        [FetchRefreshToken.fulfilled]: (state, action) => {
+        [FetchAccessToken.fulfilled]: (state, action) => {
             state.status = "resolved"
             state.tokenActive = true
             setTimeout(() => {
                 state.tokenActive = false
             }, 200000);
-            state.accessToken = action.payload
+            state.accessToken = action.payload.access
         },
-        [FetchRefreshToken.rejected]: (state, action) => {
+        [FetchAccessToken.rejected]: (state, action) => {
             state.status ="rejected"
             state.error = action.payload
         },

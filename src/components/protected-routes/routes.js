@@ -13,10 +13,10 @@ import { setRefreshToken } from "../../store/user.slice";
 export const AppRoutes = () => {
     const dispatch = useDispatch()
     dispatch(setRefreshToken(localStorage.getItem("token")))
-
+    const token = localStorage.getItem("token")
     return (
         <Routes>
-            <Route element={<ProtectedRoute  isAllowed={localStorage.getItem("token")}></ProtectedRoute>}>
+            <Route element={<ProtectedRoute  isAllowed={token}></ProtectedRoute>}>
                 <Route path="/" element={<MainApp/>}>
                     <Route index path="/" element={<MainTracks/>}/>
                     <Route path="/favorites" element={<Favorites/>}/>

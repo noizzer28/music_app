@@ -4,7 +4,7 @@ import * as S from "./sidebar.styled"
 import { PLAYLISTS } from './categories'
 import { UserContext } from '../context/context'
 import { useNavigate } from 'react-router'
-import { setPassword, setLogin, setAccessToken, setRefreshToken } from "../../store/user.slice";
+import {  setRefreshToken } from "../../store/user.slice";
 import { useDispatch, useSelector } from "react-redux";
 
 export  const SideBar = ( ) => {
@@ -17,7 +17,7 @@ export  const SideBar = ( ) => {
 
   const handleLogout = () => {
     localStorage.clear()
-    dispatch(setAccessToken(null))
+    dispatch(setRefreshToken(null))
     navigate('/login')
   }
 

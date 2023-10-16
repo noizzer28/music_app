@@ -57,6 +57,7 @@ export  const Bar = ({
   }) => {
     const currentTrack = useSelector(state => state.tracks.currentTrack)
     const dispatch = useDispatch()
+    const progressRef = useRef()
     const onLoadedMetadata = () => {
       const seconds = Math.floor(audioRef.current.duration)
       setDuration(audioRef.current.duration)

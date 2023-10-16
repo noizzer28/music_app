@@ -6,11 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPassword, setLogin, setRefreshToken } from "../../store/user.slice";
 import { FetchRefreshToken } from "../../store/user.slice";
 import { clearToken } from "../../App";
+import { tsCallSignatureDeclaration } from "@babel/types";
 
 export  function AuthPage({ isLoginMode = false}) {
   const dispatch = useDispatch()
   const password = useSelector(state => state.user.password)
   const login = useSelector(state => state.user.login)
+    const refreshToken = useSelector(state => state.user.refreshToken)
   const [error, setError] = useState(null)
   const [repeatPassword, setRepeatPassword] = useState("");
   const [isLoading, setLoading] = useState(false)
@@ -25,10 +27,12 @@ export  function AuthPage({ isLoginMode = false}) {
       return
     }
     try {
-      const data  = await Promise.all([Authorisation({login, password}), dispatch(FetchRefreshToken)])
-      dispatch(setRefreshToken(data[1].refresh))
-      localStorage.setItem('token', data[1].refresh)
+      const data  = await Promise.all([Authorisation({login, password}), dispatch(FetchRefreshToken({login, password}))])
+      console.log(data)
+      console.log(refreshToken)
+      localStorage.setItem('token', data[1].payload.refresh)
       navigate(`/`)
+      
     } catch (error) {
       console.error(error)
       setError(`Ошибка: ${error.message}`)
@@ -48,9 +52,8 @@ export  function AuthPage({ isLoginMode = false}) {
     }
 
     try {
-      const data  = await Promise.all([Registration({login, password}), dispatch(FetchRefreshToken)])
-      dispatch(setRefreshToken(data[1].refresh))
-      localStorage.setItem('token', data[1].refresh)
+      const data  = await Promise.all([Registration({login, password}), dispatch(FetchRefreshToken())])
+      localStorage.setItem('token', refreshToken)
       navigate(`/`)
     } catch (error) {
       console.error(error)

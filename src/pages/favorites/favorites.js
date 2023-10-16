@@ -7,7 +7,7 @@ import { FetchAccessToken } from "../../store/user.slice";
 import { fetchFavorites } from "../../store/track.slice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setAccessToken } from "../../store/user.slice";
+import { setAccessToken, setRefreshToken } from "../../store/user.slice";
 import { useState } from "react";
 
 
@@ -18,27 +18,22 @@ export const Favorites =() => {
     const favoriteTracks = useSelector(state => state.tracks.favoriteTracks)
     const tokenActive = useSelector(state => state.user.tokenActive)
     const accessToken = useSelector(state => state.user.accessToken)
+    const refreshToken = useSelector(state => state.user.refreshToken)
 
     useEffect(() => {
+        dispatch(setRefreshToken(localStorage.getItem("token")))
         setIsLoading(true)
         const fetchData = async () => {
-            if (tokenActive) {
-               const data = await dispatch(fetchFavorites(accessToken))
-               .catch(()=> {
-                setError(error)
-                console.error(error)
-               })
-               console.log(data)
-                setIsLoading(false)
-            } else {
-                await dispatch(FetchAccessToken()).then((data) => {
-                    dispatch(fetchFavorites(data.access))
+                console.log(refreshToken)
+                console.log(accessToken)
+                await dispatch(FetchAccessToken(refreshToken)).then(() => {
+                    dispatch(fetchFavorites(accessToken))
                     setIsLoading(false)
                 }).catch((error) => {
                     setError(error)
                     console.error(error)
                 })
-            }
+
 
         }
         fetchData()
