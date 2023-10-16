@@ -11,7 +11,8 @@ import { useOutletContext } from "react-router";
 
 export const MainTracks = () =>  {
     const AllTracks = useSelector(state => state.tracks.tracks)
-    const [trackError, loading, targetRef] = useOutletContext()
+    const [trackError, loading] = useOutletContext()
+    
 
     return    <>
     <S.SenterblockHeader>Треки</S.SenterblockHeader>
@@ -22,7 +23,7 @@ export const MainTracks = () =>  {
         <S.ContentPlaylist>
         {loading ? <SkeletonTrack/> :
         <SimpleBar forceVisible="y" style={{ height: '65vh', maxWidth:"1120px"}}>
-            <PlaylistItems targetRef={targetRef} tracks={AllTracks}/>
+            <PlaylistItems tracks={AllTracks}/>
             </SimpleBar>}
         </S.ContentPlaylist>}
     </S.CenterblockContent>

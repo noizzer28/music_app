@@ -11,7 +11,6 @@ import { nextTrack, setIsPlaying, prevTrack, toggleShuffle, setShuffledTracks, s
     const tracks = useSelector(state => state.tracks.tracks)
     const currentTrack = useSelector(state => state.tracks.currentTrack)
     const shuffledTracks = useSelector(state => state.tracks.shuffledTracks)
-    const currentIndex = useSelector(state => state.tracks.currentIndex)
 
 
     function handleNext () {

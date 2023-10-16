@@ -5,26 +5,30 @@ import SimpleBar from 'simplebar-react';
 import * as S from "../../pages/main/app.styles"
 import { useOutletContext } from "react-router";
 import { fetchFavorites } from "../../store/track.slice";
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import { FetchAccessToken } from "../../api";
-import { UserContext } from "../../components/context/context";
 import { useDispatch, useSelector } from "react-redux";
-import { setPassword, setLogin, setAccessToken, setRefreshToken } from "../../store/user.slice";
+import { setAccessToken } from "../../store/user.slice";
+import { useState } from "react";
 
 
 export const Favorites =() => {
     const dispatch = useDispatch()
-    const [trackError, loading, targetRef] = useOutletContext()
+    const [error, setError] = useState()
+    const [loading, setIsLoading] = useState(false)
     const favoriteTracks = useSelector(state => state.tracks.favoriteTracks)
     const refreshToken = useSelector(state => state.user.refreshToken)
 
     useEffect(() => {
+        setIsLoading(true)
         const fetchData = async () => {
             await FetchAccessToken({refreshToken}).then((data) => {
-                console.log(data.access)
-                dispatch(setAccessToken(data.access))
+                dispatch(setAccessToken(data.access))   
                 dispatch(fetchFavorites(data.access))
+                setIsLoading(false)
+
             }).catch((error) => {
+                setError(error)
                 console.error(error)
             })
         }
@@ -38,11 +42,11 @@ export const Favorites =() => {
         <S.SenterblockHeader>Мои треки</S.SenterblockHeader>
             <S.CenterblockContent>
             <TracksTitle></TracksTitle>
-            {trackError ? <div>{trackError}</div>  : 
+            {error ? <div>{trackError}</div>  : 
             <S.ContentPlaylist>
             {loading ? <SkeletonTrack/> :
             <SimpleBar forceVisible="y" style={{ height: '65vh', maxWidth:"1120px"}}>
-                <PlaylistItems targetRef={targetRef} tracks={favoriteTracks}/>
+                <PlaylistItems tracks={favoriteTracks}/>
                 </SimpleBar>}
             </S.ContentPlaylist>}
         </S.CenterblockContent>

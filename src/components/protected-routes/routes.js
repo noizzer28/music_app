@@ -6,18 +6,17 @@ import { Category } from "../../pages/category/category";
 import { NotFound } from "../../pages/not-found/not-found";
 import { ProtectedRoute } from "./protected";
 import { MainTracks } from "../../pages/main/mainTracks";
-import { useDispatch, useSelector } from "react-redux";
-import { setPassword, setLogin, setAccessToken, setRefreshToken } from "../../store/user.slice";
+import { useDispatch } from "react-redux";
+import { setRefreshToken } from "../../store/user.slice";
 
 
 export const AppRoutes = () => {
     const dispatch = useDispatch()
     dispatch(setRefreshToken(localStorage.getItem("token")))
-    const refreshToken = useSelector(state => state.user.refreshToken)
 
     return (
         <Routes>
-            <Route element={<ProtectedRoute  isAllowed={refreshToken}></ProtectedRoute>}>
+            <Route element={<ProtectedRoute  isAllowed={localStorage.getItem("token")}></ProtectedRoute>}>
                 <Route path="/" element={<MainApp/>}>
                     <Route index path="/" element={<MainTracks/>}/>
                     <Route path="/favorites" element={<Favorites/>}/>

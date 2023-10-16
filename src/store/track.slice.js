@@ -91,7 +91,10 @@ const trackSlice = createSlice({
             state.status = "resolved"
             state.favoriteTracks = action.payload
         },
-        [fetchFavorites.rejected]: (state, action) => {},
+        [fetchFavorites.rejected]: (state, action) => {
+            state.status ="rejected"
+            state.error = action.payload
+        },
     }
 })
 

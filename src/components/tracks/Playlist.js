@@ -4,11 +4,12 @@ import { useSelector} from "react-redux"
 import { setCurrentIndex, setCurrentTrack } from "../../store/track.slice"
 import { useDispatch } from "react-redux"
 import { setIsPlaying } from "../../store/track.slice"
+import { useOutletContext } from "react-router"
 
 
 
 
-const PlaylistItems = ({targetRef, tracks}) => {
+const PlaylistItems = ({ tracks}) => {
 
   const dispatch = useDispatch()
   const currentTrack = useSelector(state => state.tracks.currentTrack)
@@ -44,7 +45,7 @@ const PlaylistItems = ({targetRef, tracks}) => {
           </S.trackTitleSvg>
         </S.TrackTitleImage>
         <div className="track__title-text">
-        <S.TrackTitleLink  ref={currentTrack === song ? targetRef : undefined} onClick={() => handlePlay(song, index)} >
+        <S.TrackTitleLink  ref={undefined} onClick={() => handlePlay(song, index)} >
             {song.name} 
             <S.TrackTitleSpan>{song.subtitle}</S.TrackTitleSpan>
         </S.TrackTitleLink>
