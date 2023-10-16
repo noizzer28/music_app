@@ -1,17 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+
 export const fetchFavorites = createAsyncThunk(
     "tracks/fetchFavorites",
-    async function(refreshToken) {
+    async function(accessToken) {
         const responce = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/`, {
             method: "GET",
             headers: {
-                Authorization: `Bearer ${refreshToken}`
+                Authorization: `Bearer ${accessToken}`
             }
         })
-
         const data = await responce.json()
-        console.log(data)
         return data;
     }
 )
@@ -28,7 +27,7 @@ const trackSlice = createSlice({
         status: null,
         error: null,
         favoriteTracks: [],
-        refreshToken: null
+
     },
     reducers: {
         setTracks(state, action) {
@@ -81,9 +80,7 @@ const trackSlice = createSlice({
                 state.currentTrack = state.tracks[state.currentIndex]
             }
         },
-        setRefreshToken (state, action) {
-            state.refreshToken = action.payload;
-        },
+
     },
     extraReducers: {
         [fetchFavorites.pending]: (state) => {

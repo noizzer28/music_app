@@ -6,21 +6,31 @@ import * as S from "../../pages/main/app.styles"
 import { useOutletContext } from "react-router";
 import { fetchFavorites } from "../../store/track.slice";
 import { useEffect, useContext } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GetAccessToken } from "../../api";
+import { FetchAccessToken } from "../../api";
 import { UserContext } from "../../components/context/context";
+import { useDispatch, useSelector } from "react-redux";
+import { setPassword, setLogin, setAccessToken, setRefreshToken } from "../../store/user.slice";
 
 
 export const Favorites =() => {
     const dispatch = useDispatch()
     const [trackError, loading, targetRef] = useOutletContext()
     const favoriteTracks = useSelector(state => state.tracks.favoriteTracks)
-    const {refreshToken, setRefreshToken, GetAccessToken, accessToken} = useContext(UserContext)
-  
+    const refreshToken = useSelector(state => state.user.refreshToken)
 
     useEffect(() => {
-        dispatch(fetchFavorites(accessToken))
-    }, [dispatch]);
+        const fetchData = async () => {
+            await FetchAccessToken({refreshToken}).then((data) => {
+                console.log(data.access)
+                dispatch(setAccessToken(data.access))
+                dispatch(fetchFavorites(data.access))
+            }).catch((error) => {
+                console.error(error)
+            })
+        }
+        fetchData()
+        
+    }, []);
 
 
     return (

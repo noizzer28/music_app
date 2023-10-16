@@ -1,10 +1,14 @@
 import React, { useState, useContext } from "react";
 import * as S from "./navigation.styles"
 import { UserContext } from "../context/context";
+import { setPassword, setLogin, setAccessToken, setRefreshToken } from "../../store/user.slice";
+import { useDispatch, useSelector } from "react-redux";
+
 
 
 function Nav() {
-  const {refreshToken, setRefreshToken} = useContext(UserContext)
+  const dispatch = useDispatch()
+  // const {refreshToken, setRefreshToken} = useContext(UserContext)
   const [isActive, setIsActive] = useState(true);
 
   const hideSideBar = () => {
@@ -13,12 +17,10 @@ function Nav() {
 
   const handleLogOut = () => {
     localStorage.clear()
-    setRefreshToken({token: null})
+    dispatch(setRefreshToken(null))
   }
 
-  const handleFavorites = async () => {
-    console.log('1')
-  }
+
 
 
   return (
@@ -45,7 +47,7 @@ function Nav() {
               </S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink to='/favorites' onClick={handleFavorites} style={({ isActive }) => {
+              <S.MenuLink to='/favorites'  style={({ isActive }) => {
                     return {
                       color: isActive ? "#ad61ff" : "",
                       textDecoration: isActive ? "underline" : "",

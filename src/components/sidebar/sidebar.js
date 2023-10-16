@@ -4,19 +4,21 @@ import * as S from "./sidebar.styled"
 import { PLAYLISTS } from './categories'
 import { UserContext } from '../context/context'
 import { useNavigate } from 'react-router'
-import { useSelector } from "react-redux"
+import { setPassword, setLogin, setAccessToken, setRefreshToken } from "../../store/user.slice";
+import { useDispatch, useSelector } from "react-redux";
 
 export  const SideBar = ( ) => {
+  const dispatch = useDispatch()
   const login = useSelector(state => state.user.login)
 
   const navigate = useNavigate()
-  const {accessToken, setAccessToken} = useContext(UserContext)
+  // const {accessToken, setAccessToken} = useContext(UserContext)
   const [loading, setloading] = useState(true)
 
 
   const handleLogout = () => {
     localStorage.clear()
-    setAccessToken(null)
+    dispatch(setAccessToken(null))
     navigate('/')
   }
 

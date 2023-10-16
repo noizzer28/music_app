@@ -1,21 +1,19 @@
 import { Link, useNavigate } from "react-router-dom"
 import * as S from "./login.styled";
-import { useContext, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { Authorisation, Registration, GetToken } from "../../api";
-import { UserContext } from "../../components/context/context";
 import { useDispatch, useSelector } from "react-redux";
-import { setPassword, setLogin } from "../../store/user.slice";
+import { setPassword, setLogin, setAccessToken, setRefreshToken } from "../../store/user.slice";
+import { clearToken } from "../../App";
 
 export  function AuthPage({ isLoginMode = false}) {
   const dispatch = useDispatch()
   const password = useSelector(state => state.user.password)
   const login = useSelector(state => state.user.login)
   const [error, setError] = useState(null)
-
   const [repeatPassword, setRepeatPassword] = useState("");
   const [isLoading, setLoading] = useState(false)
   const navigate = useNavigate()
-  const {refreshToken, setRefreshToken, accessToken, setAccessToken} = useContext(UserContext)
 
 
 
@@ -27,10 +25,9 @@ export  function AuthPage({ isLoginMode = false}) {
     }
     try {
       const data  = await Promise.all([Authorisation({login, password}), GetToken({login, password})])
-      console.log(data)
-      setRefreshToken(data[1].refresh)
-      setAccessToken(data[1].access)
-      localStorage.setItem('token', refreshToken)
+      dispatch(setRefreshToken(data[1].refresh))
+      dispatch(setAccessToken(data[1].access))
+      localStorage.setItem('token', data[1].refresh)
       navigate(`/`)
     } catch (error) {
       console.error(error)
@@ -52,9 +49,9 @@ export  function AuthPage({ isLoginMode = false}) {
 
     try {
       const data  = await Promise.all([Registration({login, password}), GetToken({login, password})])
-      setRefreshToken(data[1].refresh)
-      localStorage.setItem('token', refreshToken)
-      navigate(`/`)
+      dispatch(setRefreshToken(data[1].refresh))
+      dispatch(setAccessToken(data[1].access))
+      localStorage.setItem('token', data[1].refresh)
     } catch (error) {
       console.error(error)
       setError(`Ошибка: ${error.message}`)
