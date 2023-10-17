@@ -23,7 +23,7 @@ export const MainTracks = () =>  {
         <S.ContentPlaylist>
         {loading ? <SkeletonTrack/> :
         <SimpleBar forceVisible="y" style={{ height: '65vh', maxWidth:"1120px"}}>
-            <PlaylistItems tracks={AllTracks}/>
+            <PlaylistItems tracks={AllTracks} status={'main'}/>
             </SimpleBar>}
         </S.ContentPlaylist>}
     </S.CenterblockContent>

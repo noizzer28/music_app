@@ -1,21 +1,23 @@
 import * as S from "./tracks.styles"
 import { secondsToMinutes } from "../../pages/main/main"
 import { useSelector} from "react-redux"
-import { setCurrentIndex, setCurrentTrack } from "../../store/track.slice"
+import { setCurrentIndex, setCurrentPlayList, setCurrentTrack, setcu } from "../../store/track.slice"
 import { useDispatch } from "react-redux"
 import { setIsPlaying } from "../../store/track.slice"
-import { useOutletContext } from "react-router"
 
 
 
 
-const PlaylistItems = ({ tracks}) => {
+
+const PlaylistItems = ({ tracks, status}) => {
 
   const dispatch = useDispatch()
   const currentTrack = useSelector(state => state.tracks.currentTrack)
   const isPlaying = useSelector(state => state.tracks.isPlaying)
 
+
   const handlePlay = (song, index) => {
+    dispatch(setCurrentPlayList(tracks))
     const prevValue = song
     dispatch(setIsPlaying(true)) 
     if (currentTrack === prevValue) {

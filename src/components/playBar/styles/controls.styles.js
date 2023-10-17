@@ -20,6 +20,7 @@ display: flex;
 -webkit-box-align: center;
 -ms-flex-align: center;
 align-items: center;
+outline: none
 `
 
 export const PlayerBtnPrev = styled(PlayerBtn)`

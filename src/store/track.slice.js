@@ -27,9 +27,12 @@ const trackSlice = createSlice({
         status: null,
         error: null,
         favoriteTracks: [],
-
+        currentPlaylist: []
     },
     reducers: {
+        setCurrentPlayList(state, action){
+            state.currentPlaylist = action.payload
+        },
         setTracks(state, action) {
             state.tracks = action.payload;
         },
@@ -62,13 +65,13 @@ const trackSlice = createSlice({
             } else {
                 if (state.currentIndex !== null && state.currentIndex > 0 ) {
                     state.currentIndex--
-                    state.currentTrack = state.tracks[state.currentIndex]
+                    state.currentTrack = state.currentPlaylist[state.currentIndex]
                 }
             }
 
         },
         nextTrack(state) {
-            if (state.currentIndex < state.tracks.length -1) {
+            if (state.currentIndex < state.currentPlaylist.length -1) {
                 state.currentIndex++
             } 
             if (state.isShuffled) {
@@ -77,7 +80,7 @@ const trackSlice = createSlice({
                 }
                 state.currentTrack = state.shuffledTracks[state.currentIndex]
             } else {
-                state.currentTrack = state.tracks[state.currentIndex]
+                state.currentTrack = state.currentPlaylist[state.currentIndex]
             }
         },
 
@@ -98,5 +101,5 @@ const trackSlice = createSlice({
     }
 })
 
-export const {setTracks, setIsPlaying,setShuffledTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack, setRefreshToken} = trackSlice.actions;
+export const {setTracks, setIsPlaying,setShuffledTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack, setCurrentPlayList} = trackSlice.actions;
 export default trackSlice.reducer;
