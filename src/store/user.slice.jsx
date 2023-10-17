@@ -71,12 +71,7 @@ const userSlice = createSlice({
             state.accessToken = action.payload.access
         },
         setIsActiveToken(state, action) {
-            if (state.isActiveToken) {
-                setTimeout(() => {
-                    state.isActiveToken == false
-                }, 200000);
-            }
-            // state.isActiveToken = action.payload
+            state.isActiveToken = action.payload
         }
 
     },

@@ -42,7 +42,7 @@ const PlaylistItems = ({ tracks, status}) => {
     <S.PlaylistTrack>
       <S.TrackTitle>
         <S.TrackTitleImage >
-          <S.trackTitleSvg alt="music" className={currentTrack === song ? `${playStyles}` : ""}>
+          <S.trackTitleSvg alt="music" className={currentTrack?.id === song.id ? `${playStyles}` : ""}>
             <use xlinkHref="./icons/sprite.svg#icon-note"></use>
           </S.trackTitleSvg>
         </S.TrackTitleImage>

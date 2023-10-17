@@ -35,11 +35,7 @@ export const Favorites =() => {
         
     }, [dispatch]);
 
-    useEffect(() => {
-        setTimeout(() => {
-            dispatch(setIsActiveToken(false))
-        }, 200000);
-    }, [isActiveToken]);
+  
 
     return (
         <div>
