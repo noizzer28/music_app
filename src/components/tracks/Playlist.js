@@ -49,7 +49,8 @@ const PlaylistItems = ({ tracks, status}) => {
   
   
   const PlayList = (tracks) => {
-    console.log(tracks)
+
+    
     return tracks.map((song, index) => {
       let isLiked
       if (status === 'favorite') {
@@ -81,8 +82,8 @@ const PlaylistItems = ({ tracks, status}) => {
           <S.TrackAlbum>
             <S.TrackAlbumLink>{song.album}</S.TrackAlbumLink>
           </S.TrackAlbum>
-          <div className="track__time _btn-icon">
-            <S.TrackTimeSvg alt="time" className={isLiked ? 'activeLike' : ''} onClick={()=> handleAddFavorite(song.id)}>
+          <div className={`track__time _btn-icon ${isLiked ? 'activeLike' : ''}` }  onClick={()=> handleAddFavorite(song.id)}>
+            <S.TrackTimeSvg alt="time" >
               <use xlinkHref="./icons/sprite.svg#icon-like"></use>
             </S.TrackTimeSvg>  
             <S.TrackTimeText>{secondsToMinutes(song.duration_in_seconds)}</S.TrackTimeText>

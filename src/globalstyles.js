@@ -23,7 +23,8 @@ export const GlobalStyles = createGlobalStyle`
   }
   
   button,
-  ._btn {
+  ._btn,
+  ._btn-icon {
     cursor: pointer;
   }
   
@@ -117,7 +118,13 @@ export const GlobalStyles = createGlobalStyle`
   }
 }
 
-.activeLike {
+.activeLike svg{
   fill: #B672FF;
 }
+._btn-icon.activeLike:hover svg{
+  fill: #B672FF
+ 
+
+}
+
 `
