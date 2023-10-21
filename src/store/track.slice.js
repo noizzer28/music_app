@@ -1,19 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 
-export const fetchFavorites = createAsyncThunk(
-    "tracks/fetchFavorites",
-    async function(accessToken) {
-        const responce = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        })
-        const data = await responce.json()
-        return data;
-    }
-)
+// export const fetchFavorites = createAsyncThunk(
+//     "tracks/fetchFavorites",
+//     async function(accessToken) {
+//         const responce = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/`, {
+//             method: "GET",
+//             headers: {
+//                 Authorization: `Bearer ${accessToken}`
+//             }
+//         })
+//         const data = await responce.json()
+//         return data;
+//     }
+// )
 
 const trackSlice = createSlice({
     name: 'tracks',
@@ -83,23 +83,25 @@ const trackSlice = createSlice({
                 state.currentTrack = state.currentPlaylist[state.currentIndex]
             }
         },
-
-    },
-    extraReducers: {
-        [fetchFavorites.pending]: (state) => {
-            state.status = "loading"
-            state.error = null
-        },
-        [fetchFavorites.fulfilled]: (state, action) => {
-            state.status = "resolved"
+        setFavoriteTracks(state, action) {
             state.favoriteTracks = action.payload
-        },
-        [fetchFavorites.rejected]: (state, action) => {
-            state.status ="rejected"
-            state.error = action.payload
-        },
-    }
+        }
+    },
+    // extraReducers: {
+    //     [fetchFavorites.pending]: (state) => {
+    //         state.status = "loading"
+    //         state.error = null
+    //     },
+    //     [fetchFavorites.fulfilled]: (state, action) => {
+    //         state.status = "resolved"
+    //         state.favoriteTracks = action.payload
+    //     },
+    //     [fetchFavorites.rejected]: (state, action) => {
+    //         state.status ="rejected"
+    //         state.error = action.payload
+    //     },
+    // }
 })
 
-export const {setTracks, setIsPlaying,setShuffledTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack, setCurrentPlayList} = trackSlice.actions;
+export const {setTracks, setFavoriteTracks, setIsPlaying,setShuffledTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack, setCurrentPlayList} = trackSlice.actions;
 export default trackSlice.reducer;

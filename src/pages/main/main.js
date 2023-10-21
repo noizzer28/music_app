@@ -34,7 +34,7 @@ export const  MainApp = () => {
     setLoading(false)
     SetTrackError(`Ошибка соединения с сервером: ${error.message}`)
   })
-  },[])
+  },[dispatch])
 
 
 

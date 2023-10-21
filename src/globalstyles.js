@@ -116,4 +116,8 @@ export const GlobalStyles = createGlobalStyle`
     transform: scale(1);
   }
 }
+
+.activeLike {
+  fill: #B672FF;
+}
 `

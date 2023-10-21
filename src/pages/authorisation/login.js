@@ -28,9 +28,11 @@ export  function AuthPage({ isLoginMode = false}) {
     }
     try {
       const data  = await Promise.all([Authorisation({login, password}), dispatch(FetchRefreshToken({login, password}))])
-      console.log(data)
-      console.log(refreshToken)
-      localStorage.setItem('token', data[1].payload.refresh)
+      const user = {
+        "token": data[1].payload.refresh,
+        name: login 
+        }
+      localStorage.setItem("token", JSON.stringify(user))
       navigate(`/`)
       
     } catch (error) {
@@ -53,7 +55,11 @@ export  function AuthPage({ isLoginMode = false}) {
 
     try {
       const data  = await Promise.all([Registration({login, password}), dispatch(FetchRefreshToken())])
-      localStorage.setItem('token', refreshToken)
+      const user = {
+        "token": data[1].payload.refresh,
+        name: login 
+        }
+      localStorage.setItem("token", JSON.stringify(user))
       navigate(`/`)
     } catch (error) {
       console.error(error)
