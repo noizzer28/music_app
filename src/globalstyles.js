@@ -123,8 +123,6 @@ export const GlobalStyles = createGlobalStyle`
 }
 ._btn-icon.activeLike:hover svg{
   fill: #B672FF
- 
-
 }
 
 `

@@ -51,7 +51,6 @@ const userSlice = createSlice({
         refreshToken: localStorage.getItem("token"),
         accessToken: null,
         status: null,
-        isActiveToken: false
     },
     reducers: {
 
@@ -66,9 +65,6 @@ const userSlice = createSlice({
         },
         setAccessToken(state, action) {
             state.accessToken = action.payload.access
-        },
-        setIsActiveToken(state, action) {
-            state.isActiveToken = action.payload
         },
         setStatus (state, action) {
             state.status = action.payload

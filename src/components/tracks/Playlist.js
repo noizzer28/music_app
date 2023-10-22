@@ -4,7 +4,7 @@ import { useSelector} from "react-redux"
 import { setCurrentIndex, setCurrentPlayList, setCurrentTrack, setcu } from "../../store/track.slice"
 import { useDispatch } from "react-redux"
 import { setIsPlaying } from "../../store/track.slice"
-import { useAddFavoritesMutation } from "../../store/favApi"
+import { useAddFavoritesMutation, useDeleteFavoritesMutation } from "../../store/favApi"
 
 
 
@@ -18,10 +18,16 @@ const PlaylistItems = ({ tracks, status}) => {
   const login = useSelector(state => state.user.login)
 
   const [addFavorite, {isError}] = useAddFavoritesMutation()
+  const [deleteFavorites] = useDeleteFavoritesMutation()
 
   const handleAddFavorite = async (id) => {
-    console.log(id)
-    await addFavorite(id).unwrap()
+    if (status === "favorite") {
+      await deleteFavorites(id).unwrap()
+    } else {
+      await addFavorite(id).unwrap()
+
+    }
+
   }
 
   const handlePlay = (song, index) => {
