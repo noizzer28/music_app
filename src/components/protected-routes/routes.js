@@ -28,7 +28,7 @@ export const AppRoutes = () => {
 
     return (
         <Routes>
-            <Route path="/" element={<ProtectedRoute  isAllowed={localStorage.getItem('token')}></ProtectedRoute>}>
+            <Route element={<ProtectedRoute  isAllowed={localStorage.getItem('token')}></ProtectedRoute>}>
                 <Route path="/" element={<MainApp/>}>
                     <Route index path="/" element={<MainTracks/>}/>
                     <Route path="/favorites" element={<Favorites/>}/>
