@@ -1,7 +1,7 @@
 import * as S from "./tracks.styles"
 import { secondsToMinutes } from "../../pages/main/main"
 import { useSelector} from "react-redux"
-import { setCurrentIndex, setCurrentPlayList, setCurrentTrack, setcu } from "../../store/track.slice"
+import { setCurrentIndex, setCurrentPlayList, setCurrentTrack, setLikedTracks } from "../../store/track.slice"
 import { useDispatch } from "react-redux"
 import { setIsPlaying } from "../../store/track.slice"
 import { useAddFavoritesMutation, useDeleteFavoritesMutation } from "../../store/favApi"
@@ -15,22 +15,22 @@ const PlaylistItems = ({ tracks, status}) => {
   const dispatch = useDispatch()
   const currentTrack = useSelector(state => state.tracks.currentTrack)
   const isPlaying = useSelector(state => state.tracks.isPlaying)
+  const likedTracks = useSelector(state => state.tracks.likedTracks)
   const login = useSelector(state => state.user.login)
 
-  const [addFavorite, {isError}] = useAddFavoritesMutation()
+  const [addFavorite] = useAddFavoritesMutation()
   const [deleteFavorites] = useDeleteFavoritesMutation()
 
-  const handleAddFavorite = async (id) => {
-    if (status === "favorite") {
+  const handleToggleFavorite = async (id, isLiked) => {
+    console.log(isLiked)
+    if (isLiked) {
       await deleteFavorites(id).unwrap()
     } else {
       await addFavorite(id).unwrap()
-
     }
-
   }
 
-  const handlePlay = (song, index) => {
+  const handlePlay = (song, index) => { 
     dispatch(setCurrentPlayList(tracks))
     const prevValue = song
     dispatch(setIsPlaying(true)) 
@@ -55,18 +55,14 @@ const PlaylistItems = ({ tracks, status}) => {
   
   
   const PlayList = (tracks) => {
+    console.log(likedTracks)
+    if (tracks.length === 0) {
+       return <div key={1}>В этом плейлисте еще нет треков</div>
+    }
+      return tracks.map((song, index) => {
 
-    
-    return tracks.map((song, index) => {
-      let isLiked
-      if (status === 'favorite') {
-        isLiked = true
-      } else {
-        isLiked = tracks[index]?.stared_user?.find((obj) => obj.username  === login)
-      }
-
-
-
+      let isLiked = tracks[index]?.stared_user?.find((obj) => obj.username  === login)
+        setLikedTracks(song)
        return ( <S.PlaylistItem key={song.id}>
         <S.PlaylistTrack>
           <S.TrackTitle>
@@ -88,7 +84,7 @@ const PlaylistItems = ({ tracks, status}) => {
           <S.TrackAlbum>
             <S.TrackAlbumLink>{song.album}</S.TrackAlbumLink>
           </S.TrackAlbum>
-          <div className={`track__time _btn-icon ${isLiked ? 'activeLike' : ''}` }  onClick={()=> handleAddFavorite(song.id)}>
+          <div className={`track__time _btn-icon ${isLiked ? 'activeLike' : ''}` }  onClick={()=> handleToggleFavorite(song.id, isLiked)}>
             <S.TrackTimeSvg alt="time" >
               <use xlinkHref="./icons/sprite.svg#icon-like"></use>
             </S.TrackTimeSvg>  

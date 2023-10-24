@@ -21,21 +21,20 @@ export const  MainApp = () => {
 
   const dispatch = useDispatch()
   const currentTrack = useSelector(state => state.tracks.currentTrack)
-
   const [loading, setLoading] = useState(true)
   const [trackError, SetTrackError] = useState("")
 
   useEffect(()=> {
   getTracks()
-    .then((tracks) => dispatch(setTracks(tracks)))
-      .then(()=> {
+    .then((tracks) => {
+       dispatch(setTracks(tracks))
+    }).then(()=> {
         setLoading(false)
   }).catch((error) => {
     setLoading(false)
     SetTrackError(`Ошибка соединения с сервером: ${error.message}`)
   })
   },[dispatch])
-
 
 
   const [isLooped, setLoop] = useState(false)
@@ -75,3 +74,5 @@ export const  MainApp = () => {
 </S.Wrapper>
 </>)
 }
+
+

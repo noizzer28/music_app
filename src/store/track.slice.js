@@ -27,9 +27,13 @@ const trackSlice = createSlice({
         status: null,
         error: null,
         favoriteTracks: [],
-        currentPlaylist: []
+        currentPlaylist: [],
+        likedTracks: [],
     },
     reducers: {
+        setLikedTracks(state, action) {
+            state.likedTracks =  [...state.likedTracks, action.payload]
+        },
         setCurrentPlayList(state, action){
             state.currentPlaylist = action.payload
         },
@@ -103,5 +107,5 @@ const trackSlice = createSlice({
     // }
 })
 
-export const {setTracks, setFavoriteTracks, setIsPlaying,setShuffledTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack, setCurrentPlayList} = trackSlice.actions;
+export const {setTracks, setLikedTracks, setFavoriteTracks, setIsPlaying,setShuffledTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack, setCurrentPlayList} = trackSlice.actions;
 export default trackSlice.reducer;

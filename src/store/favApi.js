@@ -3,7 +3,7 @@ import { setAccessToken, setStatus } from "./user.slice";
 
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
-  console.debug(args, api, extraOptions)
+
   const baseQuery = fetchBaseQuery({
     baseUrl: "https://skypro-music-api.skyeng.tech/",
     prepareHeaders: (headers, { getState }) => {
@@ -77,16 +77,26 @@ export const favoriteApi = createApi ({
   baseQuery: baseQueryWithReauth,
   endpoints: (build) => ({
       getFavorites: build.query({
-          query: () => ({
+          query: (login) => ({
             url: "catalog/track/favorite/all",
             method: "GET"
           }),
+          transformResponse: (response, queryArg, extraOptions) => {
+            const updatedResponse = response.map((track) => ({
+              ...track,
+              stared_user: [{
+                username: extraOptions
+              }]
+                
+            }));
+            return updatedResponse;
+          },
       }),
       addFavorites: build.mutation({
-        query: (id) => ({
+        query: (body) => ({ 
           method: "POST",
-          url: `catalog/track/${id}/favorite`,
-
+          url: `catalog/track/${body}/favorite/`,
+          body,
         })
       }),
       deleteFavorites: build.mutation({

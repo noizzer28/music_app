@@ -8,14 +8,15 @@ import { useGetFavoritesQuery } from "../../store/favApi";
 
 
 
+
 export const Favorites =() => {
     const {status, error} = useSelector(state => state.user)
+    const login = useSelector(state => state.user.login)
+    
+    const {data = []} = useGetFavoritesQuery(login)
+    console.log(data)
 
-    const {data = []} = useGetFavoritesQuery()
- 
-  
-
-    return (
+    return (    
         <div>
         <S.SenterblockHeader>Мои треки</S.SenterblockHeader>
             <S.CenterblockContent>
