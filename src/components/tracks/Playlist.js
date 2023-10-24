@@ -1,7 +1,7 @@
 import * as S from "./tracks.styles"
 import { secondsToMinutes } from "../../pages/main/main"
 import { useSelector} from "react-redux"
-import { setCurrentIndex, setCurrentPlayList, setCurrentTrack, setLikedTracks } from "../../store/track.slice"
+import { setCurrentIndex, setCurrentPlayList, setCurrentTrack, toggleLike } from "../../store/track.slice"
 import { useDispatch } from "react-redux"
 import { setIsPlaying } from "../../store/track.slice"
 import { useAddFavoritesMutation, useDeleteFavoritesMutation } from "../../store/favApi"
@@ -25,8 +25,10 @@ const PlaylistItems = ({ tracks, status}) => {
     console.log(isLiked)
     if (isLiked) {
       await deleteFavorites(id).unwrap()
+      dispatch(toggleLike({id: id, isLiked: false}))
     } else {
       await addFavorite(id).unwrap()
+      dispatch(toggleLike({id: id, isLiked: true}))
     }
   }
 
@@ -55,14 +57,13 @@ const PlaylistItems = ({ tracks, status}) => {
   
   
   const PlayList = (tracks) => {
-    console.log(likedTracks)
-    if (tracks.length === 0) {
-       return <div key={1}>В этом плейлисте еще нет треков</div>
-    }
+      if (tracks.length === 0) {
+        return <div key={1}>В этом плейлисте еще нет треков</div>
+      }
+      console.log(tracks)
       return tracks.map((song, index) => {
 
-      let isLiked = tracks[index]?.stared_user?.find((obj) => obj.username  === login)
-        setLikedTracks(song)
+        let isLiked = song.isLiked
        return ( <S.PlaylistItem key={song.id}>
         <S.PlaylistTrack>
           <S.TrackTitle>

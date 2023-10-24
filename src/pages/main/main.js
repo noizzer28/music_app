@@ -21,20 +21,22 @@ export const  MainApp = () => {
 
   const dispatch = useDispatch()
   const currentTrack = useSelector(state => state.tracks.currentTrack)
+  const login = useSelector(state => state.user.login)
   const [loading, setLoading] = useState(true)
   const [trackError, SetTrackError] = useState("")
 
+
   useEffect(()=> {
-  getTracks()
-    .then((tracks) => {
-       dispatch(setTracks(tracks))
-    }).then(()=> {
-        setLoading(false)
-  }).catch((error) => {
-    setLoading(false)
-    SetTrackError(`Ошибка соединения с сервером: ${error.message}`)
-  })
-  },[dispatch])
+    getTracks()
+      .then((tracks) => {
+         dispatch(setTracks({login: login, tracks: tracks}))
+      }).then(()=> {
+          setLoading(false)
+    }).catch((error) => {
+      setLoading(false)
+      SetTrackError(`Ошибка соединения с сервером: ${error.message}`)
+    })
+    },[dispatch])
 
 
   const [isLooped, setLoop] = useState(false)
@@ -74,5 +76,3 @@ export const  MainApp = () => {
 </S.Wrapper>
 </>)
 }
-
-

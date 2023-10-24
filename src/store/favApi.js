@@ -77,17 +77,14 @@ export const favoriteApi = createApi ({
   baseQuery: baseQueryWithReauth,
   endpoints: (build) => ({
       getFavorites: build.query({
-          query: (login) => ({
+          query: () => ({
             url: "catalog/track/favorite/all",
             method: "GET"
           }),
-          transformResponse: (response, queryArg, extraOptions) => {
+          transformResponse: (response) => {
             const updatedResponse = response.map((track) => ({
               ...track,
-              stared_user: [{
-                username: extraOptions
-              }]
-                
+              isLiked: true
             }));
             return updatedResponse;
           },

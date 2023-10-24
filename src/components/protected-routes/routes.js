@@ -8,27 +8,26 @@ import { ProtectedRoute } from "./protected";
 import { MainTracks } from "../../pages/main/mainTracks";
 import { useDispatch } from "react-redux";
 import { setRefreshToken, setLogin } from "../../store/user.slice";
-import { useEffect } from "react";
 
 export const AppRoutes = () => {
     const dispatch = useDispatch()
-    let user = []
 
-        const initializeUser = async () => {
-            user = JSON.parse(localStorage.getItem('token'));
-            console.log(`USER: ${user}`)
-            if (user) {
-                await dispatch(setRefreshToken(user.token));
-                await dispatch(setLogin(user.name));
-            }
+    const initializeUser =  () => {
+        const user = JSON.parse(localStorage.getItem('token'));
+        console.log(user)
+        if (user) {
+            dispatch(setRefreshToken(user.token));
+            dispatch(setLogin(user.name));
         }
-        initializeUser();
+        return user
+    }
+    const user =  initializeUser();
 
 
 
     return (
         <Routes>
-            <Route element={<ProtectedRoute  isAllowed={localStorage.getItem('token')}></ProtectedRoute>}>
+            <Route element={<ProtectedRoute  isAllowed={user}></ProtectedRoute>}>
                 <Route path="/" element={<MainApp/>}>
                     <Route index path="/" element={<MainTracks/>}/>
                     <Route path="/favorites" element={<Favorites/>}/>

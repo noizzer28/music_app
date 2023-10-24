@@ -11,9 +11,8 @@ import { useGetFavoritesQuery } from "../../store/favApi";
 
 export const Favorites =() => {
     const {status, error} = useSelector(state => state.user)
-    const login = useSelector(state => state.user.login)
     
-    const {data = []} = useGetFavoritesQuery(login)
+    const {data = []} = useGetFavoritesQuery()
     console.log(data)
 
     return (    

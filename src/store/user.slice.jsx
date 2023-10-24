@@ -77,19 +77,6 @@ const userSlice = createSlice({
             state.accessToken = action.payload.access
             state.refreshToken = action.payload.refresh
         },
-        // [FetchAccessToken.pending]: (state) => {
-        //     state.status = "loading"
-        //     state.error = null
-        // },
-        // [FetchAccessToken.fulfilled]: (state, action) => {
-        //     state.status = "resolved"
-        //     state.accessToken = action.payload.access
-        //     state.isActiveToken = true
-        // },
-        // [FetchAccessToken.rejected]: (state, action) => {
-        //     state.status ="rejected"
-        //     state.error = action.payload
-        // },
     }
 })
 

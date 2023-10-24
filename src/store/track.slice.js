@@ -1,44 +1,34 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {  createSlice } from "@reduxjs/toolkit";
 
 
-// export const fetchFavorites = createAsyncThunk(
-//     "tracks/fetchFavorites",
-//     async function(accessToken) {
-//         const responce = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/`, {
-//             method: "GET",
-//             headers: {
-//                 Authorization: `Bearer ${accessToken}`
-//             }
-//         })
-//         const data = await responce.json()
-//         return data;
-//     }
-// )
 
-const trackSlice = createSlice({
-    name: 'tracks',
-    initialState: {
-        tracks: [],
-        currentTrack: null,
-        currentIndex: null,
-        isPlaying: false,
-        isShuffled: false,
-        shuffledTracks: [],
-        status: null,
-        error: null,
-        favoriteTracks: [],
-        currentPlaylist: [],
-        likedTracks: [],
-    },
-    reducers: {
-        setLikedTracks(state, action) {
-            state.likedTracks =  [...state.likedTracks, action.payload]
+    const trackSlice = createSlice({
+        name: 'tracks',
+        initialState: {
+            tracks: [],
+            currentTrack: null,
+            currentIndex: null,
+            isPlaying: false,
+            isShuffled: false,
+            shuffledTracks: [],
+            status: null,
+            error: null,
+            favoriteTracks: [],
+            currentPlaylist: [],
+            likedTracks: [],
         },
+        reducers: {
         setCurrentPlayList(state, action){
             state.currentPlaylist = action.payload
         },
         setTracks(state, action) {
-            state.tracks = action.payload;
+            const login = action.payload.login
+            state.tracks = action.payload.tracks.map((track) => {
+                if(track.stared_user.some((obj) => obj.username  === login)){
+                return {...track, isLiked: true}
+                }
+                return {...track, isLiked: false}
+            })
         },
         setCurrentTrack (state, action) {
             state.currentTrack = action.payload;
@@ -54,6 +44,18 @@ const trackSlice = createSlice({
         },
         setShuffledTracks(state, action) {
             state.shuffledTracks = action.payload
+        },
+        toggleLike(state, action) {
+            const { id, isLiked } = action.payload;
+            const updatedTracks = state.tracks.map((track) => {
+              if (track.id === id) {
+                return { ...track, isLiked };
+              } else {
+                return track;
+              }
+            });
+          
+            state.tracks = updatedTracks;
         },
         prevTrack(state) {
 
@@ -87,9 +89,7 @@ const trackSlice = createSlice({
                 state.currentTrack = state.currentPlaylist[state.currentIndex]
             }
         },
-        setFavoriteTracks(state, action) {
-            state.favoriteTracks = action.payload
-        }
+
     },
     // extraReducers: {
     //     [fetchFavorites.pending]: (state) => {
@@ -107,5 +107,5 @@ const trackSlice = createSlice({
     // }
 })
 
-export const {setTracks, setLikedTracks, setFavoriteTracks, setIsPlaying,setShuffledTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack, setCurrentPlayList} = trackSlice.actions;
+export const {setTracks, toggleLike, setIsPlaying,setShuffledTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack, setCurrentPlayList} = trackSlice.actions;
 export default trackSlice.reducer;
