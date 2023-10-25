@@ -1,7 +1,6 @@
 import {  createSlice } from "@reduxjs/toolkit";
 
 
-
     const trackSlice = createSlice({
         name: 'tracks',
         initialState: {
@@ -13,11 +12,13 @@ import {  createSlice } from "@reduxjs/toolkit";
             shuffledTracks: [],
             status: null,
             error: null,
-            favoriteTracks: [],
             currentPlaylist: [],
             likedTracks: [],
         },
         reducers: {
+        setLikedTracks(state, action) {
+            state.likedTracks = action.payload
+        },
         setCurrentPlayList(state, action){
             state.currentPlaylist = action.payload
         },
@@ -54,6 +55,7 @@ import {  createSlice } from "@reduxjs/toolkit";
                 return track;
               }
             });
+
           
             state.tracks = updatedTracks;
         },
@@ -107,5 +109,5 @@ import {  createSlice } from "@reduxjs/toolkit";
     // }
 })
 
-export const {setTracks, toggleLike, setIsPlaying,setShuffledTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack, setCurrentPlayList} = trackSlice.actions;
+export const {setTracks, setLikedTracks, toggleLike, setIsPlaying,setShuffledTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack, setCurrentPlayList} = trackSlice.actions;
 export default trackSlice.reducer;

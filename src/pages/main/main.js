@@ -8,8 +8,9 @@ import 'simplebar-react/dist/simplebar.min.css';
 import { getTracks } from "../../api"
 import { Search } from "../../components/center/search"
 import { useDispatch, useSelector } from "react-redux";
-import { setTracks } from "../../store/track.slice";
+import { setTracks, setLikedTracks } from "../../store/track.slice";
 import { Outlet } from "react-router";
+import { useGetFavoritesQuery } from "../../store/favApi";
 
 export const secondsToMinutes = (time) => {
   const minutes = Math.floor(time / 60)
@@ -37,6 +38,7 @@ export const  MainApp = () => {
       SetTrackError(`Ошибка соединения с сервером: ${error.message}`)
     })
     },[dispatch])
+
 
 
   const [isLooped, setLoop] = useState(false)

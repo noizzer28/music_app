@@ -22,12 +22,13 @@ const PlaylistItems = ({ tracks, status}) => {
   const [deleteFavorites] = useDeleteFavoritesMutation()
 
   const handleToggleFavorite = async (id, isLiked) => {
-    console.log(isLiked)
     if (isLiked) {
-      await deleteFavorites(id).unwrap()
+      const data = await deleteFavorites(id).unwrap()
+      console.log(data)
       dispatch(toggleLike({id: id, isLiked: false}))
     } else {
-      await addFavorite(id).unwrap()
+      const data =  await addFavorite(id).unwrap()
+      console.log(data)
       dispatch(toggleLike({id: id, isLiked: true}))
     }
   }
@@ -57,10 +58,11 @@ const PlaylistItems = ({ tracks, status}) => {
   
   
   const PlayList = (tracks) => {
+    console.log(tracks)
+    console.log(likedTracks)
       if (tracks.length === 0) {
         return <div key={1}>В этом плейлисте еще нет треков</div>
       }
-      console.log(tracks)
       return tracks.map((song, index) => {
 
         let isLiked = song.isLiked

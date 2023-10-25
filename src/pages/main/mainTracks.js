@@ -12,9 +12,7 @@ import { useDispatch } from "react-redux";
 
 
 export const MainTracks = () =>  {
-    const dispatch = useDispatch()
     const AllTracks = useSelector(state => state.tracks.tracks)
-
     const [trackError, loading] = useOutletContext()
 
     return    <>
