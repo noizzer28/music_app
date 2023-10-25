@@ -14,7 +14,6 @@ export const AppRoutes = () => {
 
     const initializeUser =  () => {
         const user = JSON.parse(localStorage.getItem('token'));
-        console.log(user)
         if (user) {
             dispatch(setRefreshToken(user.token));
             dispatch(setLogin(user.name));
