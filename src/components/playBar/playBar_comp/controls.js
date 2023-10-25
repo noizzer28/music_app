@@ -1,6 +1,6 @@
-import * as S from "./styles/controls.styles"
+import * as S from "../styles/controls.styles"
 import { useDispatch, useSelector } from "react-redux"
-import { nextTrack, setIsPlaying, prevTrack, toggleShuffle, setShuffledTracks, setCurrentIndex } from "../../store/track.slice"
+import { nextTrack, setIsPlaying, prevTrack, toggleShuffle, setShuffledTracks, setCurrentIndex } from "../../../store/track.slice"
 import { useEffect } from "react"
 
 

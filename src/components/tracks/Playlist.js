@@ -1,7 +1,7 @@
 import * as S from "./tracks.styles"
 import { secondsToMinutes } from "../../pages/main/main"
 import { useSelector} from "react-redux"
-import { setCurrentIndex, setCurrentPlayList, setCurrentTrack, toggleLike, setLikedTracks } from "../../store/track.slice"
+import { setCurrentIndex, setCurrentPlayList, setCurrentTrack, toggleLike } from "../../store/track.slice"
 import { useDispatch } from "react-redux"
 import { setIsPlaying } from "../../store/track.slice"
 import { useAddFavoritesMutation, useDeleteFavoritesMutation } from "../../store/favApi"

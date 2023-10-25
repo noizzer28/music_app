@@ -124,6 +124,9 @@ color: #ffffff;
   font-size: 16px;
   line-height: 24px;
 }
+&:focus {
+  outline: none; 
+}
 `
 
 export const ContentTitle = styled.div`

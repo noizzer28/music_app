@@ -33,7 +33,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
   };
 
   const auth  = api.getState().user;
-  console.log(auth.refreshToken)
+
 
   // console.debug("Данные пользователя в сторе",  auth );
   if (!auth.refreshToken) {

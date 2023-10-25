@@ -66,6 +66,9 @@ import {  createSlice } from "@reduxjs/toolkit";
                     return track
                 }
             })
+            if (state.currentTrack?.id === song.id) {
+                state.currentTrack = {...state.currentTrack, isLiked}
+            }
         },
 
         

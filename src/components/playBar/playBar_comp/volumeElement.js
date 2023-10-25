@@ -1,4 +1,4 @@
-import * as S from "./styles/volume.styles"
+import * as S from "../styles/volume.styles"
 import { useState, useEffect, useRef } from "react";
 const BarVolume = ({audioRef}) => {
 
