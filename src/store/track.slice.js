@@ -17,7 +17,6 @@ import {  createSlice } from "@reduxjs/toolkit";
         },
         reducers: {
         setLikedTracks(state) { 
-
             state.likedTracks = state.tracks.filter((track) => {
                 if (track.isLiked) {
                     return track
@@ -104,20 +103,6 @@ import {  createSlice } from "@reduxjs/toolkit";
         },
 
     },
-    // extraReducers: {
-    //     [fetchFavorites.pending]: (state) => {
-    //         state.status = "loading"
-    //         state.error = null
-    //     },
-    //     [fetchFavorites.fulfilled]: (state, action) => {
-    //         state.status = "resolved"
-    //         state.favoriteTracks = action.payload
-    //     },
-    //     [fetchFavorites.rejected]: (state, action) => {
-    //         state.status ="rejected"
-    //         state.error = action.payload
-    //     },
-    // }
 })
 
 export const {setTracks, setLikedTracks, toggleLike, setIsPlaying,setShuffledTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack, setCurrentPlayList} = trackSlice.actions;
