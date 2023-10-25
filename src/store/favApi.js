@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
-import { setAccessToken, setStatus } from "./user.slice";
+import { setAccessToken} from "./user.slice";
 
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
@@ -9,7 +9,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     prepareHeaders: (headers, { getState }) => {
 
       const token = getState().user.accessToken;
-      console.debug("Использую токен из стора", { token });
+      // console.debug("Использую токен из стора", { token });
 
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
@@ -18,12 +18,11 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       return headers;
     },
   });
-  api.dispatch(setStatus("loading"))
+
   const result = await baseQuery(args, api, extraOptions);
 
-  console.debug("Результат первого запроса", { result });
+  // console.debug("Результат первого запроса", { result });
   if (result?.error?.status !== 401) {
-    api.dispatch(setStatus("filfilled"))
     return result;
   }
 
@@ -36,7 +35,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
   const auth  = api.getState().user;
   console.log(auth.refreshToken)
 
-  console.debug("Данные пользователя в сторе",  auth );
+  // console.debug("Данные пользователя в сторе",  auth );
   if (!auth.refreshToken) {
     return forceLogout();
   }
@@ -53,7 +52,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     extraOptions
   );
 
-  console.debug("Результат запроса на обновление токена", { refreshResult });
+  // console.debug("Результат запроса на обновление токена", { refreshResult });
 
   if (!refreshResult.data.access) {
     return forceLogout();
@@ -66,8 +65,8 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     return forceLogout();
   }
 
-  console.debug(`Повторный запрос завершился успешно `);
-  api.dispatch(setStatus("filfilled"))
+  // console.debug(`Повторный запрос завершился успешно `);
+
   return retryResult;
 };
 

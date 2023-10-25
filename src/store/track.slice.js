@@ -16,8 +16,13 @@ import {  createSlice } from "@reduxjs/toolkit";
             likedTracks: [],
         },
         reducers: {
-        setLikedTracks(state, action) {
-            state.likedTracks = action.payload
+        setLikedTracks(state) { 
+
+            state.likedTracks = state.tracks.filter((track) => {
+                if (track.isLiked) {
+                    return track
+                }
+            })
         },
         setCurrentPlayList(state, action){
             state.currentPlaylist = action.payload
@@ -47,18 +52,24 @@ import {  createSlice } from "@reduxjs/toolkit";
             state.shuffledTracks = action.payload
         },
         toggleLike(state, action) {
-            const { id, isLiked } = action.payload;
-            const updatedTracks = state.tracks.map((track) => {
-              if (track.id === id) {
+            const { song, isLiked } = action.payload;
+
+            const updated = state.tracks.map((track) => {
+              if (track.id === song.id) {
                 return { ...track, isLiked };
               } else {
                 return track;
               }
             });
-
-          
-            state.tracks = updatedTracks;
+            state.tracks = updated
+            state.likedTracks = updated.filter((track) => {
+                if (track.isLiked) {
+                    return track
+                }
+            })
         },
+
+        
         prevTrack(state) {
 
             if (state.isShuffled) {

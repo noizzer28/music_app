@@ -7,8 +7,7 @@ import * as S from "./app.styles"
 import PlaylistItems from  "../../components/tracks/Playlist"
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useOutletContext } from "react-router";
-import { setLikedTracks } from "../../store/track.slice";
-import { useDispatch } from "react-redux";
+
 
 
 export const MainTracks = () =>  {

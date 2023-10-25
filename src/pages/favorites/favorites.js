@@ -14,16 +14,16 @@ import { useEffect } from "react";
 
 export const Favorites =() => {
     const dispatch = useDispatch()
-    const {status, error} = useSelector(state => state.user)
     const  likedTracks = useSelector(state => state.tracks.likedTracks) 
 
-    const { data = [], isSuccess } = useGetFavoritesQuery();
+
+    const { data = [], isLoading, isSuccess, error } = useGetFavoritesQuery();
 
     useEffect(() => {
       if (isSuccess) {
-        dispatch(setLikedTracks(data));
+        dispatch(setLikedTracks())
       }
-    }, [data, isSuccess, dispatch]);
+    }, [isSuccess, data]);
 
 
    
@@ -34,7 +34,7 @@ export const Favorites =() => {
                 <TracksTitle></TracksTitle>
                 {error ? <div style={{color: "red", fontSize: "24px"}}>{error}</div>  : 
                 <S.ContentPlaylist>
-                {status === "loading" ? <SkeletonTrack/> :
+                {isLoading ? <SkeletonTrack/> :
                 <SimpleBar forceVisible="y" style={{ height: '65vh', maxWidth:"1120px"}}>
                     <PlaylistItems tracks={likedTracks} status={`favorite`}/>
                 </SimpleBar>}
