@@ -26,7 +26,8 @@ justify-content: flex-end;`
 export const VolumeImage = styled.div`
 width: 13px;
 height: 18px;
-margin-right: 17px;` 
+margin-right: 17px;
+cursor: pointer;` 
 export const VolumeSvg = styled.svg`
 width: 13px;
 height: 18px;

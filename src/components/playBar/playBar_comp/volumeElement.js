@@ -3,23 +3,47 @@ import { useState, useEffect, useRef } from "react";
 const BarVolume = ({audioRef}) => {
 
   const [volume, setVolume] = useState(60);
+  const [ isMuted, setIsMuted] = useState(false)
 
   useEffect(() => {
     if (audioRef) {
       audioRef.current.volume = volume / 100;
     }
+    // const thumbElement = volumeRef.current.querySelector('::-webkit-slider-thumb');
+    console.log(volumeRef.current)
+    // if (thumbElement) {
+    //   thumbElement.style.left = volume + '%';
+    // }
+
   }, [volume, audioRef]);
 
   const volumeRef = useRef(60)
-  const volumeHandler = () => {
+  const volumeHandler = (volume) => {
+    setIsMuted(false)
     setVolume(volumeRef.current.value)
     volumeRef.current.style.setProperty(`--volume-width`, `${ volume }%`)
+
   }
+  
+  const toggleMute = () => {
+
+    if (!isMuted) {
+      audioRef.current.volume = 0
+      volumeRef.current.style.setProperty(`--volume-width`, `0%`) 
+
+    } else {
+      audioRef.current.volume = volume / 100
+      volumeRef.current.style.setProperty(`--volume-width`, `${ volume }%`)
+    }
+    setIsMuted((prevValue) => !prevValue)
+  }
+
+
 
     return(<S.BarVolumeBlock>
     <S.VolumeContent>
-      <S.VolumeImage>
-        <S.VolumeSvg alt="volume">
+      <S.VolumeImage className={isMuted ? "mutedVolume" : ""}  onClick={toggleMute}>
+        <S.VolumeSvg alt="volume" >
           <use xlinkHref="./icons/sprite.svg#icon-volume"></use>
         </S.VolumeSvg>
       </S.VolumeImage>
@@ -29,7 +53,7 @@ const BarVolume = ({audioRef}) => {
           className="_btn"
           type="range"
           min={0} max={100}
-          onChange={volumeHandler}
+          onChange={()=> volumeHandler(volume)}
         />
       </S.VolumeProgress>
     </S.VolumeContent>

@@ -18,7 +18,6 @@ position: relative;
     cursor: pointer;
 }
 &::-webkit-slider-thumb{
-
     cursor: pointer;
     -webkit-appearance: none;
 }

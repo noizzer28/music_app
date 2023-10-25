@@ -125,4 +125,16 @@ export const GlobalStyles = createGlobalStyle`
   fill: #B672FF
 }
 
+.mutedVolume::before {
+ content: "";
+ display: inline-block;
+ position: absolute;
+ width: 24px;
+ height: 3px;
+ transform: rotate(40deg);
+ background-color: #D9D9D9;
+ margin-top: 7px;
+ margin-left: -6px;
+}
+
 `
