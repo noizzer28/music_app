@@ -15,10 +15,7 @@ display: flex;
 -webkit-box-direction: normal;
 -ms-flex-direction: column;
 flex-direction: column;`
-export const BarPlayerProgress = styled.div`
-width: 100%;
-height: 5px;
-background: #2e2e2e;`
+
 export const BarPlayerBlock = styled.div`
 height: 73px;
 display: -webkit-box;
@@ -91,7 +88,7 @@ grid-row: 1;
 grid-column: 2;
 grid-area: author;
 min-width: 49px;`
-export const TrackPlayAuthorLink = styled.a`
+export const TrackPlayAuthorLink = styled.span`
 font-style: normal;
 font-weight: 400;
 font-size: 16px;
@@ -103,7 +100,7 @@ grid-row: 2;
 grid-column: 2;
 grid-area: album;
 min-width: 49px;`
-export const TrackPlayAlbumLink = styled.a`  
+export const TrackPlayAlbumLink = styled.span`  
 font-style: normal;
 font-weight: 400;
 font-size: 13px;
@@ -137,3 +134,11 @@ width: 14.34px;
 height: 13px;
 fill: transparent;
 stroke: #696969;`
+
+
+export const TrackAudio = styled.audio`
+position: absolute;
+top: -100px;
+left: 32px;
+// display: none;
+`

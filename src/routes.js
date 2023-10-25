@@ -1,23 +1,31 @@
 import { Routes, Route } from "react-router-dom";
 import MainApp from "./pages/main/main";
-import { Login } from "./pages/login/login";
+import  { AuthPage } from "./pages/authorisation/login";
 import { Favorites } from "./pages/favorites/favorites";
-import { Authorisation } from "./pages/authorisation/auth";
 import { Category } from "./pages/category/category";
 import { NotFound } from "./pages/not-found/not-found";
 import { ProtectedRoute } from "./components/protected-routes/protected";
+import { useContext, useReducer } from "react";
+import { UserContext } from "./components/context/context";
 
-export const AppRoutes = ({ setToken }) => {
 
+export const AppRoutes = () => {
+    const user = useContext(UserContext)
     return (
         <Routes>
-            <Route element={<ProtectedRoute  isAllowed={Boolean(localStorage.getItem("token"))}></ProtectedRoute>}>
-                <Route path="/" element={<MainApp setToken={setToken}/>}/>
+            <Route element={<ProtectedRoute  isAllowed={user.token}></ProtectedRoute>}>
+                <Route path="/" element={<MainApp/>}/>
                 <Route path="/favorites" element={<Favorites/>}/>
                 <Route path="/category/:id" element={<Category/>}/>
             </Route>
-            <Route path="/login" element={<Login setToken={setToken}/>}/>
-            <Route path="/authorisation" element={<Authorisation/>}/>   
+            <Route
+                path="/login"
+                element={<AuthPage  isLoginMode={true}></AuthPage>}
+            ></Route>
+            <Route
+                path="/register"
+                element={<AuthPage  isLoginMode={false}></AuthPage>}
+            ></Route>
             <Route path="*" element={<NotFound/ >} />
 
         </Routes>

@@ -1,9 +1,9 @@
 import PlaylistItems from  "../../components/tracks/tracks"
 import  Nav from "../../components/navigation/navigation"
 import { SideBar } from "../../components/sidebar/sidebar";
-import {Bar} from "../../components/playBar/playBar";
+import {Bar} from "../../components/playBar/audio";
 import SkeletonTrack from "../../components/skeleton/skeleton";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import PlaylistFilter from "../../components/filter/filter";
 import * as S from "./app.styles"
 import SimpleBar from 'simplebar-react';
@@ -13,31 +13,44 @@ import { Search } from "../../components/center/search"
 import { TracksTitle } from "../../components/center/title"
 
 
-function MainApp({setToken}) {
+export const secondsToMinutes = (time) => {
+  const minutes = Math.floor(time / 60)
+  const seconds = Math.floor(time % 60)
+  return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`
+}
 
-    const [loading, setLoading] = useState(true)
-    const [trackError, SetTrackError] = useState("")
 
-    useEffect(()=> {
-    getTracks()
-      .then((tracks) => setTracks(tracks))
-        .then(()=> {
-          console.log(tracks)
-          setLoading(false)
-    }).catch((error) => {
-      setLoading(false)
-      SetTrackError(`Ошибка соединения с сервером: ${error.message}`)
-      console.log(trackError)
-    })
-    },[])
+function MainApp() {
 
-  const [isPlayBar, setPlayBar] = useState(false)
+
+  const [loading, setLoading] = useState(true)
+  const [trackError, SetTrackError] = useState("")
+
+  useEffect(()=> {
+  getTracks()
+    .then((tracks) => setTracks(tracks))
+      .then(()=> {
+        setLoading(false)
+  }).catch((error) => {
+    setLoading(false)
+    SetTrackError(`Ошибка соединения с сервером: ${error.message}`)
+  })
+  },[])
 
   const [currentTrack, setCurrentTrack] = useState(null)
 
+  const [isPlaying, setIsPlaying] = useState(false)
+ 
   const [tracks, setTracks] = useState([])
 
+  const [isLooped, setLoop] = useState(false)
 
+  const [duration, setDuration] = useState(0)
+
+  const [currentTime, setCurrentTime] = useState(0)
+
+   
+  const audioRef = useRef()
 
   return (  
 <>
@@ -55,16 +68,30 @@ function MainApp({setToken}) {
            <S.ContentPlaylist>
           {loading ? <SkeletonTrack/> :
           <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}>
-            <PlaylistItems setPlayBar={setPlayBar} setTracks={setTracks} tracks={tracks} setLoading={setLoading} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack}/>
+            <PlaylistItems 
+             tracks={tracks} 
+             currentTrack={currentTrack} 
+             setCurrentTrack={setCurrentTrack}
+             setIsPlaying={setIsPlaying}
+             audioRef={audioRef}/>
             </SimpleBar>}
           </S.ContentPlaylist>}
-
-
         </S.CenterblockContent>
       </S.MainSenterblock>  
-      <SideBar setToken={setToken}/>
+      <SideBar />
     </S.Main>
-    {isPlayBar ? <Bar currentTrack={currentTrack} loading={loading}/> : ""} 
+    {currentTrack ? <Bar 
+    currentTrack={currentTrack} 
+    loading={loading}
+    isPlaying={isPlaying}
+    setIsPlaying={setIsPlaying}
+    audioRef={audioRef}
+    isLooped={isLooped}
+    setLoop={setLoop}
+    duration={duration}
+    setDuration={setDuration}
+    currentTime={currentTime}
+    setCurrentTime={setCurrentTime}/> : ""} 
   </S.Container>
 </S.Wrapper>
 </>)

@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import * as S from "./navigation.styles"
+import { UserContext } from "../context/context";
 
 function Nav() {
+  const {token, setToken} = useContext(UserContext)
   const [isActive, setIsActive] = useState(true);
 
   const hideSideBar = () => {
     setIsActive(!isActive);
   };
 
+  const handleLogOut = () => {
+    localStorage.clear()
+    setToken({token: null})
+  }
   return (
     <S.MainNav >
       <S.NavLogo>
@@ -23,32 +29,32 @@ function Nav() {
           <S.MenuList>
             <S.MenuItem>
               <S.MenuLink to="/" style={({ isActive }) => {
-    return {
-      color: isActive ? "#ad61ff" : "",
-      textDecoration: isActive ? "underline" : "",
-    };
-  }}>
+                  return {
+                    color: isActive ? "#ad61ff" : "",
+                    textDecoration: isActive ? "underline" : "",
+                  };
+                }}>
                 Главное
               </S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
               <S.MenuLink to='/favorites' style={({ isActive }) => {
-    return {
-      color: isActive ? "#ad61ff" : "",
-      textDecoration: isActive ? "underline" : "",
-    };
-  }}>
+                    return {
+                      color: isActive ? "#ad61ff" : "",
+                      textDecoration: isActive ? "underline" : "",
+                    };
+                  }}>
                 Мой плейлист
               </S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink to='/login' style={({ isActive }) => {
-    return {
-      color: isActive ? "#ad61ff" : "",
-      textDecoration: isActive ? "underline" : "",
-    };
-  }}>
-                Войти
+              <S.MenuLink onClick={handleLogOut} to='/login' style={({ isActive }) => {
+                    return {
+                      color: isActive ? "#ad61ff" : "",
+                      textDecoration: isActive ? "underline" : "",
+                    };
+                  }}>
+                Выйти
               </S.MenuLink>
             </S.MenuItem>
           </S.MenuList>
