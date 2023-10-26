@@ -56,7 +56,6 @@ position: relative;
     border: 2px solid #fff;
     opacity:1;
     z-index: 10;
-
 }
 
 &::before {

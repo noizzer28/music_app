@@ -11,7 +11,8 @@ flex-direction: row;
 -ms-flex-align: center;
 align-items: center;
 margin-bottom: 51px;
-position: relative;`
+position: relative;
+justify-content: space-between;`
 
 
 export const FilterTitle = styled.div`  font-style: normal;
@@ -27,9 +28,7 @@ line-height: 24px;
 border: 1px solid #ffffff;
 border-radius: 60px;
 padding: 6px 20px;
-&:not(:last-child) {
-    margin-right: 10px;
-}`
+`
 export const FilterModal = styled.ul`
 width: 248px;
 background-color: #313131;
@@ -42,16 +41,20 @@ position: absolute;
 top: calc(100% + 10px);
 left: 8%;
 `
-
-export const FilterYear = styled(FilterModal)`
+export const FilterFlex = styled.div`
+display: flex;
+justify-content: space-between;
+align-items: center;
+`
+export const FilterSort = styled(FilterModal)`
 position: absolute;
 top: calc(100% + 10px);
-left: 22%;
+right: 0;
 `
 export const FilterGenre = styled(FilterModal)`
 position: absolute;
 top: calc(100% + 10px);
-left: 35%;
+left: 22%;
 `
 export const FilterList = styled.li`
 margin-bottom: 25px;

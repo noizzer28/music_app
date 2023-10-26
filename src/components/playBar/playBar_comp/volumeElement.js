@@ -9,12 +9,6 @@ const BarVolume = ({audioRef}) => {
     if (audioRef) {
       audioRef.current.volume = volume / 100;
     }
-    // const thumbElement = volumeRef.current.querySelector('::-webkit-slider-thumb');
-    console.log(volumeRef.current)
-    // if (thumbElement) {
-    //   thumbElement.style.left = volume + '%';
-    // }
-
   }, [volume, audioRef]);
 
   const volumeRef = useRef(60)

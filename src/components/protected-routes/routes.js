@@ -6,27 +6,29 @@ import { Category } from "../../pages/category/category";
 import { NotFound } from "../../pages/not-found/not-found";
 import { ProtectedRoute } from "./protected";
 import { MainTracks } from "../../pages/main/mainTracks";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setRefreshToken, setLogin } from "../../store/user.slice";
+import { useEffect } from "react";
 
 export const AppRoutes = () => {
+    const login = useSelector(state => state.user.login)
     const dispatch = useDispatch()
-
-    const initializeUser =  () => {
-        const user = JSON.parse(localStorage.getItem('token'));
-        if (user) {
-            dispatch(setRefreshToken(user.token));
-            dispatch(setLogin(user.name));
+    useEffect(() => {
+        const initializeUser =  () => {
+            const user = JSON.parse(localStorage.getItem('token'));
+            if (user) {
+                dispatch(setRefreshToken(user.token));
+                dispatch(setLogin(user.name));  
+            }
+            return user
         }
-        return user
-    }
-    const user =  initializeUser();
-
+          initializeUser();
+    });
 
 
     return (
         <Routes>
-            <Route element={<ProtectedRoute  isAllowed={user}></ProtectedRoute>}>
+            <Route element={<ProtectedRoute  isAllowed={login}></ProtectedRoute>}>
                 <Route path="/" element={<MainApp/>}>
                     <Route index path="/" element={<MainTracks/>}/>
                     <Route path="/favorites" element={<Favorites/>}/>
