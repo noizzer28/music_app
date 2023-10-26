@@ -50,9 +50,11 @@ export  function AuthPage({ isLoginMode = false}) {
     }
 
     try {
-      const data  = await Promise.all([Registration({login, password}), dispatch(FetchRefreshToken())])
+      console.log(login, password)
+      const data  = await Promise.all([Registration({login, password}), dispatch(FetchRefreshToken({login, password}))])
+      console.log(data);
       const user = {
-        token: data[1].payload.refresh,
+        token: data[1]?.payload?.refresh,
         name: login 
         }
       localStorage.setItem("token", JSON.stringify(user))
