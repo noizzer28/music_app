@@ -32,6 +32,12 @@ export const GlobalStyles = createGlobalStyle`
     list-style: none;
   }
   
+  strong{
+    color: rgb(182, 114, 255);
+  }
+  strong::hover{
+    color: white;
+  }
 
   
   html,
@@ -136,5 +142,7 @@ export const GlobalStyles = createGlobalStyle`
  margin-top: 7px;
  margin-left: -6px;
 }
+
+
 
 `

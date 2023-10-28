@@ -19,7 +19,6 @@ function Nav() {
     dispatch(setInitialState())
     localStorage.clear()
     dispatch(setRefreshToken(null))
-    console.log("initial1")
 
   }
 

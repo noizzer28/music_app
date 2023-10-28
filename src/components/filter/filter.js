@@ -16,26 +16,27 @@ function yearFromDate(dateString) {
 
 const PlaylistFilter = () => {
     const [isActiveAuthor, setIsActiveAuthor] = useState(false);
-    const [isActiveYear, setIsActiveYear] = useState(false);
+    const [isActiveSort, setIsActiveSort] = useState(false);
     const [isActiveGenre, setIsActiveGenre] = useState(false);
+    const [activeSort, setActiveSort] = useState("По умолчанию")
     
     const tracks = useSelector(state => state.tracks.tracks)
 
     const handleAuthor = () => {
         setIsActiveAuthor(!isActiveAuthor);
-        setIsActiveYear(false);
+        setIsActiveSort(false);
         setIsActiveGenre(false);
     };
 
-    const handleYear = () => {
+    const handleSort = () => {
         setIsActiveAuthor(false);
-        setIsActiveYear(!isActiveYear);
+        setIsActiveSort(!isActiveSort);
         setIsActiveGenre(false);
     };
 
     const handleGenre = () => {
         setIsActiveAuthor(false);
-        setIsActiveYear(false);
+        setIsActiveSort(false);
         setIsActiveGenre(!isActiveGenre);
     };
 
@@ -71,16 +72,19 @@ const PlaylistFilter = () => {
 
   
     const renderSort = () => {
-        const genreArray = []
-        return tracks.map((track) => {
-            if (genreArray.includes(track.genre)) {
-                return
-            } else {
-                genreArray.push(track.genre)
-                return <S.FilterList key={track.id}>
-                {track.genre}
+        const sortArray = ["По умолчанию", 'Сначала старые', 'Сначала новые']
+        return sortArray.map((element, index) => {
+            console.log(activeSort)
+            if (element === activeSort) {
+                console.log("wrong logic")
+                return <S.FilterList key={index} >
+                <strong>{element}</strong> 
                     </S.FilterList>
             }
+                return <S.FilterList key={index} onClick={() => setActiveSort(element)} >
+                {element}
+                    </S.FilterList>
+            
         })
     };
 
@@ -102,8 +106,8 @@ const PlaylistFilter = () => {
             </S.FilterFlex>
             <S.FilterFlex >
             <S.FilterTitle>Сортировка:</S.FilterTitle>
-                <S.FilterButton  className="_btn-text" onClick={handleYear}> По умолчанию</S.FilterButton>
-            {isActiveYear && <S.FilterSort>{renderSort()}</S.FilterSort>} 
+                <S.FilterButton  className="_btn-text" onClick={handleSort}> По умолчанию</S.FilterButton>
+            {isActiveSort && <S.FilterSort>{renderSort()}</S.FilterSort>} 
             </S.FilterFlex>
         </S.CenterblockFilter>
     );
