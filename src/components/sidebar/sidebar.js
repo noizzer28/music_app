@@ -2,7 +2,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { useEffect, useState, useContext } from 'react'
 import * as S from "./sidebar.styled"
 import { PLAYLISTS } from './categories'
-import { UserContext } from '../context/context'
+import { setInitialState } from '../../store/track.slice'
 import { useNavigate } from 'react-router'
 import {  setRefreshToken } from "../../store/user.slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +16,7 @@ export  const SideBar = ( ) => {
 
 
   const handleLogout = () => {
+    dispatch(setInitialState())
     localStorage.clear()
     dispatch(setRefreshToken(null))
     navigate('/login')

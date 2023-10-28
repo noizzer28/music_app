@@ -24,7 +24,6 @@ export const BarPlayingTrack = ({ loading}) => {
       }
 
 
-    console.log(currentTrack)
       return(
       <S.TrackPlay>
         <S.TrackPlayContainer>

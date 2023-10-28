@@ -1,14 +1,14 @@
 import React, { useState, useContext } from "react";
 import * as S from "./navigation.styles"
-import { UserContext } from "../context/context";
-import { setPassword, setLogin, setAccessToken, setRefreshToken } from "../../store/user.slice";
-import { useDispatch, useSelector } from "react-redux";
+import { setRefreshToken } from "../../store/user.slice";
+import { useDispatch } from "react-redux";
+import { setInitialState } from "../../store/track.slice";
 
 
 
 function Nav() {
   const dispatch = useDispatch()
-  // const {refreshToken, setRefreshToken} = useContext(UserContext)
+
   const [isActive, setIsActive] = useState(true);
 
   const hideSideBar = () => {
@@ -16,8 +16,11 @@ function Nav() {
   };
 
   const handleLogOut = () => {
+    dispatch(setInitialState())
     localStorage.clear()
     dispatch(setRefreshToken(null))
+    console.log("initial1")
+
   }
 
 

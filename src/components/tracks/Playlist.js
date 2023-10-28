@@ -54,7 +54,7 @@ const PlaylistItems = ({ tracks, status}) => {
   
   
   const PlayList = (tracks) => {
-    console.log(tracks)
+
       if (tracks.length === 0) {
         return <div key={1}>В этом плейлисте еще нет треков</div>
       }

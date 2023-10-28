@@ -45,9 +45,9 @@ export async function Registration({login, password}) {
         "content-type": "application/json",
       },
     })
-    console.log(response)
+    console.log('IN REG api',response)
     const data = await response.json()
-    console.log(data)
+    console.log('IN REG api',data)
     if (response.ok) {
       return data
     } else if (data.email){

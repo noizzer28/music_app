@@ -16,6 +16,17 @@ import {  createSlice } from "@reduxjs/toolkit";
             likedTracks: [],
         },
         reducers: {
+        setInitialState(state = initialState) {
+            console.debug("initial")
+            state.tracks = [];
+            state.currentTrack =  null;
+            state.currentIndex = null;
+            state.isPlaying = false;
+            state.isShuffled = false;
+            state.shuffledTracks = [];
+            state.currentPlaylist = [];
+            state.likedTracks = [];
+        },
         setLikedTracks(state) { 
             state.likedTracks = state.tracks.filter((track) => {
                 if (track.isLiked) {
@@ -108,5 +119,5 @@ import {  createSlice } from "@reduxjs/toolkit";
     },
 })
 
-export const {setTracks, setLikedTracks, toggleLike, setIsPlaying,setShuffledTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack, setCurrentPlayList} = trackSlice.actions;
+export const {setTracks,setInitialState, setLikedTracks, toggleLike, setIsPlaying,setShuffledTracks, setCurrentTrack, setCurrentIndex, toggleShuffle, prevTrack, nextTrack, setCurrentPlayList} = trackSlice.actions;
 export default trackSlice.reducer;
