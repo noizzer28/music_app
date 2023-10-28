@@ -35,9 +35,6 @@ export const GlobalStyles = createGlobalStyle`
   strong{
     color: rgb(182, 114, 255);
   }
-  strong::hover{
-    color: white;
-  }
 
   
   html,

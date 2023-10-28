@@ -80,10 +80,18 @@ import {  createSlice } from "@reduxjs/toolkit";
         },
         setSortedTracks(state, action) {
             const payload = action.payload
-            console.log(payload)
-            // state.tracks = state.tracks.map((track) => {
-            //     return 
-            // })
+                state.tracks = state.tracks.sort((a, b) => {
+                    const dateA = new Date(a.release_date)
+                    const dateB = new Date(b.release_date)
+                    if (payload === "Сначала старые") {
+                        return dateA - dateB
+                    } else if (payload === "Сначала новые") {
+                        return dateB - dateA
+                    } else {
+                        return a.id - b.id
+                    }
+                })
+    
         },
         setFilteredTracks(state, action) {
 

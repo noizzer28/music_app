@@ -11,9 +11,7 @@ import { setRefreshToken, setLogin } from "../../store/user.slice";
 import { useEffect } from "react";
 
 export const AppRoutes = () => {
-    console.log('here')
     const login = useSelector(state => state.user.login)
-    console.log(login)
     const dispatch = useDispatch()
     useEffect(() => {
         const initializeUser =  () => {

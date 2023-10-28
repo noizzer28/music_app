@@ -3,41 +3,20 @@ import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import * as S from "./filter.styles"
+import { setSortedTracks } from "../../store/track.slice";
+import { useDispatch } from "react-redux";
 
 
-function yearFromDate(dateString) {
-    const dateArray = dateString.split("-");
-    if (dateArray.length >= 1) {
-      return dateArray[0];
-    } else {
-      return null;
-    }
-  }
 
 const PlaylistFilter = () => {
-    const [isActiveAuthor, setIsActiveAuthor] = useState(false);
-    const [isActiveSort, setIsActiveSort] = useState(false);
-    const [isActiveGenre, setIsActiveGenre] = useState(false);
+    const dispatch = useDispatch()
+    const [activeFilter, setActiveFilter] = useState(null);
     const [activeSort, setActiveSort] = useState("По умолчанию")
     
     const tracks = useSelector(state => state.tracks.tracks)
 
-    const handleAuthor = () => {
-        setIsActiveAuthor(!isActiveAuthor);
-        setIsActiveSort(false);
-        setIsActiveGenre(false);
-    };
-
-    const handleSort = () => {
-        setIsActiveAuthor(false);
-        setIsActiveSort(!isActiveSort);
-        setIsActiveGenre(false);
-    };
-
-    const handleGenre = () => {
-        setIsActiveAuthor(false);
-        setIsActiveSort(false);
-        setIsActiveGenre(!isActiveGenre);
+    const handleFilter = (filterName) => {
+        setActiveFilter(filterName === activeFilter ? null : filterName);
     };
 
     const renderAuthors = () => {
@@ -74,17 +53,17 @@ const PlaylistFilter = () => {
     const renderSort = () => {
         const sortArray = ["По умолчанию", 'Сначала старые', 'Сначала новые']
         return sortArray.map((element, index) => {
-            console.log(activeSort)
             if (element === activeSort) {
-                console.log("wrong logic")
                 return <S.FilterList key={index} >
                 <strong>{element}</strong> 
                     </S.FilterList>
             }
-                return <S.FilterList key={index} onClick={() => setActiveSort(element)} >
+                return <S.FilterList key={index} onClick={() => {
+                    setActiveSort(element)
+                    dispatch(setSortedTracks(element))
+                    setActiveFilter(null)}}>
                 {element}
                     </S.FilterList>
-            
         })
     };
 
@@ -93,21 +72,21 @@ const PlaylistFilter = () => {
 
             <S.FilterFlex>
             <S.FilterTitle>Искать по:</S.FilterTitle>
-                <S.FilterButton className="_btn-text" onClick={handleAuthor}>исполнителю</S.FilterButton>
-                {isActiveAuthor && (
+                <S.FilterButton className="_btn-text" onClick={() => handleFilter("author")}>исполнителю</S.FilterButton>
+                {activeFilter === "author" && (
                     <S.FilterAuthor>
                         <SimpleBar forceVisible="y" style={{ height: '300px' }}>
                             {renderAuthors()}
                         </SimpleBar>
                     </S.FilterAuthor>
                 )}
-                <S.FilterButton style={{marginLeft: "15px"}} className="_btn-text" onClick={handleGenre}>жанру</S.FilterButton>
-                {isActiveGenre && <S.FilterGenre>{renderGenre()}</S.FilterGenre>}
+                <S.FilterButton style={{marginLeft: "15px"}} className="_btn-text" onClick={() => handleFilter("genre")}>жанру</S.FilterButton>
+                {activeFilter === "genre" && <S.FilterGenre>{renderGenre()}</S.FilterGenre>}
             </S.FilterFlex>
             <S.FilterFlex >
             <S.FilterTitle>Сортировка:</S.FilterTitle>
-                <S.FilterButton  className="_btn-text" onClick={handleSort}> По умолчанию</S.FilterButton>
-            {isActiveSort && <S.FilterSort>{renderSort()}</S.FilterSort>} 
+                <S.FilterButton  className="_btn-text" onClick={() => handleFilter("sort")}>{activeSort}</S.FilterButton>
+            {activeFilter === "sort" && <S.FilterSort>{renderSort()}</S.FilterSort>} 
             </S.FilterFlex>
         </S.CenterblockFilter>
     );
