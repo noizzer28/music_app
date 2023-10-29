@@ -11,7 +11,7 @@ import { useAddFavoritesMutation, useDeleteFavoritesMutation } from "../../store
 
 
 const PlaylistItems = ({ tracks, status}) => {
-
+  console.log("Playlist")
   const dispatch = useDispatch()
   const currentTrack = useSelector(state => state.tracks.currentTrack)
   const isPlaying = useSelector(state => state.tracks.isPlaying)

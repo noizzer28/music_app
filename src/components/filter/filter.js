@@ -3,7 +3,7 @@ import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import * as S from "./filter.styles"
-import { setSortedTracks } from "../../store/track.slice";
+import { setFilteredAuthor, setFilteredGenre, setSortedTracks } from "../../store/track.slice";
 import { useDispatch } from "react-redux";
 
 
@@ -12,40 +12,55 @@ const PlaylistFilter = () => {
     const dispatch = useDispatch()
     const [activeFilter, setActiveFilter] = useState(null);
     const [activeSort, setActiveSort] = useState("По умолчанию")
-    
-    const tracks = useSelector(state => state.tracks.tracks)
+    const activeAuthors = useSelector(state => state.tracks.activeAuthors)
+    const activeGenre = useSelector(state => state.tracks.activeGenre)
+    const authors = useSelector(state => state.tracks.authors)
+    const genres = useSelector(state => state.tracks.genres)
+
 
     const handleFilter = (filterName) => {
         setActiveFilter(filterName === activeFilter ? null : filterName);
     };
 
     const renderAuthors = () => {
-        const authorArray = []
-        return tracks.map((track) => {
-            if (authorArray.includes(track.author)) {
-                return
-            } else {
-                authorArray.push(track.author)
-                return <S.FilterList key={track.id}>
-                {track.author}
+        return authors.map((author, index) => {
+                if (activeAuthors.includes(author)) {
+                    return <S.FilterList key={index} onClick={() =>  dispatch(setFilteredAuthor(author))}>
+                    <strong>{author}</strong>
+                        </S.FilterList>
+                }
+                return <S.FilterList key={index} onClick={() => dispatch(setFilteredAuthor(author))}>
+                {author}
                     </S.FilterList>
-            }
+            
         })
     };
+    
+    // const handleActiveAuthor = (author) => {
+    //     console.log(activeAuthors)
+    //     if (!activeAuthors.includes(author)) {
+    //         setActiveAuthors([...activeAuthors, author]);
+    //         dispatch(setFilteredTracks(activeAuthors))
+    //     } else {
+    //         setActiveAuthors(activeAuthors.filter(item => item !== author));
+    //         dispatch(setFilteredTracks(activeAuthors))
+    //     }
+    //     console.log(activeAuthors)
 
+    // }
 
     const renderGenre = () => {
-        const genreArray = []
-        return tracks.map((track) => {
-            if (genreArray.includes(track.genre)) {
-                return
-            } else {
-                genreArray.push(track.genre)
-                return <S.FilterList key={track.id}>
-                {track.genre}
+        return genres.map((genre, index) => {
+            if (activeGenre.includes(genre)) {
+                return <S.FilterList key={index} onClick={() =>  dispatch(setFilteredGenre(genre))}>
+                <strong>{genre}</strong>
                     </S.FilterList>
             }
-        })
+            return <S.FilterList key={index} onClick={() => dispatch(setFilteredGenre(genre))}>
+            {genre}
+                </S.FilterList>
+        
+    })
     };
 
 

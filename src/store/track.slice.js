@@ -4,6 +4,7 @@ import {  createSlice } from "@reduxjs/toolkit";
     const trackSlice = createSlice({
         name: 'tracks',
         initialState: {
+            initialTracks: [],
             tracks: [],
             currentTrack: null,
             currentIndex: null,
@@ -12,6 +13,10 @@ import {  createSlice } from "@reduxjs/toolkit";
             shuffledTracks: [],
             currentPlaylist: [],
             likedTracks: [],
+            authors: [],
+            genres: [],
+            activeAuthors: [],
+            activeGenre: []
         },
         reducers: {
         setInitialState(state = initialState) {
@@ -23,6 +28,8 @@ import {  createSlice } from "@reduxjs/toolkit";
             state.shuffledTracks = [];
             state.currentPlaylist = [];
             state.likedTracks = [];
+            state.activeAuthors = [];
+            state.activeGenre = [];
         },
         setLikedTracks(state) { 
             state.likedTracks = state.tracks.filter((track) => {
@@ -36,12 +43,17 @@ import {  createSlice } from "@reduxjs/toolkit";
         },
         setTracks(state, action) {
             const login = action.payload.login
-            state.tracks = action.payload.tracks.map((track) => {
+            const tracks = action.payload.tracks
+            state.initialTracks = action.payload.tracks
+            state.tracks = tracks.map((track) => {
                 if(track.stared_user.some((obj) => obj.username  === login)){
                 return {...track, isLiked: true}
                 }
                 return {...track, isLiked: false}
             })
+            state.authors = [...new Set(tracks.map((track) => track.author))];
+            state.genres = [...new Set(tracks.map((track) => track.genre))];
+
         },
         setCurrentTrack (state, action) {
             state.currentTrack = action.payload;
@@ -93,8 +105,26 @@ import {  createSlice } from "@reduxjs/toolkit";
                 })
     
         },
-        setFilteredTracks(state, action) {
-
+        setFilteredAuthor(state, action) {
+            const payload = action.payload
+            if (!state.activeAuthors.includes(payload)) {
+                state.activeAuthors.push(payload)
+            } else {
+                state.activeAuthors = state.activeAuthors.filter(item => item !== payload);
+            }
+            console.log(state.activeAuthors.slice())
+            state.tracks = state.initialTracks.filter((track) => state.activeAuthors.includes(track.author))
+        },
+        
+        setFilteredGenre(state, action) {
+            const payload = action.payload
+            if (!state.activeGenre.includes(payload)) {
+                state.activeGenre.push(payload)
+            } else {
+                state.activeGenre = state.activeGenre.filter(item => item !== payload);
+            }
+            console.log(state.activeGenre.slice())
+            state.tracks = state.initialTracks.filter((track) => state.activeGenre.includes(track.genre))
         },
         
         prevTrack(state) {
@@ -146,5 +176,6 @@ export const {setTracks,
         nextTrack, 
         setCurrentPlayList,
         setSortedTracks,
-        setFilteredTracks} = trackSlice.actions;
+        setFilteredGenre,
+        setFilteredAuthor} = trackSlice.actions;
 export default trackSlice.reducer;

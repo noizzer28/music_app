@@ -5,15 +5,33 @@ import PlaylistFilter from "../../components/filter/filter";
 import SimpleBar from 'simplebar-react';
 import * as S from "./app.styles"
 import PlaylistItems from  "../../components/tracks/Playlist"
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { useOutletContext } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { getTracks } from "../../api";
+import { setTracks } from "../../store/track.slice";
+
 
 
 
 export const MainTracks = () =>  {
     const AllTracks = useSelector(state => state.tracks.tracks)
-    const [trackError, loading] = useOutletContext()
-
+    const dispatch = useDispatch()
+    const login = useSelector(state => state.user.login)
+    const [loading, setLoading] = useState(true)
+    const [trackError, SetTrackError] = useState("")
+    console.log('mainTracks')
+    useEffect(()=> {
+        getTracks()
+          .then((tracks) => {
+             dispatch(setTracks({login: login, tracks: tracks}))
+          }).then(()=> {
+              setLoading(false)
+        }).catch((error) => {
+          setLoading(false)
+          SetTrackError(`Ошибка соединения с сервером: ${error.message}`)
+        })
+        },[dispatch])
+    
     return    <>
     <S.SenterblockHeader>Треки</S.SenterblockHeader>
         <PlaylistFilter/>

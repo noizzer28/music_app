@@ -1,10 +1,32 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setRefreshToken, setLogin } from "../../store/user.slice";
 
 
-export const ProtectedRoute = ({redirectPath = "/", isAllowed}) => {
+export const ProtectedRoute = () => {
+    console.debug("Protected route")
+    const login = useSelector(state => state.user.login)
+    const dispatch = useDispatch()
+    let user = []
+    useEffect(() => {
+        const initializeUser =  () => {
+            user = JSON.parse(localStorage.getItem('token'));
+            if (user) {
+                dispatch(setRefreshToken(user.token));
+                dispatch(setLogin(user.name));  
+            }
+            console.log(user)
+            return user
+        }
+          initializeUser();
+    });
 
-    if (!isAllowed) {
-       return <Navigate to={redirectPath} replace={true}/>
-    }
-    return <Outlet/>
+    console.log(login)
+    return (
+        login ?  <Outlet/> : <Navigate to={'/login'}/>
+    )
+
+
+    
 }
