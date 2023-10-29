@@ -12,13 +12,26 @@
 
     export const AppRoutes = () => {
         console.debug("Routes")
-
+        const dispatch = useDispatch()
+        useEffect(() => {
+            const initializeUser = async () => {
+                const user = await JSON.parse(localStorage.getItem('token'));
+                if (user) {
+                    dispatch(setRefreshToken(user.token));
+                    dispatch(setLogin(user.name));  
+                }
+                console.log(user)
+                return user
+            }
+              initializeUser();
+        });
+    
 
         return (
             <Routes>
                 <Route element={<ProtectedRoute/>}>
                     <Route path="/" element={<MainApp/>}>
-                        <Route index path="/" element={<MainTracks/>}/>
+                        <Route path="/" element={<MainTracks/>}/>
                         <Route path="/favorites" element={<Favorites/>}/>
                         <Route path="/category/:id" element={<Category/>}/>
                     </Route>

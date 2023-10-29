@@ -21,13 +21,17 @@ export const MainTracks = () =>  {
     const [trackError, SetTrackError] = useState("")
     console.log('mainTracks')
     useEffect(()=> {
+        console.log('загружаю треки')
         getTracks()
           .then((tracks) => {
+            console.log("tracks dispatch")
              dispatch(setTracks({login: login, tracks: tracks}))
           }).then(()=> {
+            console.log('setloading')
               setLoading(false)
         }).catch((error) => {
           setLoading(false)
+          console.log("error")
           SetTrackError(`Ошибка соединения с сервером: ${error.message}`)
         })
         },[dispatch])

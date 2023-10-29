@@ -7,26 +7,10 @@ import { setRefreshToken, setLogin } from "../../store/user.slice";
 export const ProtectedRoute = () => {
     console.debug("Protected route")
     const login = useSelector(state => state.user.login)
-    const dispatch = useDispatch()
-    let user = []
-    useEffect(() => {
-        const initializeUser =  () => {
-            user = JSON.parse(localStorage.getItem('token'));
-            if (user) {
-                dispatch(setRefreshToken(user.token));
-                dispatch(setLogin(user.name));  
-            }
-            console.log(user)
-            return user
-        }
-          initializeUser();
-    });
 
     console.log(login)
     return (
         login ?  <Outlet/> : <Navigate to={'/login'}/>
     )
 
-
-    
 }
