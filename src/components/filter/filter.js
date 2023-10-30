@@ -16,6 +16,7 @@ const PlaylistFilter = () => {
     const activeGenre = useSelector(state => state.tracks.activeGenre)
     const authors = useSelector(state => state.tracks.authors)
     const genres = useSelector(state => state.tracks.genres)
+  
 
 
     const handleFilter = (filterName) => {
@@ -26,28 +27,16 @@ const PlaylistFilter = () => {
         return authors.map((author, index) => {
                 if (activeAuthors.includes(author)) {
                     return <S.FilterList key={index} onClick={() =>  dispatch(setFilteredAuthor(author))}>
-                    <strong>{author}</strong>
+                            <strong>{author}</strong>
                         </S.FilterList>
                 }
                 return <S.FilterList key={index} onClick={() => dispatch(setFilteredAuthor(author))}>
-                {author}
+                            {author}
                     </S.FilterList>
             
         })
     };
     
-    // const handleActiveAuthor = (author) => {
-    //     console.log(activeAuthors)
-    //     if (!activeAuthors.includes(author)) {
-    //         setActiveAuthors([...activeAuthors, author]);
-    //         dispatch(setFilteredTracks(activeAuthors))
-    //     } else {
-    //         setActiveAuthors(activeAuthors.filter(item => item !== author));
-    //         dispatch(setFilteredTracks(activeAuthors))
-    //     }
-    //     console.log(activeAuthors)
-
-    // }
 
     const renderGenre = () => {
         return genres.map((genre, index) => {
@@ -87,7 +76,9 @@ const PlaylistFilter = () => {
 
             <S.FilterFlex>
             <S.FilterTitle>Искать по:</S.FilterTitle>
+            <S.FilterButtonWrapper>
                 <S.FilterButton className="_btn-text" onClick={() => handleFilter("author")}>исполнителю</S.FilterButton>
+                {activeAuthors.length > 0 &&  <S.FilterQuantity>{activeAuthors.length}</S.FilterQuantity>}
                 {activeFilter === "author" && (
                     <S.FilterAuthor>
                         <SimpleBar forceVisible="y" style={{ height: '300px' }}>
@@ -95,8 +86,12 @@ const PlaylistFilter = () => {
                         </SimpleBar>
                     </S.FilterAuthor>
                 )}
+                </S.FilterButtonWrapper>
+            <S.FilterButtonWrapper>
                 <S.FilterButton style={{marginLeft: "15px"}} className="_btn-text" onClick={() => handleFilter("genre")}>жанру</S.FilterButton>
+                {activeGenre.length > 0 &&  <S.FilterQuantity>{activeGenre.length}</S.FilterQuantity>}
                 {activeFilter === "genre" && <S.FilterGenre>{renderGenre()}</S.FilterGenre>}
+                </S.FilterButtonWrapper>
             </S.FilterFlex>
             <S.FilterFlex >
             <S.FilterTitle>Сортировка:</S.FilterTitle>

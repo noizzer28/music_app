@@ -4,7 +4,7 @@ import {  createSlice } from "@reduxjs/toolkit";
     const trackSlice = createSlice({
         name: 'tracks',
         initialState: {
-            initialTracks: [],
+            filteredTracks: [],
             tracks: [],
             currentTrack: null,
             currentIndex: null,
@@ -16,23 +16,13 @@ import {  createSlice } from "@reduxjs/toolkit";
             authors: [],
             genres: [],
             activeAuthors: [],
-            activeGenre: []
+            activeGenre: [],
+            filteredByAuthor: [],
+            filteredByGenre: [],
         },
         reducers: {
-        setInitialState(state = initialState) {
-            state.tracks = [];
-            state.currentTrack =  null;
-            state.currentIndex = null;
-            state.isPlaying = false;
-            state.isShuffled = false;
-            state.shuffledTracks = [];
-            state.currentPlaylist = [];
-            state.likedTracks = [];
-            state.activeAuthors = [];
-            state.activeGenre = [];
-        },
-        setLikedTracks(state) { 
-            state.likedTracks = state.tracks.filter((track) => {
+            setLikedTracks(state) { 
+                state.likedTracks = state.tracks.filter((track) => {
                 if (track.isLiked) {
                     return track
                 }
@@ -44,7 +34,6 @@ import {  createSlice } from "@reduxjs/toolkit";
         setTracks(state, action) {
             const login = action.payload.login
             const tracks = action.payload.tracks
-            state.initialTracks = action.payload.tracks
             state.tracks = tracks.map((track) => {
                 if(track.stared_user.some((obj) => obj.username  === login)){
                 return {...track, isLiked: true}
@@ -53,6 +42,7 @@ import {  createSlice } from "@reduxjs/toolkit";
             })
             state.authors = [...new Set(tracks.map((track) => track.author))];
             state.genres = [...new Set(tracks.map((track) => track.genre))];
+            state.filteredTracks = [...state.tracks]
 
         },
         setCurrentTrack (state, action) {
@@ -73,15 +63,23 @@ import {  createSlice } from "@reduxjs/toolkit";
         toggleLike(state, action) {
             const { song, isLiked } = action.payload;
 
-            const updated = state.tracks.map((track) => {
+            state.tracks = state.tracks.map((track) => {
               if (track.id === song.id) {
                 return { ...track, isLiked };
               } else {
                 return track;
               }
             });
-            state.tracks = updated
-            state.likedTracks = updated.filter((track) => {
+            state.filteredTracks = state.filteredTracks.map((track) => {
+                if (track.id === song.id) {
+                    return { ...track, isLiked };
+                } else {
+                    return track;
+                }
+            });
+            
+           
+            state.likedTracks =  state.tracks.filter((track) => {
                 if (track.isLiked) {
                     return track
                 }
@@ -103,29 +101,40 @@ import {  createSlice } from "@reduxjs/toolkit";
                         return a.id - b.id
                     }
                 })
-    
+
         },
         setFilteredAuthor(state, action) {
-            const payload = action.payload
+            const payload = action.payload;
+            console.log(payload)
             if (!state.activeAuthors.includes(payload)) {
-                state.activeAuthors.push(payload)
+                state.activeAuthors.push(payload);
             } else {
                 state.activeAuthors = state.activeAuthors.filter(item => item !== payload);
             }
-            console.log(state.activeAuthors.slice())
-            state.tracks = state.initialTracks.filter((track) => state.activeAuthors.includes(track.author))
+        
+            state.filteredByAuthor = state.tracks.filter(track => state.activeAuthors.includes(track.author));
+            
+            state.filteredTracks =  state.activeAuthors.filter(item => state.activeGenre.includes(item));
+
         },
         
         setFilteredGenre(state, action) {
-            const payload = action.payload
+            const payload = action.payload;
+            console.log(payload)
+
+            
             if (!state.activeGenre.includes(payload)) {
-                state.activeGenre.push(payload)
+                state.activeGenre.push(payload);
             } else {
                 state.activeGenre = state.activeGenre.filter(item => item !== payload);
             }
-            console.log(state.activeGenre.slice())
-            state.tracks = state.initialTracks.filter((track) => state.activeGenre.includes(track.genre))
+        
+            state.filteredByGenre = state.tracks.filter(track => state.activeGenre.includes(track.genre));
+            
+            state.filteredTracks = state.activeGenre.filter(item => state.activeAuthors.includes(item));
         },
+        
+
         
         prevTrack(state) {
 
@@ -159,7 +168,19 @@ import {  createSlice } from "@reduxjs/toolkit";
                 state.currentTrack = state.currentPlaylist[state.currentIndex]
             }
         },
-
+        setInitialState(state = initialState) {
+            state.tracks = [];
+            state.currentTrack =  null;
+            state.currentIndex = null;
+            state.isPlaying = false;
+            state.isShuffled = false;
+            state.shuffledTracks = [];
+            state.currentPlaylist = [];
+            state.likedTracks = [];
+            state.activeAuthors = [];
+            state.activeGenre = [];
+        },
+        
     },
 })
 
@@ -179,3 +200,10 @@ export const {setTracks,
         setFilteredGenre,
         setFilteredAuthor} = trackSlice.actions;
 export default trackSlice.reducer;
+
+
+
+function combineFilters(filteredByAuthor, filteredByGenre) {
+    const filteredSet = new Set([...filteredByAuthor, ...filteredByGenre]);
+    return Array.from(filteredSet);
+}

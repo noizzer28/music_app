@@ -6,25 +6,25 @@
     import { NotFound } from "../../pages/not-found/not-found";
     import { ProtectedRoute } from "./protected";
     import { MainTracks } from "../../pages/main/mainTracks";
-    import { useDispatch, useSelector } from "react-redux";
+    import { useDispatch } from "react-redux";
     import { setRefreshToken, setLogin } from "../../store/user.slice";
-    import { useEffect } from "react";
+
+
+
+    const user =  () => {
+        const dispatch = useDispatch()
+        const userData =  JSON.parse(localStorage.getItem('token'));
+        if (user) {
+            dispatch(setRefreshToken(userData.token));
+            dispatch(setLogin(userData.name));  
+        }
+        return userData
+    }
+
 
     export const AppRoutes = () => {
-        console.debug("Routes")
-        const dispatch = useDispatch()
-        useEffect(() => {
-            const initializeUser = async () => {
-                const user = await JSON.parse(localStorage.getItem('token'));
-                if (user) {
-                    dispatch(setRefreshToken(user.token));
-                    dispatch(setLogin(user.name));  
-                }
-                console.log(user)
-                return user
-            }
-              initializeUser();
-        });
+
+        user()
     
 
         return (

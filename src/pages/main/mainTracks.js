@@ -14,7 +14,7 @@ import { setTracks } from "../../store/track.slice";
 
 
 export const MainTracks = () =>  {
-    const AllTracks = useSelector(state => state.tracks.tracks)
+    const filteredTracks = useSelector(state => state.tracks.filteredTracks)
     const dispatch = useDispatch()
     const login = useSelector(state => state.user.login)
     const [loading, setLoading] = useState(true)
@@ -45,7 +45,7 @@ export const MainTracks = () =>  {
         <S.ContentPlaylist>
         {loading ? <SkeletonTrack/> :
         <SimpleBar forceVisible="y" style={{ height: '65vh', maxWidth:"1120px"}}>
-            <PlaylistItems tracks={AllTracks} status={'main'}/>
+            <PlaylistItems tracks={filteredTracks} status={'main'}/>
             </SimpleBar>}
         </S.ContentPlaylist>}
     </S.CenterblockContent>
