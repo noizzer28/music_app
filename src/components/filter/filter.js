@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector, useDispatch, useEffect } from "react-redux";
 import * as S from "./filter.styles"
 import { setFilteredAuthor, setFilteredGenre, setSortedTracks } from "../../store/track.slice";
-import { useDispatch } from "react-redux";
 
 
 
@@ -16,8 +15,7 @@ const PlaylistFilter = () => {
     const activeGenre = useSelector(state => state.tracks.activeGenre)
     const authors = useSelector(state => state.tracks.authors)
     const genres = useSelector(state => state.tracks.genres)
-  
-
+    
 
     const handleFilter = (filterName) => {
         setActiveFilter(filterName === activeFilter ? null : filterName);

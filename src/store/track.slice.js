@@ -21,12 +21,16 @@ import {  createSlice } from "@reduxjs/toolkit";
             filteredByGenre: [],
         },
         reducers: {
-            setLikedTracks(state) { 
-                state.likedTracks = state.tracks.filter((track) => {
-                if (track.isLiked) {
-                    return track
-                }
-            })
+        setActiveFilters(state) {
+            state.activeAuthors = []
+            state.activeGenre = []
+        },
+        setLikedTracks(state) { 
+            state.likedTracks = state.tracks.filter((track) => {
+            if (track.isLiked) {
+                return track
+            }
+        })
         },
         setCurrentPlayList(state, action){
             state.currentPlaylist = action.payload
@@ -234,6 +238,7 @@ export const {setTracks,
         setCurrentPlayList,
         setSortedTracks,
         setFilteredGenre,
-        setFilteredAuthor} = trackSlice.actions;
+        setFilteredAuthor,
+        setActiveFilters} = trackSlice.actions;
 export default trackSlice.reducer;
 
