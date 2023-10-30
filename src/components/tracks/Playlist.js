@@ -11,10 +11,12 @@ import { useAddFavoritesMutation, useDeleteFavoritesMutation } from "../../store
 
 
 const PlaylistItems = ({ tracks, status}) => {
-  console.log("Playlist")
+
   const dispatch = useDispatch()
   const currentTrack = useSelector(state => state.tracks.currentTrack)
   const isPlaying = useSelector(state => state.tracks.isPlaying)
+  const filteredByAuthor = useSelector(state => state.tracks.filteredByAuthor)
+  const filteredByGenre = useSelector(state => state.tracks.filteredByGenre)
 
   const [addFavorite] = useAddFavoritesMutation()
   const [deleteFavorites] = useDeleteFavoritesMutation()
@@ -54,7 +56,7 @@ const PlaylistItems = ({ tracks, status}) => {
   
   
   const PlayList = (tracks) => {
-    console.log(tracks)
+    
       if (tracks.length === 0) {
         return <div key={1}>В этом плейлисте еще нет треков</div>
       }

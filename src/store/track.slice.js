@@ -90,7 +90,7 @@ import {  createSlice } from "@reduxjs/toolkit";
         },
         setSortedTracks(state, action) {
             const payload = action.payload
-                state.tracks = state.tracks.sort((a, b) => {
+                state.filteredTracks = state.filteredTracks.sort((a, b) => {
                     const dateA = new Date(a.release_date)
                     const dateB = new Date(b.release_date)
                     if (payload === "Сначала старые") {
@@ -105,34 +105,70 @@ import {  createSlice } from "@reduxjs/toolkit";
         },
         setFilteredAuthor(state, action) {
             const payload = action.payload;
-            console.log(payload)
             if (!state.activeAuthors.includes(payload)) {
                 state.activeAuthors.push(payload);
             } else {
                 state.activeAuthors = state.activeAuthors.filter(item => item !== payload);
             }
-        
-            state.filteredByAuthor = state.tracks.filter(track => state.activeAuthors.includes(track.author));
-            
-            state.filteredTracks =  state.activeAuthors.filter(item => state.activeGenre.includes(item));
+            state.filteredByAuthor = state.tracks.filter(track => {
+                if (state.activeAuthors.includes(track.author)) {
+                    return track
+                }
+            });
+            if (state.filteredByAuthor.length === 0) {
+                state.filteredByAuthor = state.tracks
+            }
+            if (state.activeAuthors.length === 0 && state.activeGenre.length=== 0) {
+                state.filteredTracks =  state.tracks;
+            } else if (state.activeGenre.length === 0) {
+                state.filteredTracks = state.filteredByAuthor
+            } else {
+                state.filteredTracks = state.filteredByAuthor.filter((item) => {
+                    for (let i = 0; i < state.filteredByGenre.length; i++) {
+                        const element = state.filteredByGenre[i];
+                        if (element.id === item.id) {
+                            return item
+                        }
+                        
+                    }
+                })
 
+            }
+
+            
         },
         
         setFilteredGenre(state, action) {
             const payload = action.payload;
-            console.log(payload)
-
-            
             if (!state.activeGenre.includes(payload)) {
                 state.activeGenre.push(payload);
             } else {
                 state.activeGenre = state.activeGenre.filter(item => item !== payload);
             }
-        
-            state.filteredByGenre = state.tracks.filter(track => state.activeGenre.includes(track.genre));
-            
-            state.filteredTracks = state.activeGenre.filter(item => state.activeAuthors.includes(item));
-        },
+            state.filteredByGenre = state.tracks.filter(track => {
+                if (state.activeGenre.includes(track.genre)) {
+                    return track
+                }
+            });
+            if (state.filteredByGenre.length === 0) {
+                state.filteredByGenre = state.tracks
+            }
+            if (state.activeAuthors.length === 0 && state.activeGenre.length=== 0) {
+                state.filteredTracks =  state.tracks;
+            } else if(state.activeAuthors.length === 0) {
+                state.filteredTracks = state.filteredByGenre
+            } else {
+                state.filteredTracks  = state.filteredByAuthor.filter((item) => {
+                    for (let i = 0; i < state.filteredByGenre.length; i++) {
+                        const element = state.filteredByGenre[i];
+                        if (element.id === item.id) {
+                            return item
+                        }
+                        
+                    }
+                })
+            }
+        },  
         
 
         
@@ -201,9 +237,3 @@ export const {setTracks,
         setFilteredAuthor} = trackSlice.actions;
 export default trackSlice.reducer;
 
-
-
-function combineFilters(filteredByAuthor, filteredByGenre) {
-    const filteredSet = new Set([...filteredByAuthor, ...filteredByGenre]);
-    return Array.from(filteredSet);
-}
