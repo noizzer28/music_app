@@ -17,11 +17,44 @@ import {  createSlice } from "@reduxjs/toolkit";
             genres: [],
             activeAuthors: [],
             activeGenre: [],
-            filteredByAuthor: [],
-            filteredByGenre: [],
+            activeSearch: [],
         },
         reducers: {
-        setActiveFilters(state) {
+        setSearch (state,  action) {
+            state.activeSearch  = action.payload.toLowerCase()
+        },
+        setFilteredTracks(state, action) {
+            let filter = state.tracks
+            if (state.activeAuthors.length > 0) {
+                const filteredByAuthor = state.tracks.filter(track => {
+                    if (state.activeAuthors.includes(track.author)) {
+                        return track
+                    }
+                }); 
+                filter = filteredByAuthor
+            }
+            if (state.activeGenre.length > 0) {
+                console.log('doing genre here')
+                const filteredByGenre = filter.filter(track => {
+                    if (state.activeGenre.includes(track.genre)) {
+                        return track
+                    }
+                }); 
+                filter = filteredByGenre
+            }
+
+            if (state.activeSearch) {
+                const searched = filter.filter((track) => {
+                    if(track.name.toLowerCase().includes(state.activeSearch))  {
+                        return track
+                    }
+                })
+                filter = searched
+            }
+
+            state.filteredTracks = filter
+        },
+        setDeactivedFilters(state) {
             state.activeAuthors = []
             state.activeGenre = []
         },
@@ -114,34 +147,8 @@ import {  createSlice } from "@reduxjs/toolkit";
             } else {
                 state.activeAuthors = state.activeAuthors.filter(item => item !== payload);
             }
-            state.filteredByAuthor = state.tracks.filter(track => {
-                if (state.activeAuthors.includes(track.author)) {
-                    return track
-                }
-            });
-            if (state.filteredByAuthor.length === 0) {
-                state.filteredByAuthor = state.tracks
-            }
-            if (state.activeAuthors.length === 0 && state.activeGenre.length=== 0) {
-                state.filteredTracks =  state.tracks;
-            } else if (state.activeGenre.length === 0) {
-                state.filteredTracks = state.filteredByAuthor
-            } else {
-                state.filteredTracks = state.filteredByAuthor.filter((item) => {
-                    for (let i = 0; i < state.filteredByGenre.length; i++) {
-                        const element = state.filteredByGenre[i];
-                        if (element.id === item.id) {
-                            return item
-                        }
-                        
-                    }
-                })
-
-            }
-
-            
+            console.log(state.activeAuthors.slice())
         },
-        
         setFilteredGenre(state, action) {
             const payload = action.payload;
             if (!state.activeGenre.includes(payload)) {
@@ -149,33 +156,8 @@ import {  createSlice } from "@reduxjs/toolkit";
             } else {
                 state.activeGenre = state.activeGenre.filter(item => item !== payload);
             }
-            state.filteredByGenre = state.tracks.filter(track => {
-                if (state.activeGenre.includes(track.genre)) {
-                    return track
-                }
-            });
-            if (state.filteredByGenre.length === 0) {
-                state.filteredByGenre = state.tracks
-            }
-            if (state.activeAuthors.length === 0 && state.activeGenre.length=== 0) {
-                state.filteredTracks =  state.tracks;
-            } else if(state.activeAuthors.length === 0) {
-                state.filteredTracks = state.filteredByGenre
-            } else {
-                state.filteredTracks  = state.filteredByAuthor.filter((item) => {
-                    for (let i = 0; i < state.filteredByGenre.length; i++) {
-                        const element = state.filteredByGenre[i];
-                        if (element.id === item.id) {
-                            return item
-                        }
-                        
-                    }
-                })
-            }
+            
         },  
-        
-
-        
         prevTrack(state) {
 
             if (state.isShuffled) {
@@ -239,6 +221,8 @@ export const {setTracks,
         setSortedTracks,
         setFilteredGenre,
         setFilteredAuthor,
-        setActiveFilters} = trackSlice.actions;
+        setDeactivedFilters,
+        setFilteredTracks,
+        setSearch} = trackSlice.actions;
 export default trackSlice.reducer;
 

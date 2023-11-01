@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
-import { useSelector, useDispatch, useEffect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import * as S from "./filter.styles"
-import { setFilteredAuthor, setFilteredGenre, setSortedTracks } from "../../store/track.slice";
+import { setFilteredAuthor, setFilteredGenre, setSortedTracks, setFilteredTracks } from "../../store/track.slice";
 
 
 
@@ -24,11 +24,18 @@ const PlaylistFilter = () => {
     const renderAuthors = () => {
         return authors.map((author, index) => {
                 if (activeAuthors.includes(author)) {
-                    return <S.FilterList key={index} onClick={() =>  dispatch(setFilteredAuthor(author))}>
+                    return <S.FilterList key={index} onClick={() => {
+                        dispatch(setFilteredAuthor(author))
+                        dispatch(setFilteredTracks())
+                    } }>
+                        
                             <strong>{author}</strong>
                         </S.FilterList>
                 }
-                return <S.FilterList key={index} onClick={() => dispatch(setFilteredAuthor(author))}>
+                return <S.FilterList key={index} onClick={() => {
+                    dispatch(setFilteredAuthor(author))
+                    dispatch(setFilteredTracks())
+                }}>
                             {author}
                     </S.FilterList>
             
@@ -39,11 +46,17 @@ const PlaylistFilter = () => {
     const renderGenre = () => {
         return genres.map((genre, index) => {
             if (activeGenre.includes(genre)) {
-                return <S.FilterList key={index} onClick={() =>  dispatch(setFilteredGenre(genre))}>
+                return <S.FilterList key={index} onClick={ () => {
+                     dispatch(setFilteredGenre(genre));
+                    dispatch(setFilteredTracks())
+                } }>
                 <strong>{genre}</strong>
                     </S.FilterList>
             }
-            return <S.FilterList key={index} onClick={() => dispatch(setFilteredGenre(genre))}>
+            return <S.FilterList key={index} onClick={() => {
+                dispatch(setFilteredGenre(genre))
+                dispatch(setFilteredTracks())
+            }}>
             {genre}
                 </S.FilterList>
         

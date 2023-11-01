@@ -8,21 +8,21 @@ import PlaylistItems from  "../../components/tracks/Playlist"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getTracks } from "../../api";
-import { setTracks, setActiveFilters } from "../../store/track.slice";
+import { setTracks, setDeactivedFilters } from "../../store/track.slice";
 
 
 
 
 
 export const MainTracks = () =>  {
-    const filteredTracks = useSelector(state => state.tracks.filteredTracks)
     const dispatch = useDispatch()
+    const filteredTracks = useSelector(state => state.tracks.filteredTracks)
     const login = useSelector(state => state.user.login)
     const [loading, setLoading] = useState(true)
     const [trackError, SetTrackError] = useState("")
 
     useEffect(()=> {
-        dispatch(setActiveFilters())
+        dispatch(setDeactivedFilters())
         getTracks()
           .then((tracks) => {
              dispatch(setTracks({login: login, tracks: tracks}))

@@ -19,10 +19,7 @@ export const secondsToMinutes = (time) => {
 }
 
 export const  MainApp = () => {
-
-
   const currentTrack = useSelector(state => state.tracks.currentTrack)
-    console.log("MainApp")
   const [isLooped, setLoop] = useState(false)
 
   const [duration, setDuration] = useState(0)
