@@ -14,7 +14,7 @@
     const user =  () => {
         const dispatch = useDispatch()
         const userData =  JSON.parse(localStorage.getItem('token'));
-        if (user) {
+        if (userData) {
             dispatch(setRefreshToken(userData.token));
             dispatch(setLogin(userData.name));  
         }
