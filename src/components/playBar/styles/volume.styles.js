@@ -36,7 +36,8 @@ export const VolumeProgress = styled.div`
 display: flex;
 align-items: center;
 justify-content: center;
-width: 109px;` 
+width: 109px;
+position: relative;` 
 export const VolumeProgresLine = styled.input`
 --volume-width: 50%;
 -webkit-appearance: none;
@@ -66,5 +67,15 @@ position: relative;
     width: var(--volume-width);
     top: 0;
     left: 0;    
-}
+
 ` 
+export const VolumeThumb = styled.div`
+width: 12px;
+height: 12px;
+border-radius: 50%;
+background-color: #fff;
+// border: 2px;
+// border-color: #fff;
+position: absolute;
+left: 0;
+`

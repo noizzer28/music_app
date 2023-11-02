@@ -1,7 +1,7 @@
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useEffect, useState, useContext } from 'react'
 import * as S from "./sidebar.styled"
-import { PLAYLISTS } from './categories'
+import { SELECTED } from '../../pages/category/selected'
 import { setInitialState } from '../../store/track.slice'
 import { useNavigate } from 'react-router'
 import {  setRefreshToken } from "../../store/user.slice";
@@ -25,7 +25,7 @@ export  const SideBar = ( ) => {
   useEffect(() => {
     setTimeout(() => {
       setloading(false)
-    }, 2000);
+    }, 700);
   })
     return(       
          <S.MainSideBar>
@@ -41,7 +41,7 @@ export  const SideBar = ( ) => {
     <S.SidebarBlock>
       <S.SideBarList>
       {
-        PLAYLISTS.map((playlist) => (
+        SELECTED.map((playlist) => (
           <S.SidebarItem key={playlist.id}>
           {loading ? <S.Skeleton></S.Skeleton> : <S.SideBarLink to={`/category/${playlist.id}`} >
               <S.SideBarImg

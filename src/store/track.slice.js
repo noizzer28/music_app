@@ -23,6 +23,17 @@ import {  createSlice } from "@reduxjs/toolkit";
         setSearch (state,  action) {
             state.activeSearch  = action.payload.toLowerCase()
         },
+        setSelected (state,  action) {
+            const payload = action.payload
+            state.filteredTracks = state.tracks.filter((track) => {
+                if ( track.genre == payload ) {
+                    return track
+                }
+               
+            })
+
+        },
+        
         setFilteredTracks(state, action) {
             let filter = state.tracks
             if (state.activeAuthors.length > 0) {
@@ -223,6 +234,7 @@ export const {setTracks,
         setFilteredAuthor,
         setDeactivedFilters,
         setFilteredTracks,
-        setSearch} = trackSlice.actions;
+        setSearch,
+        setSelected} = trackSlice.actions;
 export default trackSlice.reducer;
 

@@ -60,8 +60,13 @@ align-items: center;`
 export const SidebarItem = styled.div`
 width: 250px;
 height: 150px;
+transition-duration: 0.3s;
 &:not(:last-child) {
   margin-bottom: 30px;
+}
+&:hover{
+  transform: scale(1.04);
+
 }`
 export const Skeleton = styled.div`  width: 250px;
 height: 150px;

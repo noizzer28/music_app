@@ -49,6 +49,7 @@ const BarVolume = ({audioRef}) => {
           min={0} max={100}
           onChange={()=> volumeHandler(volume)}
         />
+        {/* <S.VolumeThumb className="div"></S.VolumeThumb> */}
       </S.VolumeProgress>
     </S.VolumeContent>
   </S.BarVolumeBlock>)
