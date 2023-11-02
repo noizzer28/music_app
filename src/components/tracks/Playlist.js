@@ -10,7 +10,7 @@ import { useAddFavoritesMutation, useDeleteFavoritesMutation } from "../../store
 
 
 
-const PlaylistItems = ({ tracks, status}) => {
+export const PlaylistItems = ({ tracks, status}) => {
 
   const dispatch = useDispatch()
   const currentTrack = useSelector(state => state.tracks.currentTrack)
@@ -101,4 +101,3 @@ const PlaylistItems = ({ tracks, status}) => {
 }
 
 
-export default PlaylistItems

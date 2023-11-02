@@ -1,13 +1,11 @@
 import { useParams } from "react-router-dom"
 import { SELECTED } from "./selected";
-import PlaylistItems from "../../components/tracks/Playlist";
+import { PlaylistItems } from "../../components/tracks/Playlist";
 import { TracksTitle } from "../../components/center/title"
-import SkeletonTrack from "../../components/skeleton/skeleton";
-import PlaylistFilter from "../../components/filter/filter";
 import SimpleBar from 'simplebar-react';
 import * as S from '../main/app.styles'
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { setSelected } from "../../store/track.slice";
 
 

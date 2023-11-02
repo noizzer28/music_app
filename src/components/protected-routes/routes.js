@@ -34,6 +34,7 @@
                         <Route path="/" element={<MainTracks/>}/>
                         <Route path="/favorites" element={<Favorites/>}/>
                         <Route path="/category/:id" element={<Category/>}/>
+                        <Route path="*" element={<NotFound/ >} />
                     </Route>
                 </Route>
                 <Route
@@ -44,7 +45,6 @@
                     path="/register"
                     element={<AuthPage  isLoginMode={false}></AuthPage>}
                 ></Route>
-                <Route path="*" element={<NotFound/ >} />
             </Routes>
         )
     }

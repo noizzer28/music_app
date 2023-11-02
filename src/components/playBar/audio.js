@@ -1,7 +1,7 @@
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useRef} from 'react'
-import BarVolume from './playBar_comp/volumeElement'
-import BarPlayerControls from './playBar_comp/controls'
+import { BarVolume }  from './playBar_comp/volumeElement'
+import { BarPlayerControls } from './playBar_comp/controls'
 import * as S from "./styles/audio.styles"
 import { BarProgress } from './playBar_comp/barProgress'
 import { useSelector } from 'react-redux/es/hooks/useSelector'

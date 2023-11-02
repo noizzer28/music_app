@@ -5,7 +5,7 @@ import { useEffect } from "react"
 
 
 
- const  BarPlayerControls = ({ audioRef, isLooped, setLoop, currentTime, setCurrentTime, targetRef}) =>  {
+export  const  BarPlayerControls = ({ audioRef, isLooped, setLoop, currentTime, setCurrentTime, targetRef}) =>  {
 
     const dispatch = useDispatch()
     const isPlaying = useSelector(state => state.tracks.isPlaying)
@@ -103,5 +103,3 @@ import { useEffect } from "react"
     </S.PlayerBtnShuffle>
     </S.PlayerControls>)
     }
-
-    export default BarPlayerControls

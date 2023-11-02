@@ -1,16 +1,13 @@
 
-import  Nav from "../../components/navigation/navigation"
+import { Nav }  from "../../components/navigation/navigation"
 import { SideBar } from "../../components/sidebar/sidebar";
 import {Bar} from "../../components/playBar/audio";
 import { useState, useEffect, useRef } from "react";
 import * as S from "./app.styles"
 import 'simplebar-react/dist/simplebar.min.css';
-import { getTracks } from "../../api"
 import { Search } from "../../components/center/search"
-import { useDispatch, useSelector } from "react-redux";
-import { setTracks, setLikedTracks } from "../../store/track.slice";
+import { useSelector } from "react-redux";
 import { Outlet } from "react-router";
-import { useGetFavoritesQuery } from "../../store/favApi";
 
 export const secondsToMinutes = (time) => {
   const minutes = Math.floor(time / 60)

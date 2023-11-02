@@ -1,4 +1,4 @@
-import PlaylistItems from "../../components/tracks/Playlist"
+import { PlaylistItems } from "../../components/tracks/Playlist"
 import { TracksTitle } from "../../components/center/title";
 import SkeletonTrack from "../../components/skeleton/skeleton";
 import SimpleBar from 'simplebar-react';

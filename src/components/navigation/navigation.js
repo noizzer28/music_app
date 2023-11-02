@@ -6,7 +6,7 @@ import { setInitialState } from "../../store/track.slice";
 
 
 
-function Nav() {
+export const  Nav = () => {
   const dispatch = useDispatch()
 
   const [isActive, setIsActive] = useState(true);
@@ -75,4 +75,3 @@ function Nav() {
   );
 }
 
-export default Nav;

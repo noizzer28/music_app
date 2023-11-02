@@ -1,6 +1,6 @@
 import * as S from "../styles/volume.styles"
 import { useState, useEffect, useRef } from "react";
-const BarVolume = ({audioRef}) => {
+ export const BarVolume = ({audioRef}) => {
 
   const [volume, setVolume] = useState(60);
   const [ isMuted, setIsMuted] = useState(false)
@@ -54,6 +54,3 @@ const BarVolume = ({audioRef}) => {
     </S.VolumeContent>
   </S.BarVolumeBlock>)
   }
-
-
-export default BarVolume

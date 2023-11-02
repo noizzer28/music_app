@@ -7,7 +7,7 @@ import { setFilteredAuthor, setFilteredGenre, setSortedTracks, setFilteredTracks
 
 
 
-const PlaylistFilter = () => {
+export const PlaylistFilter = () => {
     const dispatch = useDispatch()
     const [activeFilter, setActiveFilter] = useState(null);
     const [activeSort, setActiveSort] = useState("По умолчанию")
@@ -113,6 +113,5 @@ const PlaylistFilter = () => {
     );
 };
 
-export default PlaylistFilter;
 
 
