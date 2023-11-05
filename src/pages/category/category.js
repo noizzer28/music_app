@@ -3,7 +3,7 @@ import { SELECTED } from "./selected";
 import { PlaylistItems } from "../../components/tracks/Playlist";
 import { TracksTitle } from "../../components/center/title"
 import SimpleBar from 'simplebar-react';
-import * as S from '../main/app.styles'
+import * as S from '../main/main.styles'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setSelected } from "../../store/track.slice";
@@ -14,6 +14,8 @@ export const Category = () => {
     const filteredTracks = useSelector(state => state.tracks.filteredTracks)
     const playlist = SELECTED.find((playlist) => playlist.id === Number(id));
     const dispatch = useDispatch()
+
+
     useEffect(() => {
         dispatch(setSelected(playlist.playlist))
         
@@ -21,7 +23,7 @@ export const Category = () => {
 
     
     return    <>
-    <S.SenterblockHeader className="tofind">{playlist.playlist}</S.SenterblockHeader>
+    <S.SenterblockHeader>{playlist.playlist}</S.SenterblockHeader>
         <S.CenterblockContent>
         <TracksTitle></TracksTitle>
         <S.ContentPlaylist>

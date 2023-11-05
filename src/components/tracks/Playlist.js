@@ -60,6 +60,7 @@ export const PlaylistItems = ({ tracks, status}) => {
       }
       return tracks.map((song, index) => {
         let isLiked = song.isLiked
+        console.log(isLiked)
        return ( <S.PlaylistItem key={song.id}>
         <S.PlaylistTrack>
           <S.TrackTitle>

@@ -2,8 +2,8 @@
 import { Nav }  from "../../components/navigation/navigation"
 import { SideBar } from "../../components/sidebar/sidebar";
 import {Bar} from "../../components/playBar/audio";
-import { useState, useEffect, useRef } from "react";
-import * as S from "./app.styles"
+import { useState, useRef } from "react";
+import * as S from "./main.styles"
 import 'simplebar-react/dist/simplebar.min.css';
 import { Search } from "../../components/center/search"
 import { useSelector } from "react-redux";

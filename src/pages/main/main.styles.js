@@ -32,7 +32,7 @@ justify-content: space-between;
 
 
 export const MainSenterblock = styled.div`  
-max-width: 1250px;
+// max-width: 1250px;
 -webkit-box-flex: 3;
 -ms-flex-positive: 3;
 flex-grow: 3;

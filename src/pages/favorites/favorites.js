@@ -2,7 +2,7 @@ import { PlaylistItems } from "../../components/tracks/Playlist"
 import { TracksTitle } from "../../components/center/title";
 import SkeletonTrack from "../../components/skeleton/skeleton";
 import SimpleBar from 'simplebar-react';
-import * as S from "../../pages/main/app.styles"
+import * as S from "../main/main.styles"
 import { useSelector } from "react-redux";
 import { useGetFavoritesQuery } from "../../store/favApi";
 import { useDispatch } from "react-redux";

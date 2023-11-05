@@ -46,7 +46,7 @@ export  const SideBar = ( ) => {
           {loading ? <S.Skeleton></S.Skeleton> : <S.SideBarLink to={`/category/${playlist.id}`} >
               <S.SideBarImg
                 src={playlist.image}
-                alt={playlist.Playlist}
+                alt={playlist.id}
               />
             </S.SideBarLink>}
   

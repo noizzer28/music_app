@@ -3,7 +3,7 @@ import { TracksTitle } from "../../components/center/title"
 import SkeletonTrack from "../../components/skeleton/skeleton";
 import { PlaylistFilter } from "../../components/filter/filter";
 import SimpleBar from 'simplebar-react';
-import * as S from "./app.styles"
+import * as S from "./main.styles"
 import { PlaylistItems } from  "../../components/tracks/Playlist"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";

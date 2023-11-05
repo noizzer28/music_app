@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import * as S from "../../pages/main/app.styles"
+import * as S from "../../pages/main/main.styles"
 import { setSearch, setFilteredTracks } from "../../store/track.slice"
 
 
