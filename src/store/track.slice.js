@@ -25,6 +25,8 @@ import {  createSlice } from "@reduxjs/toolkit";
         },
         setSelected (state,  action) {
             const payload = action.payload
+            console.log('payload', payload)
+            console.log(state.tracks.slice())
             state.filteredTracks = state.tracks.filter((track) => {
                 if ( track.genre == payload ) {
                     return track
