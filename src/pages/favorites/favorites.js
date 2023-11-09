@@ -18,11 +18,9 @@ export const Favorites =() => {
 
 
     const { data = [], isLoading, isSuccess, error } = useGetFavoritesQuery();
-    console.log("liked from server", data)
 
     useEffect(() => {
       if (isSuccess) {
-        console.log("DATA @@@@@@",data)
         dispatch(setLikedTracks(data))
       }
     }, [isSuccess, data]);

@@ -10,20 +10,17 @@ export  const  BarPlayerControls = ({ audioRef, isLooped, setLoop, currentTime, 
     const dispatch = useDispatch()
     const isPlaying = useSelector(state => state.tracks.isPlaying)
     const isShuffled = useSelector(state => state.tracks.isShuffled)
-    const tracks = useSelector(state => state.tracks.tracks)
     const currentTrack = useSelector(state => state.tracks.currentTrack)
     const shuffledTracks = useSelector(state => state.tracks.shuffledTracks)
     const currentPlaylist = useSelector(state => state.tracks.currentPlaylist)
 
 
     function handleNext () {
-        targetRef?.current?.scrollIntoView({ behavior: 'smooth' })
         dispatch((setIsPlaying(true)))
         dispatch(nextTrack())
     }
 
     function handlePrev () {
-        targetRef?.current?.scrollIntoView({ behavior: 'smooth' });
         if (currentTime < 5) {
             dispatch((setIsPlaying(true)))
             dispatch(prevTrack())
