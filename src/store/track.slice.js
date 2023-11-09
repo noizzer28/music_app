@@ -25,8 +25,6 @@ import {  createSlice } from "@reduxjs/toolkit";
         },
         setSelected (state,  action) {
             const payload = action.payload
-            console.log('payload', payload)
-            console.log(state.tracks.slice())
             state.filteredTracks = state.tracks.filter((track) => {
                 if ( track.genre == payload ) {
                     return track
@@ -47,7 +45,6 @@ import {  createSlice } from "@reduxjs/toolkit";
                 filter = filteredByAuthor
             }
             if (state.activeGenre.length > 0) {
-                console.log('doing genre here')
                 const filteredByGenre = filter.filter(track => {
                     if (state.activeGenre.includes(track.genre)) {
                         return track
@@ -71,12 +68,9 @@ import {  createSlice } from "@reduxjs/toolkit";
             state.activeAuthors = []
             state.activeGenre = []
         },
-        setLikedTracks(state) { 
-            state.likedTracks = state.tracks.filter((track) => {
-            if (track.isLiked) {
-                return track
-            }
-        })
+        setLikedTracks(state, action) { 
+            const payload = action.payload
+            state.likedTracks = payload
         },
         setCurrentPlayList(state, action){
             state.currentPlaylist = action.payload
@@ -160,7 +154,6 @@ import {  createSlice } from "@reduxjs/toolkit";
             } else {
                 state.activeAuthors = state.activeAuthors.filter(item => item !== payload);
             }
-            console.log(state.activeAuthors.slice())
         },
         setFilteredGenre(state, action) {
             const payload = action.payload;

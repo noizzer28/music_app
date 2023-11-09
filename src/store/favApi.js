@@ -75,7 +75,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 };
 
-
+const TRACKS_TAG  =  "Tracks"
 export const favoriteApi = createApi ({
   reducerPath: "favoriteApi",
   baseQuery: baseQueryWithReauth,
@@ -92,20 +92,24 @@ export const favoriteApi = createApi ({
             }));
             return updatedResponse;
           },
+          providesTags: () => [TRACKS_TAG]
       }),
       addFavorites: build.mutation({
         query: (body) => ({ 
           method: "POST",
           url: `catalog/track/${body}/favorite/`,
           body,
-        })
+        }),
+        invalidatesTags: () => [TRACKS_TAG],
       }),
+
       deleteFavorites: build.mutation({
         query: (body) => ({
           url: `catalog/track/${body}/favorite`,
           method: "DELETE",
           body,
-        })
+        }),
+        invalidatesTags: () => [TRACKS_TAG],
       })
   })
 })

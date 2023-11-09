@@ -18,11 +18,12 @@ export const Category = () => {
     const filteredTracks = useSelector(state => state.tracks.filteredTracks)
     const login = useSelector(state => state.user.login)
     const dispatch = useDispatch()
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [trackError, SetTrackError] = useState("")
     
     
     useEffect(() => {
+        setLoading(true)
         getTracks()
         .then((tracks) => {
            dispatch(setTracks({login: login, tracks: tracks}))
