@@ -1,23 +1,25 @@
 import { BrowserRouter } from "react-router-dom";
-import { AppRoutes } from "./routes";
+import { AppRoutes } from "./components/protected-routes/routes";
 import { GlobalStyles } from "./globalstyles";
-import {  useState } from "react";
-import { UserContext } from "./components/context/context";
+import { Provider } from "react-redux";
+import store from './store/index'
 
-
-
+// export function clearToken () {
+//   setInterval(() => {
+//     console.log('interval')
+//     setAccessToken(null)
+//   }, 200000);
+// }
 function App() {
-  const [token, setToken] = useState(null)
-
 
 
   return (
-    <UserContext.Provider value={{token, setToken}}>
-    <BrowserRouter>
-        <GlobalStyles/>
-            <AppRoutes/>
-    </BrowserRouter>
-    </UserContext.Provider>
+      <Provider store={store}>
+        <BrowserRouter >
+            <GlobalStyles/>
+                <AppRoutes/>
+        </BrowserRouter>
+      </Provider>
 
 
   );

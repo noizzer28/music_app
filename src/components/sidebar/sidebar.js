@@ -3,14 +3,22 @@ import { useEffect, useState, useContext } from 'react'
 import * as S from "./sidebar.styled"
 import { PLAYLISTS } from './categories'
 import { UserContext } from '../context/context'
+import { useNavigate } from 'react-router'
+import {  setRefreshToken } from "../../store/user.slice";
+import { useDispatch, useSelector } from "react-redux";
 
 export  const SideBar = ( ) => {
+  const dispatch = useDispatch()
+  const login = useSelector(state => state.user.login)
 
-  const {token, setToken} = useContext(UserContext)
+  const navigate = useNavigate()
   const [loading, setloading] = useState(true)
+
+
   const handleLogout = () => {
     localStorage.clear()
-    setToken(null)
+    dispatch(setRefreshToken(null))
+    navigate('/login')
   }
 
   useEffect(() => {
@@ -21,7 +29,7 @@ export  const SideBar = ( ) => {
     return(       
          <S.MainSideBar>
             {loading ? "" : <S.SideBarPersonal>
-      <S.SideBarName>{token}</S.SideBarName>
+      <S.SideBarName>{login}</S.SideBarName>
       <S.SideBarIcon onClick={handleLogout}>
         <svg alt="logout">
           <use xlinkHref="./icons/sprite.svg#logout"></use>

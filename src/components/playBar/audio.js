@@ -1,14 +1,16 @@
 import Skeleton, {SkeletonTheme} from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { useEffect, useState, useRef, useCallback } from 'react'
+import { useRef} from 'react'
 import BarVolume from './volumeElement'
 import BarPlayerControls from './controls'
 import * as S from "./styles/audio.styles"
 import { BarProgress } from './barProgress'
+import { useSelector } from 'react-redux/es/hooks/useSelector'
+import { useDispatch } from 'react-redux'
+import { nextTrack } from "../../store/track.slice"
 
-
-const BarPlayingTrack = ({currentTrack, loading}) => {
-
+const BarPlayingTrack = ({ loading}) => {
+  const currentTrack = useSelector(state => state.tracks.currentTrack)
     return(
     <S.TrackPlay>
       <S.TrackPlayContainer>
@@ -42,10 +44,8 @@ const BarPlayingTrack = ({currentTrack, loading}) => {
   
 
   
-export  const Bar = ({currentTrack, 
+export  const Bar = ({
   loading, 
-  isPlaying, 
-  setIsPlaying, 
   isLooped, 
   setLoop,
   duration,
@@ -53,41 +53,31 @@ export  const Bar = ({currentTrack,
   audioRef,
   currentTime,
   setCurrentTime,
-  playAnimationRef
+  targetRef
   }) => {
-
+    const currentTrack = useSelector(state => state.tracks.currentTrack)
+    const dispatch = useDispatch()
     const progressRef = useRef()
-
-    // useEffect(() => {
-    //   function getTrackLength(track) {
-    //     track.addEventListener("loadedmetadata",  () => {
-    //       const seconds = Math.floor(audioRef.current.duration)
-    //       setDuration(audioRef.current.duration)
-    //       progressRef.current.max = seconds
-    //     });
-    //   }
-    //   getTrackLength(audioRef.current)
-    // здесь был audioRef?.current?.loadedmetadata, а также audioRef?.current?.readySate, 
-    // и их различные комбинации, но я все равно не понимаю почему компонент рендерится два раза
-    
-
-    // а потом я нашла более изящный способ:
     const onLoadedMetadata = () => {
       const seconds = Math.floor(audioRef.current.duration)
       setDuration(audioRef.current.duration)
       progressRef.current.max = seconds
     };
 
-
+    const handleEndTrack = () => {
+      dispatch(nextTrack())
+    }
 
     return (<S.BarContainer>
     <S.BarContent>
     <S.TrackAudio 
-    onLoadedMetadata={onLoadedMetadata}  
-    ref={audioRef} 
-    src={currentTrack.track_file} 
-    autoPlay 
-    {...(isLooped ? { loop: true } : {})}>
+        onLoadedMetadata={onLoadedMetadata} 
+        onEnded={handleEndTrack} 
+        ref={audioRef} 
+        src={currentTrack.track_file} 
+        autoPlay 
+        preload="metadata"
+        {...(isLooped ? { loop: true } : {})}>
     </S.TrackAudio>
       <BarProgress 
           duration={duration}
@@ -100,16 +90,15 @@ export  const Bar = ({currentTrack,
       <S.BarPlayerBlock>
         <S.BarPlayer>
           <BarPlayerControls 
-          isPlaying={isPlaying} 
-          setIsPlaying={setIsPlaying} 
+          currentTime={currentTime}
           audioRef={audioRef}     
           isLooped={isLooped}
           setLoop={setLoop}
-          playAnimationRef={playAnimationRef}
           progressRef={progressRef}
           setCurrentTime={setCurrentTime}
-          duration={duration}/>
-          <BarPlayingTrack loading={loading} currentTrack={currentTrack}/>
+          duration={duration}
+          targetRef={targetRef}/>
+          <BarPlayingTrack loading={loading}/>
         </S.BarPlayer>
         <BarVolume audioRef={audioRef}/>
       </S.BarPlayerBlock>

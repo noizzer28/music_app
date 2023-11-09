@@ -1,17 +1,16 @@
-import PlaylistItems from  "../../components/tracks/tracks"
+
 import  Nav from "../../components/navigation/navigation"
 import { SideBar } from "../../components/sidebar/sidebar";
 import {Bar} from "../../components/playBar/audio";
-import SkeletonTrack from "../../components/skeleton/skeleton";
 import { useState, useEffect, useRef } from "react";
-import PlaylistFilter from "../../components/filter/filter";
 import * as S from "./app.styles"
-import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 import { getTracks } from "../../api"
 import { Search } from "../../components/center/search"
-import { TracksTitle } from "../../components/center/title"
-
+import { useDispatch, useSelector } from "react-redux";
+import { setTracks, setLikedTracks } from "../../store/track.slice";
+import { Outlet } from "react-router";
+import { useGetFavoritesQuery } from "../../store/favApi";
 
 export const secondsToMinutes = (time) => {
   const minutes = Math.floor(time / 60)
@@ -19,29 +18,28 @@ export const secondsToMinutes = (time) => {
   return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`
 }
 
+export const  MainApp = () => {
 
-function MainApp() {
-
-
+  const dispatch = useDispatch()
+  const currentTrack = useSelector(state => state.tracks.currentTrack)
+  const login = useSelector(state => state.user.login)
   const [loading, setLoading] = useState(true)
   const [trackError, SetTrackError] = useState("")
 
+
   useEffect(()=> {
-  getTracks()
-    .then((tracks) => setTracks(tracks))
-      .then(()=> {
-        setLoading(false)
-  }).catch((error) => {
-    setLoading(false)
-    SetTrackError(`Ошибка соединения с сервером: ${error.message}`)
-  })
-  },[])
+    getTracks()
+      .then((tracks) => {
+         dispatch(setTracks({login: login, tracks: tracks}))
+      }).then(()=> {
+          setLoading(false)
+    }).catch((error) => {
+      setLoading(false)
+      SetTrackError(`Ошибка соединения с сервером: ${error.message}`)
+    })
+    },[dispatch])
 
-  const [currentTrack, setCurrentTrack] = useState(null)
 
-  const [isPlaying, setIsPlaying] = useState(false)
- 
-  const [tracks, setTracks] = useState([])
 
   const [isLooped, setLoop] = useState(false)
 
@@ -51,6 +49,7 @@ function MainApp() {
 
    
   const audioRef = useRef()
+  const targetRef = useRef()
 
   return (  
 <>
@@ -60,42 +59,22 @@ function MainApp() {
       <Nav/>
       <S.MainSenterblock>
         <Search></Search>
-        <S.SenterblockHeader>Треки</S.SenterblockHeader>
-        <PlaylistFilter tracks={tracks}/>
-        <S.CenterblockContent>
-          <TracksTitle></TracksTitle>
-          {trackError ? <div>{trackError}</div>  : 
-           <S.ContentPlaylist>
-          {loading ? <SkeletonTrack/> :
-          <SimpleBar forceVisible="y" style={{ height: '50vh', maxWidth:"1120px"}}>
-            <PlaylistItems 
-             tracks={tracks} 
-             currentTrack={currentTrack} 
-             setCurrentTrack={setCurrentTrack}
-             setIsPlaying={setIsPlaying}
-             audioRef={audioRef}/>
-            </SimpleBar>}
-          </S.ContentPlaylist>}
-        </S.CenterblockContent>
+        <Outlet context={[trackError, loading, targetRef]}>
+        </Outlet>
       </S.MainSenterblock>  
       <SideBar />
     </S.Main>
     {currentTrack ? <Bar 
-    currentTrack={currentTrack} 
     loading={loading}
-    isPlaying={isPlaying}
-    setIsPlaying={setIsPlaying}
     audioRef={audioRef}
     isLooped={isLooped}
     setLoop={setLoop}
     duration={duration}
     setDuration={setDuration}
     currentTime={currentTime}
-    setCurrentTime={setCurrentTime}/> : ""} 
+    setCurrentTime={setCurrentTime}
+    targetRef={targetRef}/> : ""} 
   </S.Container>
 </S.Wrapper>
 </>)
 }
-
-
-export default MainApp;

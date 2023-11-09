@@ -1,7 +1,9 @@
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkwOTYwNDMxLCJpYXQiOjE2OTA5NjAxMzEsImp0aSI6ImE4NDAwZjRkNWUzMTQ4NGJiMzE4YzUzMjE3Y2NhNWZmIiwidXNlcl9pZCI6NzkyfQ.SfvLYWbz72DQqWK7SyF4Yx9Zxx8hGsNxHEcwOU0RTk4"
+import { useDispatch, useSelector } from "react-redux"
+import { setRefreshToken, setAccessToken } from "./store/user.slice"
 const regLink = `https://skypro-music-api.skyeng.tech/user/signup/`
 const authLink = `https://skypro-music-api.skyeng.tech/user/login/`
 // myPassword =`Q9yCxe8xKRMdVvj`
+
 
 export async function getTracks () {
     try {
@@ -10,7 +12,6 @@ export async function getTracks () {
         });
     
         const data = await response.json();
-
         return data;
       } catch (error) {
         console.error("Error in getTracks:", error);
@@ -32,13 +33,13 @@ export async function getTrackById(id) {
 }
 
 
-export async function Registration({email, password}) {
+export async function Registration({login, password}) {
     const response = await fetch(`${regLink}`, {
       method: "POST",
       body: JSON.stringify({
-        email: `${email}`,
+        email: `${login}`,
         password: `${password}`,
-        username: `${email}`,
+        username: `${login}`,
     }),
       headers: {
         "content-type": "application/json",
@@ -55,11 +56,11 @@ export async function Registration({email, password}) {
 }
 
 
-export async function Authorisation({email, password}) {
+export async function Authorisation({login, password}) {
     const response = await fetch(`${authLink}`, {
       method: "POST",
       body: JSON.stringify({
-        email: `${email}`,
+        email: `${login}`,
         password: `${password}`,
     }),
       headers: {
@@ -73,3 +74,5 @@ export async function Authorisation({email, password}) {
       throw new Error(data.detail);
     }
 }
+
+

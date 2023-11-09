@@ -1,38 +1,46 @@
 import { Link, useNavigate } from "react-router-dom"
 import * as S from "./login.styled";
-import { useContext, useEffect, useState } from "react";
-import { Authorisation, Registration } from "../../api";
-import { UserContext } from "../../components/context/context";
+import {  useEffect, useState } from "react";
+import { Authorisation, Registration, GetToken } from "../../api";
+import { useDispatch, useSelector } from "react-redux";
+import { setPassword, setLogin, setRefreshToken } from "../../store/user.slice";
+import { FetchRefreshToken } from "../../store/user.slice";
+
 
 export  function AuthPage({ isLoginMode = false}) {
-  const [error, setError] = useState(null);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const dispatch = useDispatch()
+  const {password, login } = useSelector(state => state.user)
+  const [error, setError] = useState(null)
   const [repeatPassword, setRepeatPassword] = useState("");
   const [isLoading, setLoading] = useState(false)
   const navigate = useNavigate()
-  const {token, setToken} = useContext(UserContext)
 
 
-  const handleLogin = async ({ email, password }) => {
 
-
+  const handleLogin = async ({ login, password }) => {
     setLoading(true)  
-    Authorisation({email, password})
-        .then((data) => {
-          setToken(data.username)
-          localStorage.setItem('token', data.username)
-          navigate(`/`)
-        }).catch((error) => {
-          console.error(error)
-          setError(`Ошибка: ${error.message}`)
-        })
-
+    if (!password || !login)  {
+      setError(`Все поля должны быть заполнены`)
+      return
+    }
+    try {
+      const data  = await Promise.all([Authorisation({login, password}), dispatch(FetchRefreshToken({login, password}))])
+      const user = {
+        token: data[1].payload.refresh,
+        name: login 
+        }
+        localStorage.setItem("token", JSON.stringify(user))
+        navigate('/')
+    } catch (error) {
+      console.error(error)
+      setError(`Ошибка: ${error.message}`)
+    }
+    setLoading(false)
   };
 
   const handleRegister = async () => {
     setLoading(true)
-    if (!password || !repeatPassword || !email)  {
+    if (!password || !repeatPassword || !login)  {
       setError(`Все поля должны быть заполнены`)
       return
     }
@@ -40,24 +48,30 @@ export  function AuthPage({ isLoginMode = false}) {
       setError(`Введенные пароли не совпадают`)
       return
     }
-      Registration({email, password})
-      .then((data) => {
-        setToken(`token`, data.username)
-        localStorage.setItem('token', data.username)
-        navigate(`/`)
-      }).catch((error) => {
-        console.error(error)
+
+    try {
+      const data  = await Promise.all([Registration({login, password}), dispatch(FetchRefreshToken())])
+      const user = {
+        token: data[1].payload.refresh,
+        name: login 
+        }
+      localStorage.setItem("token", JSON.stringify(user))
+      navigate(`/`)
+    } catch (error) {
+      console.error(error)
       setError(`Ошибка: ${error.message}`)
-    })
+    }
     setLoading(false)
   }
+
 
   useEffect(() => {
     setError(null);
     setLoading(false)
-  }, [isLoginMode, email, password, repeatPassword]);
+  }, [isLoginMode, login, password, repeatPassword]);
 
   return (
+    
     <S.PageContainer>
       <S.ModalForm>
         <Link to="/login">
@@ -66,15 +80,16 @@ export  function AuthPage({ isLoginMode = false}) {
           </S.ModalLogo>
         </Link>
         {isLoginMode ? (
-          <>
+          <form>
             <S.Inputs>
               <S.ModalInput
                 type="text"
                 name="login"
                 placeholder="Почта"
-                value={email}
-                onChange={(event) => {
-                  setEmail(event.target.value);
+                value={login}
+                autoComplete={login}
+                onChange={(e) => {
+                  dispatch(setLogin(e.target.value));
                 }}
               />
               <S.ModalInput
@@ -82,21 +97,22 @@ export  function AuthPage({ isLoginMode = false}) {
                 name="password"
                 placeholder="Пароль"
                 value={password}
+                autoComplete={password}
                 onChange={(event) => {
-                  setPassword(event.target.value);
+                  dispatch(setPassword(event.target.value));
                 }}
               />
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton disabled={isLoading ? true : false} onClick={() => handleLogin({ email, password })}>
+              <S.PrimaryButton type="submit"  disabled={isLoading ? true : false} onClick={() => handleLogin({ login, password })}>
                 Войти
               </S.PrimaryButton>
               <Link to="/register">
                 <S.SecondaryButton>Зарегистрироваться</S.SecondaryButton>
               </Link>
             </S.Buttons>
-          </>
+          </form>
         ) : (
           <>
             <S.Inputs>
@@ -104,9 +120,9 @@ export  function AuthPage({ isLoginMode = false}) {
                 type="text"
                 name="login"
                 placeholder="Почта"
-                value={email}
+                value={login}
                 onChange={(event) => {
-                  setEmail(event.target.value);
+                  dispatch(setLogin(event.target.value));
                 }}
               />
               <S.ModalInput
@@ -115,7 +131,7 @@ export  function AuthPage({ isLoginMode = false}) {
                 placeholder="Пароль"
                 value={password}
                 onChange={(event) => {
-                  setPassword(event.target.value);
+                  dispatch(setPassword(event.target.value));
                 }}
               />
               <S.ModalInput
