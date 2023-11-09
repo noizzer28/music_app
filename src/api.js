@@ -19,18 +19,18 @@ export async function getTracks () {
       }
 }
 
-export async function getTrackById(id) {
-  try {
-    const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/` + id, {
-      method: "GET"
-  })
-  const data = await response.json()
-  return data;
-  } catch {
-    console.error("Error in getTrack:", error);
-    throw error; 
-  }
-}
+// export async function getTrackById(id) {
+//   try {
+//     const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/` + id, {
+//       method: "GET"
+//   })
+//   const data = await response.json()
+//   return data;
+//   } catch {
+//     console.error("Error in getTrack:", error);
+//     throw error; 
+//   }
+// }
 
 
 export async function Registration({login, password}) {
@@ -45,9 +45,7 @@ export async function Registration({login, password}) {
         "content-type": "application/json",
       },
     })
-    console.log('IN REG api',response)
     const data = await response.json()
-    console.log('IN REG api',data)
     if (response.ok) {
       return data
     } else if (data.email){

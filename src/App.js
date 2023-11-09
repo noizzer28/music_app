@@ -6,8 +6,6 @@ import store from './store/index'
 
 
   function App() {
-
-
     return (
         <Provider store={store}>
           <BrowserRouter >
@@ -15,7 +13,6 @@ import store from './store/index'
                   <AppRoutes/>
           </BrowserRouter>
         </Provider>
-
 
     );
   }
