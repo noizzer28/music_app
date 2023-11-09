@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from 'react'
 import * as S from "./sidebar.styled"
 import { SELECTED } from '../../pages/category/selected'
 import { setInitialState } from '../../store/track.slice'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import {  setRefreshToken } from "../../store/user.slice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -33,7 +33,7 @@ export  const SideBar = ( ) => {
       <S.SideBarName>{login}</S.SideBarName>
       <S.SideBarIcon onClick={handleLogout}>
         <svg alt="logout">
-          <use xlinkHref="./icons/sprite.svg#logout"></use>
+          <use xlinkHref="/icons/sprite.svg#logout"></use>
         </svg>
       </S.SideBarIcon>
       </S.SideBarPersonal>} 

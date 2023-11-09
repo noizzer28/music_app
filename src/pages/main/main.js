@@ -7,7 +7,7 @@ import * as S from "./main.styles"
 import 'simplebar-react/dist/simplebar.min.css';
 import { Search } from "../../components/center/search"
 import { useSelector } from "react-redux";
-import { Outlet } from "react-router";
+import { Outlet } from "react-router-dom";
 
 export const secondsToMinutes = (time) => {
   const minutes = Math.floor(time / 60)

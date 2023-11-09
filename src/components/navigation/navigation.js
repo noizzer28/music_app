@@ -28,7 +28,7 @@ export const  Nav = () => {
   return (
     <S.MainNav >
       <S.NavLogo>
-        <S.LogoImage src="./logo.png" alt="logo" />
+        <S.LogoImage src="/logo.png" alt="logo" />
       </S.NavLogo>
       <S.NavBurger onClick={hideSideBar}>
         <S.BurgerLine></S.BurgerLine>

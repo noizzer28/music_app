@@ -19,7 +19,7 @@ export const PlaylistItems = ({ tracks, status}) => {
   const [addFavorite] = useAddFavoritesMutation()
   const [deleteFavorites] = useDeleteFavoritesMutation()
 
-  const handleToggleFavorite = async (song, isLiked) => {
+  const toggleFavorite = async (song, isLiked) => {
     if (isLiked) {
       await deleteFavorites(song.id).unwrap()
       dispatch(toggleLike({isLiked: false, song: song}))
@@ -60,13 +60,12 @@ export const PlaylistItems = ({ tracks, status}) => {
       }
       return tracks.map((song, index) => {
         let isLiked = song.isLiked
-        console.log(isLiked)
        return ( <S.PlaylistItem key={song.id}>
         <S.PlaylistTrack>
           <S.TrackTitle>
             <S.TrackTitleImage >
               <S.trackTitleSvg alt="music" className={currentTrack?.id === song.id ? `${playStyles}` : ""}>
-                <use xlinkHref="./icons/sprite.svg#icon-note"></use>
+                <use xlinkHref="/icons/sprite.svg#icon-note"></use>
               </S.trackTitleSvg>
             </S.TrackTitleImage>
             <div className="track__title-text">
@@ -82,9 +81,9 @@ export const PlaylistItems = ({ tracks, status}) => {
           <S.TrackAlbum>
             <S.TrackAlbumLink>{song.album}</S.TrackAlbumLink>
           </S.TrackAlbum>
-          <div className={`track__time _btn-icon ${isLiked ? 'activeLike' : ''}` }  onClick={()=> handleToggleFavorite(song, isLiked)}>
-            <S.TrackTimeSvg alt="time" >
-              <use xlinkHref="./icons/sprite.svg#icon-like"></use>
+          <div className={`track__time _btn-icon ${isLiked ? 'activeLike' : ''}` }  onClick={()=> toggleFavorite(song, isLiked)}>
+            <S.TrackTimeSvg alt="time">
+              <use xlinkHref="/icons/sprite.svg#icon-like"></use>
             </S.TrackTimeSvg>  
             <S.TrackTimeText>{secondsToMinutes(song.duration_in_seconds)}</S.TrackTimeText>
           </div>

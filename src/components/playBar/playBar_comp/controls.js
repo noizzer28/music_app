@@ -74,21 +74,21 @@ export  const  BarPlayerControls = ({ audioRef, isLooped, setLoop, currentTime, 
     return (<S.PlayerControls>
     <S.PlayerBtnPrev className="_btn"  onClick={handlePrev}>
         <S.PlayerBtnPrevSvg alt="prev">
-        <use xlinkHref="./icons/sprite.svg#icon-prev"></use>
+        <use xlinkHref="/icons/sprite.svg#icon-prev"></use>
         </S.PlayerBtnPrevSvg>
     </S.PlayerBtnPrev>
     <S.PlayerBtnPlay className="_btn" onClick={handlePlaying}>
     {isPlaying ?         
     <S.PlayerBtnPLaySvg alt="pause">
-    <use xlinkHref="./icons/sprite.svg#icon-pause"></use>
+    <use xlinkHref="/icons/sprite.svg#icon-pause"></use>
     </S.PlayerBtnPLaySvg> :         
     <S.PlayerBtnPLaySvg alt="play">
-    <use xlinkHref="./icons/sprite.svg#icon-play"></use>
+    <use xlinkHref="/icons/sprite.svg#icon-play"></use>
     </S.PlayerBtnPLaySvg>}
     </S.PlayerBtnPlay>
     <S.PlayerBtnNext className="_btn" onClick={handleNext}>
         <S.PlayerBtnNextSvg alt="next">
-        <use xlinkHref="./icons/sprite.svg#icon-next"></use>
+        <use xlinkHref="/icons/sprite.svg#icon-next"></use>
         </S.PlayerBtnNextSvg>
     </S.PlayerBtnNext>
     <S.PlayerBtnRepeat className={isLooped ? '_btn-icon _btn-icon__active' : '_btn-icon'}  onClick={handleLoop}>
@@ -98,7 +98,7 @@ export  const  BarPlayerControls = ({ audioRef, isLooped, setLoop, currentTime, 
     </S.PlayerBtnRepeat>
     <S.PlayerBtnShuffle className={isShuffled ? '_btn-icon _btn-icon__active' : '_btn-icon'}  onClick={handleShuffle}>
         <S.PlayerBtnShuffleSvg alt="shuffle" >
-        <use xlinkHref="./icons/sprite.svg#icon-shuffle"></use>
+        <use xlinkHref="/icons/sprite.svg#icon-shuffle"></use>
         </S.PlayerBtnShuffleSvg>
     </S.PlayerBtnShuffle>
     </S.PlayerControls>)

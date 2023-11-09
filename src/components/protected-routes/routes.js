@@ -30,11 +30,11 @@
         return (
             <Routes>
                 <Route element={<ProtectedRoute/>}>
-                    <Route path="/" element={<MainApp/>}>
+                    <Route element={<MainApp/>}>
                         <Route path="/" element={<MainTracks/>}/>
                         <Route path="/favorites" element={<Favorites/>}/>
                         <Route path="/category/:id" element={<Category/>}/>
-                        <Route path="*" element={<NotFound/ >} />
+                        <Route path="*" element={<NotFound />} />
                     </Route>
                 </Route>
                 <Route
