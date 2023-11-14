@@ -1,80 +1,117 @@
 import React, { useState } from "react";
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector, useDispatch } from "react-redux";
 import * as S from "./filter.styles"
+import { setFilteredAuthor, setFilteredGenre, setSortedTracks, setFilteredTracks } from "../../store/track.slice";
 
-const PlaylistFilter = () => {
-    const [isActiveAuthor, setIsActiveAuthor] = useState(false);
-    const [isActiveYear, setIsActiveYear] = useState(false);
-    const [isActiveGenre, setIsActiveGenre] = useState(false);
+
+
+export const PlaylistFilter = () => {
+    const dispatch = useDispatch()
+    const [activeFilter, setActiveFilter] = useState(null);
+    const [activeSort, setActiveSort] = useState("По умолчанию")
+    const activeAuthors = useSelector(state => state.tracks.activeAuthors)
+    const activeGenre = useSelector(state => state.tracks.activeGenre)
+    const authors = useSelector(state => state.tracks.authors)
+    const genres = useSelector(state => state.tracks.genres)
     
-    const tracks = useSelector(state => state.tracks.tracks)
 
-    const handleAuthor = () => {
-        setIsActiveAuthor(!isActiveAuthor);
-        setIsActiveYear(false);
-        setIsActiveGenre(false);
-    };
-
-    const handleYear = () => {
-        setIsActiveAuthor(false);
-        setIsActiveYear(!isActiveYear);
-        setIsActiveGenre(false);
-    };
-
-    const handleGenre = () => {
-        setIsActiveAuthor(false);
-        setIsActiveYear(false);
-        setIsActiveGenre(!isActiveGenre);
+    const handleFilter = (filterName) => {
+        setActiveFilter(filterName === activeFilter ? null : filterName);
     };
 
     const renderAuthors = () => {
-        const authorList = tracks.map((track) => {
-            if (track.author !== "-") {
-                return <S.FilterList key={track.id}>
-                        {track.author}
+        return authors.map((author, index) => {
+                if (activeAuthors.includes(author)) {
+                    return <S.FilterList key={index} onClick={() => {
+                        dispatch(setFilteredAuthor(author))
+                        dispatch(setFilteredTracks())
+                    } }>
+                        
+                            <strong>{author}</strong>
+                        </S.FilterList>
+                }
+                return <S.FilterList key={index} onClick={() => {
+                    dispatch(setFilteredAuthor(author))
+                    dispatch(setFilteredTracks())
+                }}>
+                            {author}
                     </S.FilterList>
-            }
+            
         })
-        return authorList
     };
-
-    const renderYears = () => {
-        const years = ["1990-2000", "2001-2010", "2011-2020", "2020+"];
-        return years.map((year, index) => (
-            <S.FilterList key={index}>
-                {year}
-            </S.FilterList>
-        ));
-    };
+    
 
     const renderGenre = () => {
-        const genres = ["Rock", "Pop", "RnB", "Jazz", "Hip-Hop"];
-        return genres.map((genre, index) => (
-            <S.FilterList key={index}>
-                {genre}
-            </S.FilterList>
-        ));
+        return genres.map((genre, index) => {
+            if (activeGenre.includes(genre)) {
+                return <S.FilterList key={index} onClick={ () => {
+                     dispatch(setFilteredGenre(genre));
+                    dispatch(setFilteredTracks())
+                } }>
+                <strong>{genre}</strong>
+                    </S.FilterList>
+            }
+            return <S.FilterList key={index} onClick={() => {
+                dispatch(setFilteredGenre(genre))
+                dispatch(setFilteredTracks())
+            }}>
+            {genre}
+                </S.FilterList>
+        
+    })
+    };
+
+
+  
+    const renderSort = () => {
+        const sortArray = ["По умолчанию", 'Сначала старые', 'Сначала новые']
+        return sortArray.map((element, index) => {
+            if (element === activeSort) {
+                return <S.FilterList key={index} >
+                <strong>{element}</strong> 
+                    </S.FilterList>
+            }
+                return <S.FilterList key={index} onClick={() => {
+                    setActiveSort(element)
+                    dispatch(setSortedTracks(element))
+                    setActiveFilter(null)}}>
+                {element}
+                    </S.FilterList>
+        })
     };
 
     return (
         <S.CenterblockFilter>
+
+            <S.FilterFlex>
             <S.FilterTitle>Искать по:</S.FilterTitle>
-            <S.FilterButton className="_btn-text" onClick={handleAuthor}>исполнителю</S.FilterButton>
-            {isActiveAuthor && (
-                <S.FilterAuthor>
-                    <SimpleBar forceVisible="y" style={{ height: '300px' }}>
-                        {renderAuthors()}
-                    </SimpleBar>
-                </S.FilterAuthor>
-            )}
-            <S.FilterButton className="_btn-text" onClick={handleYear}>году выпуска</S.FilterButton>
-            {isActiveYear && <S.FilterYear>{renderYears()}</S.FilterYear>}
-            <S.FilterButton className="_btn-text" onClick={handleGenre}>жанру</S.FilterButton>
-            {isActiveGenre && <S.FilterGenre>{renderGenre()}</S.FilterGenre>}
+            <S.FilterButtonWrapper>
+                <S.FilterButton className="_btn-text" onClick={() => handleFilter("author")}>исполнителю</S.FilterButton>
+                {activeAuthors.length > 0 &&  <S.FilterQuantity>{activeAuthors.length}</S.FilterQuantity>}
+                {activeFilter === "author" && (
+                    <S.FilterAuthor>
+                        <SimpleBar forceVisible="y" style={{ height: '300px' }}>
+                            {renderAuthors()}
+                        </SimpleBar>
+                    </S.FilterAuthor>
+                )}
+                </S.FilterButtonWrapper>
+            <S.FilterButtonWrapper>
+                <S.FilterButton style={{marginLeft: "15px"}} className="_btn-text" onClick={() => handleFilter("genre")}>жанру</S.FilterButton>
+                {activeGenre.length > 0 &&  <S.FilterQuantity>{activeGenre.length}</S.FilterQuantity>}
+                {activeFilter === "genre" && <S.FilterGenre>{renderGenre()}</S.FilterGenre>}
+                </S.FilterButtonWrapper>
+            </S.FilterFlex>
+            <S.FilterFlex >
+            <S.FilterTitle>Сортировка:</S.FilterTitle>
+                <S.FilterButton  className="_btn-text" onClick={() => handleFilter("sort")}>{activeSort}</S.FilterButton>
+            {activeFilter === "sort" && <S.FilterSort>{renderSort()}</S.FilterSort>} 
+            </S.FilterFlex>
         </S.CenterblockFilter>
     );
 };
 
-export default PlaylistFilter;
+
+

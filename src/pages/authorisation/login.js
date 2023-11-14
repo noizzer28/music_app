@@ -25,10 +25,12 @@ export  function AuthPage({ isLoginMode = false}) {
     }
     try {
       const data  = await Promise.all([Authorisation({login, password}), dispatch(FetchRefreshToken({login, password}))])
+
       const user = {
         token: data[1].payload.refresh,
         name: login 
         }
+
         localStorage.setItem("token", JSON.stringify(user))
         navigate('/')
     } catch (error) {
@@ -50,10 +52,11 @@ export  function AuthPage({ isLoginMode = false}) {
     }
 
     try {
-      const data  = await Promise.all([Registration({login, password}), dispatch(FetchRefreshToken())])
+      const userData = await Registration({login, password})
+      const tokenData = await dispatch(FetchRefreshToken({login, password}))
       const user = {
-        token: data[1].payload.refresh,
-        name: login 
+        token: tokenData?.payload?.refresh || undefined,
+        name: userData?.username || undefined
         }
       localStorage.setItem("token", JSON.stringify(user))
       navigate(`/`)
@@ -76,7 +79,7 @@ export  function AuthPage({ isLoginMode = false}) {
       <S.ModalForm>
         <Link to="/login">
           <S.ModalLogo>
-            <S.ModalLogoImage src="./logo_modal.png" alt="logo" />
+            <S.ModalLogoImage src="../logo_modal.png" alt="logo" />
           </S.ModalLogo>
         </Link>
         {isLoginMode ? (
@@ -114,13 +117,14 @@ export  function AuthPage({ isLoginMode = false}) {
             </S.Buttons>
           </form>
         ) : (
-          <>
+          <form>
             <S.Inputs>
               <S.ModalInput
                 type="text"
                 name="login"
                 placeholder="Почта"
                 value={login}
+                autoComplete={login}
                 onChange={(event) => {
                   dispatch(setLogin(event.target.value));
                 }}
@@ -130,6 +134,7 @@ export  function AuthPage({ isLoginMode = false}) {
                 name="password"
                 placeholder="Пароль"
                 value={password}
+                autoComplete={password}
                 onChange={(event) => {
                   dispatch(setPassword(event.target.value));
                 }}
@@ -153,7 +158,7 @@ export  function AuthPage({ isLoginMode = false}) {
                 <S.SecondaryButton>Войти</S.SecondaryButton>
               </Link>
             </S.Buttons>
-          </>
+          </form>
         )}
       </S.ModalForm>
     </S.PageContainer>

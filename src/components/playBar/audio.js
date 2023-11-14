@@ -1,49 +1,14 @@
-import Skeleton, {SkeletonTheme} from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useRef} from 'react'
-import BarVolume from './volumeElement'
-import BarPlayerControls from './controls'
+import { BarVolume }  from './playBar_comp/volumeElement'
+import { BarPlayerControls } from './playBar_comp/controls'
 import * as S from "./styles/audio.styles"
-import { BarProgress } from './barProgress'
+import { BarProgress } from './playBar_comp/barProgress'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
 import { useDispatch } from 'react-redux'
 import { nextTrack } from "../../store/track.slice"
+import { BarPlayingTrack } from "./playBar_comp/barPlayingTrack"
 
-const BarPlayingTrack = ({ loading}) => {
-  const currentTrack = useSelector(state => state.tracks.currentTrack)
-    return(
-    <S.TrackPlay>
-      <S.TrackPlayContainer>
-        <S.TrackPlayImg> {loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> :          
-         <S.TrackPlaySvg alt="music">
-            <use xlinkHref="./icons/sprite.svg#icon-note"></use>
-          </S.TrackPlaySvg>}
-        </S.TrackPlayImg>
-        <S.TrackPlayAuthor>
-          <S.TrackPlayAuthorLink href="http://">{loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> : currentTrack.name}</S.TrackPlayAuthorLink>
-        </S.TrackPlayAuthor>
-        <S.TrackPlayAlbum>
-          <S.TrackPlayAlbumLink href="http://">{loading ? <SkeletonTheme baseColor="#202020" highlightColor="#444"><Skeleton/></SkeletonTheme> : currentTrack.author}</S.TrackPlayAlbumLink>
-        </S.TrackPlayAlbum>
-      </S.TrackPlayContainer>
-  
-    <S.TrackPlayLikeDis>
-      <S.TrackPlayLike className="_btn-icon">
-        <S.TrackPlayLikeSvg alt="like">
-          <use xlinkHref="./icons/sprite.svg#icon-like"></use>
-        </S.TrackPlayLikeSvg>
-      </S.TrackPlayLike>
-      <S.TrackPlayDisike className="_btn-icon">
-        <S.TrackPlayDisLikeSvg alt="dislike">
-          <use xlinkHref="./icons/sprite.svg#icon-dislike"></use>
-        </S.TrackPlayDisLikeSvg>
-      </S.TrackPlayDisike>
-    </S.TrackPlayLikeDis>
-  </S.TrackPlay>)
-  }
-  
-
-  
 export  const Bar = ({
   loading, 
   isLooped, 
@@ -98,7 +63,7 @@ export  const Bar = ({
           setCurrentTime={setCurrentTime}
           duration={duration}
           targetRef={targetRef}/>
-          <BarPlayingTrack loading={loading}/>
+          <BarPlayingTrack loading={loading} />
         </S.BarPlayer>
         <BarVolume audioRef={audioRef}/>
       </S.BarPlayerBlock>

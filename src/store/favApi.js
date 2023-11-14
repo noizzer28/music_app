@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
-import { setAccessToken} from "./user.slice";
+import { setAccessToken, setRefreshToken } from "./user.slice";
+import { setInitialState } from "./track.slice";
+
 
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
@@ -28,12 +30,14 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
   const forceLogout = () => {
     console.debug("Принудительная авторизация!");
-    api.dispatch(setAccessToken(null));
-    window.location.navigate("/login");
+    api.dispatch(setInitialState())
+    localStorage.clear()
+    api.dispatch(setRefreshToken(null))
+    window.location.href = "/login";
   };
 
   const auth  = api.getState().user;
-  console.log(auth.refreshToken)
+
 
   // console.debug("Данные пользователя в сторе",  auth );
   if (!auth.refreshToken) {
@@ -54,23 +58,24 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
   // console.debug("Результат запроса на обновление токена", { refreshResult });
 
-  if (!refreshResult.data.access) {
+  if (!refreshResult?.data?.access) {
     return forceLogout();
+  } else {
+    api.dispatch(setAccessToken({ ...auth, access: refreshResult.data.access }));
+  
+    const retryResult = await baseQuery(args, api, extraOptions);
+    if (retryResult?.error?.status === 401) {
+      return forceLogout();
+    }
+  
+    // console.debug(`Повторный запрос завершился успешно `);
+  
+    return retryResult;
   }
 
-  api.dispatch(setAccessToken({ ...auth, access: refreshResult.data.access }));
-
-  const retryResult = await baseQuery(args, api, extraOptions);
-  if (retryResult?.error?.status === 401) {
-    return forceLogout();
-  }
-
-  // console.debug(`Повторный запрос завершился успешно `);
-
-  return retryResult;
 };
 
-
+const TRACKS_TAG  =  "Tracks"
 export const favoriteApi = createApi ({
   reducerPath: "favoriteApi",
   baseQuery: baseQueryWithReauth,
@@ -87,20 +92,24 @@ export const favoriteApi = createApi ({
             }));
             return updatedResponse;
           },
+          providesTags: () => [TRACKS_TAG]
       }),
       addFavorites: build.mutation({
         query: (body) => ({ 
           method: "POST",
           url: `catalog/track/${body}/favorite/`,
           body,
-        })
+        }),
+        invalidatesTags: () => [TRACKS_TAG],
       }),
+
       deleteFavorites: build.mutation({
         query: (body) => ({
           url: `catalog/track/${body}/favorite`,
           method: "DELETE",
           body,
-        })
+        }),
+        invalidatesTags: () => [TRACKS_TAG],
       })
   })
 })

@@ -4,25 +4,17 @@ import { GlobalStyles } from "./globalstyles";
 import { Provider } from "react-redux";
 import store from './store/index'
 
-// export function clearToken () {
-//   setInterval(() => {
-//     console.log('interval')
-//     setAccessToken(null)
-//   }, 200000);
-// }
-function App() {
 
+  function App() {
+    return (
+        <Provider store={store}>
+          <BrowserRouter >
+              <GlobalStyles/>
+                  <AppRoutes/>
+          </BrowserRouter>
+        </Provider>
 
-  return (
-      <Provider store={store}>
-        <BrowserRouter >
-            <GlobalStyles/>
-                <AppRoutes/>
-        </BrowserRouter>
-      </Provider>
-
-
-  );
-}
+    );
+  }
 
 export default App;
