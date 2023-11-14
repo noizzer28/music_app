@@ -33,7 +33,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     api.dispatch(setInitialState())
     localStorage.clear()
     api.dispatch(setRefreshToken(null))
-    window.location.navigate("/login")
+    window.location.href = "/login";
   };
 
   const auth  = api.getState().user;

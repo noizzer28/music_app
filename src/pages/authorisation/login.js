@@ -79,7 +79,7 @@ export  function AuthPage({ isLoginMode = false}) {
       <S.ModalForm>
         <Link to="/login">
           <S.ModalLogo>
-            <S.ModalLogoImage src="./logo_modal.png" alt="logo" />
+            <S.ModalLogoImage src="../logo_modal.png" alt="logo" />
           </S.ModalLogo>
         </Link>
         {isLoginMode ? (
