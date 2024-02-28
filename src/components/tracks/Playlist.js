@@ -1,7 +1,7 @@
 import * as S from "./tracks.styles"
 import { secondsToMinutes } from "../../pages/main/main"
 import { useSelector} from "react-redux"
-import { setCurrentIndex, setCurrentPlayList, setCurrentTrack, toggleLike, setLikedTracks } from "../../store/track.slice"
+import { setCurrentIndex, setCurrentPlayList, setCurrentTrack, toggleLike } from "../../store/track.slice"
 import { useDispatch } from "react-redux"
 import { setIsPlaying } from "../../store/track.slice"
 import { useAddFavoritesMutation, useDeleteFavoritesMutation } from "../../store/favApi"
@@ -10,7 +10,7 @@ import { useAddFavoritesMutation, useDeleteFavoritesMutation } from "../../store
 
 
 
-const PlaylistItems = ({ tracks, status}) => {
+export const PlaylistItems = ({ tracks, status}) => {
 
   const dispatch = useDispatch()
   const currentTrack = useSelector(state => state.tracks.currentTrack)
@@ -19,7 +19,7 @@ const PlaylistItems = ({ tracks, status}) => {
   const [addFavorite] = useAddFavoritesMutation()
   const [deleteFavorites] = useDeleteFavoritesMutation()
 
-  const handleToggleFavorite = async (song, isLiked) => {
+  const toggleFavorite = async (song, isLiked) => {
     if (isLiked) {
       await deleteFavorites(song.id).unwrap()
       dispatch(toggleLike({isLiked: false, song: song}))
@@ -54,18 +54,19 @@ const PlaylistItems = ({ tracks, status}) => {
   
   
   const PlayList = (tracks) => {
-
-      if (tracks.length === 0) {
-        return <div key={1}>В этом плейлисте еще нет треков</div>
+    console.log(tracks)
+    if (tracks.length === 0) {
+    return <div key={1}>В этом плейлисте еще нет треков</div>
       }
       return tracks.map((song, index) => {
         let isLiked = song.isLiked
+        console.log(isLiked)
        return ( <S.PlaylistItem key={song.id}>
         <S.PlaylistTrack>
           <S.TrackTitle>
             <S.TrackTitleImage >
               <S.trackTitleSvg alt="music" className={currentTrack?.id === song.id ? `${playStyles}` : ""}>
-                <use xlinkHref="./icons/sprite.svg#icon-note"></use>
+                <use xlinkHref="/icons/sprite.svg#icon-note"></use>
               </S.trackTitleSvg>
             </S.TrackTitleImage>
             <div className="track__title-text">
@@ -81,9 +82,9 @@ const PlaylistItems = ({ tracks, status}) => {
           <S.TrackAlbum>
             <S.TrackAlbumLink>{song.album}</S.TrackAlbumLink>
           </S.TrackAlbum>
-          <div className={`track__time _btn-icon ${isLiked ? 'activeLike' : ''}` }  onClick={()=> handleToggleFavorite(song, isLiked)}>
-            <S.TrackTimeSvg alt="time" >
-              <use xlinkHref="./icons/sprite.svg#icon-like"></use>
+          <div className={`track__time _btn-icon ${isLiked ? 'activeLike' : ''}` }  onClick={()=> toggleFavorite(song, isLiked)}>
+            <S.TrackTimeSvg alt="time">
+              <use xlinkHref="/icons/sprite.svg#icon-like"></use>
             </S.TrackTimeSvg>  
             <S.TrackTimeText>{secondsToMinutes(song.duration_in_seconds)}</S.TrackTimeText>
           </div>
@@ -101,4 +102,3 @@ const PlaylistItems = ({ tracks, status}) => {
 }
 
 
-export default PlaylistItems

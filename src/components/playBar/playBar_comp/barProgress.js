@@ -1,5 +1,5 @@
-import * as S from "./styles/barProgress.styles"
-import { secondsToMinutes } from "../../pages/main/main"
+import * as S from "../styles/barProgress.styles"
+import { secondsToMinutes } from "../../../pages/main/main"
 import { useEffect } from "react"
 
 

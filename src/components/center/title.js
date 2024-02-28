@@ -1,4 +1,4 @@
-import * as S from "../../pages/main/app.styles"
+import * as S from "../../pages/main/main.styles"
 
 
 export function TracksTitle () {
