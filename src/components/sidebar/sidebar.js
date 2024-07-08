@@ -1,9 +1,9 @@
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useEffect, useState, useContext } from 'react'
 import * as S from "./sidebar.styled"
-import { PLAYLISTS } from './categories'
-import { UserContext } from '../context/context'
-import { useNavigate } from 'react-router'
+import { SELECTED } from '../../pages/category/selected'
+import { setInitialState } from '../../store/track.slice'
+import { useNavigate } from 'react-router-dom'
 import {  setRefreshToken } from "../../store/user.slice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -16,6 +16,7 @@ export  const SideBar = ( ) => {
 
 
   const handleLogout = () => {
+    dispatch(setInitialState())
     localStorage.clear()
     dispatch(setRefreshToken(null))
     navigate('/login')
@@ -24,7 +25,7 @@ export  const SideBar = ( ) => {
   useEffect(() => {
     setTimeout(() => {
       setloading(false)
-    }, 2000);
+    }, 700);
   })
     return(       
          <S.MainSideBar>
@@ -32,7 +33,7 @@ export  const SideBar = ( ) => {
       <S.SideBarName>{login}</S.SideBarName>
       <S.SideBarIcon onClick={handleLogout}>
         <svg alt="logout">
-          <use xlinkHref="./icons/sprite.svg#logout"></use>
+          <use xlinkHref="/icons/sprite.svg#logout"></use>
         </svg>
       </S.SideBarIcon>
       </S.SideBarPersonal>} 
@@ -40,12 +41,12 @@ export  const SideBar = ( ) => {
     <S.SidebarBlock>
       <S.SideBarList>
       {
-        PLAYLISTS.map((playlist) => (
+        SELECTED.map((playlist) => (
           <S.SidebarItem key={playlist.id}>
           {loading ? <S.Skeleton></S.Skeleton> : <S.SideBarLink to={`/category/${playlist.id}`} >
               <S.SideBarImg
                 src={playlist.image}
-                alt={playlist.Playlist}
+                alt={playlist.id}
               />
             </S.SideBarLink>}
   

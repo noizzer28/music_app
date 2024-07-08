@@ -3,19 +3,26 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const FetchRefreshToken = createAsyncThunk(
     'user/fetchRefreshToken',
-    async function({login, password}) {
-        const response = await fetch(`https://skypro-music-api.skyeng.tech/user/token/`, {
-            method: "POST",
-            body: JSON.stringify({
-              email: `${login}`,
-              password: `${password}`,
-          }),
-            headers: {
-              "content-type": "application/json",
-            },
-          })
-          const data = await response.json()
-          return data
+    async function({login, password}, {rejectWithValue}) {
+        try {
+            const response = await fetch(`https://skypro-music-api.skyeng.tech/user/token/`, {
+                method: "POST",
+                body: JSON.stringify({
+                  email: `${login}`,
+                  password: `${password}`,
+              }),
+                headers: {
+                  "content-type": "application/json",
+                },
+              })
+              console.log(response)
+              const data = await response.json()
+              console.log(data)
+              return data
+            
+        } catch (error) {
+             return rejectWithValue(error.message)
+        }
     }
 )
 

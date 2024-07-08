@@ -1,47 +1,50 @@
-import { Routes, Route, Router } from "react-router-dom";
-import { MainApp } from "../../pages/main/main";
-import  { AuthPage } from "../../pages/authorisation/login";
-import { Favorites } from "../../pages/favorites/favorites";
-import { Category } from "../../pages/category/category";
-import { NotFound } from "../../pages/not-found/not-found";
-import { ProtectedRoute } from "./protected";
-import { MainTracks } from "../../pages/main/mainTracks";
-import { useDispatch } from "react-redux";
-import { setRefreshToken, setLogin } from "../../store/user.slice";
+    import { Routes, Route, Router } from "react-router-dom";
+    import { MainApp } from "../../pages/main/main";
+    import  { AuthPage } from "../../pages/authorisation/login";
+    import { Favorites } from "../../pages/favorites/favorites";
+    import { Category } from "../../pages/category/category";
+    import { NotFound } from "../../pages/not-found/not-found";
+    import { ProtectedRoute } from "./protected";
+    import { MainTracks } from "../../pages/main/mainTracks";
+    import { useDispatch } from "react-redux";
+    import { setRefreshToken, setLogin } from "../../store/user.slice";
 
-export const AppRoutes = () => {
-    const dispatch = useDispatch()
 
-    const initializeUser =  () => {
-        const user = JSON.parse(localStorage.getItem('token'));
-        if (user) {
-            dispatch(setRefreshToken(user.token));
-            dispatch(setLogin(user.name));
+
+    const user =  () => {
+        const dispatch = useDispatch()
+        const userData =  JSON.parse(localStorage.getItem('token'));
+        if (userData) {
+            dispatch(setRefreshToken(userData.token));
+            dispatch(setLogin(userData.name));  
         }
-        return user
+        return userData
     }
-    const user =  initializeUser();
 
 
+    export const AppRoutes = () => {
 
-    return (
-        <Routes>
-            <Route element={<ProtectedRoute  isAllowed={user}></ProtectedRoute>}>
-                <Route path="/" element={<MainApp/>}>
-                    <Route index path="/" element={<MainTracks/>}/>
-                    <Route path="/favorites" element={<Favorites/>}/>
-                    <Route path="/category/:id" element={<Category/>}/>
+        user()
+    
+        console.log('routes')
+        return (
+            <Routes>
+                <Route element={<ProtectedRoute/>}>
+                    <Route element={<MainApp/>}>
+                        <Route path="/" element={<MainTracks/>}/>
+                        <Route path="/favorites" element={<Favorites/>}/>
+                        <Route path="/category/:id" element={<Category/>}/>
+                        <Route path="*" element={<NotFound />} />
+                    </Route>
                 </Route>
-            </Route>
-            <Route
-                path="/login"
-                element={<AuthPage  isLoginMode={true}></AuthPage>}
-            ></Route>
-            <Route
-                path="/register"
-                element={<AuthPage  isLoginMode={false}></AuthPage>}
-            ></Route>
-            <Route path="*" element={<NotFound/ >} />
-        </Routes>
-    )
-}
+                <Route
+                    path="/login"
+                    element={<AuthPage  isLoginMode={true}></AuthPage>}
+                ></Route>
+                <Route
+                    path="/register"
+                    element={<AuthPage  isLoginMode={false}></AuthPage>}
+                ></Route>
+            </Routes>
+        )
+    }

@@ -1,10 +1,14 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
-export const ProtectedRoute = ({redirectPath = "/login", isAllowed}) => {
 
-    if (!isAllowed) {
-       return <Navigate to={redirectPath} replace={true}/>
-    }
-    return <Outlet/>
+export const ProtectedRoute = () => {
+
+    const login = useSelector(state => state.user.login)
+
+    return (
+        login ?  <Outlet/> : <Navigate to={'/login'}/>
+    )
+
 }

@@ -15,9 +15,9 @@ outline: none;
 position: relative;
 &:hover{
     height: 8px;
+    cursor: pointer;
 }
 &::-webkit-slider-thumb{
-
     cursor: pointer;
     -webkit-appearance: none;
 }
@@ -27,7 +27,7 @@ position: relative;
     width: 20px;
     border-radius: 50px;
     background: #FFF;
-    opacity: 10%;
+    opacity: 0%;
     cursor: pointer;
 }
 &:active::-webkit-slider-thumb{

@@ -1,29 +1,26 @@
-import * as S from "./styles/controls.styles"
+import * as S from "../styles/controls.styles"
 import { useDispatch, useSelector } from "react-redux"
-import { nextTrack, setIsPlaying, prevTrack, toggleShuffle, setShuffledTracks, setCurrentIndex } from "../../store/track.slice"
+import { nextTrack, setIsPlaying, prevTrack, toggleShuffle, setShuffledTracks, setCurrentIndex } from "../../../store/track.slice"
 import { useEffect } from "react"
 
 
 
- const  BarPlayerControls = ({ audioRef, isLooped, setLoop, currentTime, setCurrentTime, targetRef}) =>  {
+export  const  BarPlayerControls = ({ audioRef, isLooped, setLoop, currentTime, setCurrentTime, targetRef}) =>  {
 
     const dispatch = useDispatch()
     const isPlaying = useSelector(state => state.tracks.isPlaying)
     const isShuffled = useSelector(state => state.tracks.isShuffled)
-    const tracks = useSelector(state => state.tracks.tracks)
     const currentTrack = useSelector(state => state.tracks.currentTrack)
     const shuffledTracks = useSelector(state => state.tracks.shuffledTracks)
     const currentPlaylist = useSelector(state => state.tracks.currentPlaylist)
 
 
     function handleNext () {
-        targetRef?.current?.scrollIntoView({ behavior: 'smooth' })
         dispatch((setIsPlaying(true)))
         dispatch(nextTrack())
     }
 
     function handlePrev () {
-        targetRef?.current?.scrollIntoView({ behavior: 'smooth' });
         if (currentTime < 5) {
             dispatch((setIsPlaying(true)))
             dispatch(prevTrack())
@@ -74,21 +71,21 @@ import { useEffect } from "react"
     return (<S.PlayerControls>
     <S.PlayerBtnPrev className="_btn"  onClick={handlePrev}>
         <S.PlayerBtnPrevSvg alt="prev">
-        <use xlinkHref="./icons/sprite.svg#icon-prev"></use>
+        <use xlinkHref="/icons/sprite.svg#icon-prev"></use>
         </S.PlayerBtnPrevSvg>
     </S.PlayerBtnPrev>
     <S.PlayerBtnPlay className="_btn" onClick={handlePlaying}>
     {isPlaying ?         
     <S.PlayerBtnPLaySvg alt="pause">
-    <use xlinkHref="./icons/sprite.svg#icon-pause"></use>
+    <use xlinkHref="/icons/sprite.svg#icon-pause"></use>
     </S.PlayerBtnPLaySvg> :         
     <S.PlayerBtnPLaySvg alt="play">
-    <use xlinkHref="./icons/sprite.svg#icon-play"></use>
+    <use xlinkHref="/icons/sprite.svg#icon-play"></use>
     </S.PlayerBtnPLaySvg>}
     </S.PlayerBtnPlay>
     <S.PlayerBtnNext className="_btn" onClick={handleNext}>
         <S.PlayerBtnNextSvg alt="next">
-        <use xlinkHref="./icons/sprite.svg#icon-next"></use>
+        <use xlinkHref="/icons/sprite.svg#icon-next"></use>
         </S.PlayerBtnNextSvg>
     </S.PlayerBtnNext>
     <S.PlayerBtnRepeat className={isLooped ? '_btn-icon _btn-icon__active' : '_btn-icon'}  onClick={handleLoop}>
@@ -98,10 +95,8 @@ import { useEffect } from "react"
     </S.PlayerBtnRepeat>
     <S.PlayerBtnShuffle className={isShuffled ? '_btn-icon _btn-icon__active' : '_btn-icon'}  onClick={handleShuffle}>
         <S.PlayerBtnShuffleSvg alt="shuffle" >
-        <use xlinkHref="./icons/sprite.svg#icon-shuffle"></use>
+        <use xlinkHref="/icons/sprite.svg#icon-shuffle"></use>
         </S.PlayerBtnShuffleSvg>
     </S.PlayerBtnShuffle>
     </S.PlayerControls>)
     }
-
-    export default BarPlayerControls

@@ -35,6 +35,9 @@ export const GlobalStyles = createGlobalStyle`
     list-style: none;
   }
   
+  strong{
+    color: rgb(182, 114, 255);
+  }
 
   
   html,
@@ -48,8 +51,8 @@ export const GlobalStyles = createGlobalStyle`
   @font-face {
     font-family: "StratosSkyeng";
     src: local("StratosSkyeng"), local("StratosSkyeng"),
-      url("../public/StratosSkyeng.woff2") format("woff2"),
-      url("../public/StratosSkyeng.woff") format("woff");
+      url("/public/StratosSkyeng.woff2") format("woff2"),
+      url("/public/StratosSkyeng.woff") format("woff");
     font-weight: 400;
     font-style: normal;
   }
@@ -127,5 +130,19 @@ export const GlobalStyles = createGlobalStyle`
 ._btn-icon.activeLike:hover svg{
   fill: #B672FF
 }
+
+.mutedVolume::before {
+ content: "";
+ display: inline-block;
+ position: absolute;
+ width: 24px;
+ height: 3px;
+ transform: rotate(40deg);
+ background-color: #D9D9D9;
+ margin-top: 7px;
+ margin-left: -6px;
+}
+
+
 
 `
