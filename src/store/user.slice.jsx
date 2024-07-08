@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const FetchRefreshToken = createAsyncThunk(
     'user/fetchRefreshToken',
-    async function({login, password}) {
+    async function({login, password}, {rejectWithValue}) {
         try {
             const response = await fetch(`https://skypro-music-api.skyeng.tech/user/token/`, {
                 method: "POST",

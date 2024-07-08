@@ -25,6 +25,7 @@ export const MainTracks = () =>  {
         dispatch(setDeactivedFilters())
         getTracks()
           .then((tracks) => {
+            console.log(tracks)
              dispatch(setTracks({login: login, tracks: tracks}))
           }).then(()=> {
               setLoading(false)

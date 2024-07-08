@@ -26,7 +26,7 @@
 
         user()
     
-
+        console.log('routes')
         return (
             <Routes>
                 <Route element={<ProtectedRoute/>}>

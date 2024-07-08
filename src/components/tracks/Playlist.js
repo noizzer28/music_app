@@ -11,7 +11,7 @@ import { useAddFavoritesMutation, useDeleteFavoritesMutation } from "../../store
 
 
 export const PlaylistItems = ({ tracks, status}) => {
-
+  console.log(status)
   const dispatch = useDispatch()
   const currentTrack = useSelector(state => state.tracks.currentTrack)
   const isPlaying = useSelector(state => state.tracks.isPlaying)
@@ -54,13 +54,12 @@ export const PlaylistItems = ({ tracks, status}) => {
   
   
   const PlayList = (tracks) => {
-    console.log(tracks)
+
     if (tracks.length === 0) {
     return <div key={1}>В этом плейлисте еще нет треков</div>
       }
       return tracks.map((song, index) => {
         let isLiked = song.isLiked
-        console.log(isLiked)
        return ( <S.PlaylistItem key={song.id}>
         <S.PlaylistTrack>
           <S.TrackTitle>
